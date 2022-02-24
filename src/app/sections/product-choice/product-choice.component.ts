@@ -12,4 +12,8 @@ export class ProductChoiceComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+  decidePlan(){
+
+  }
 }

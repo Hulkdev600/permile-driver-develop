@@ -9,7 +9,7 @@ import { NoticesComponent } from './sections/notices/notices.component';
 import { JoinInformationComponent } from './sections/join-information/join-information.component';
 import { ReviewComponent } from './sections/review/review.component';
 import { FinishComponent } from './sections/finish/finish.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +22,8 @@ import { FinishComponent } from './sections/finish/finish.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

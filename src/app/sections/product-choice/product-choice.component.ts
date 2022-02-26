@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'section-product-choice',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductChoiceComponent implements OnInit {
 
-  constructor() { }
+
+  plan :String=''
+  planForm! : FormGroup
+  constructor(private fb : FormBuilder) { }
 
   ngOnInit(): void {
+    this.planForm = this.fb.group({
+      plan : ['',[Validators.required]]
+    })
   }
 
 

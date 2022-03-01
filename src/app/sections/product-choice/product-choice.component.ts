@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -8,7 +8,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class ProductChoiceComponent implements OnInit {
 
-
+  @Output("changePage") changePage:EventEmitter<any> = new EventEmitter();
   plan :String=''
   planForm! : FormGroup
   constructor(private fb : FormBuilder) { }
@@ -21,6 +21,9 @@ export class ProductChoiceComponent implements OnInit {
 
 
   decidePlan(){
-
+    console.log('test')
+    this.changePage.emit(2)
   }
+
+  
 }

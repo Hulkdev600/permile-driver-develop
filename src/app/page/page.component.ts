@@ -15,4 +15,9 @@ export class PageComponent implements OnInit {
     
   }
 
+  changePage(page : string | number){
+    console.log(page)
+    this.STEP = Number(page)
+  }
+
 }

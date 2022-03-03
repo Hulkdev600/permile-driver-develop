@@ -1,1 +1,32 @@
-<p>join-information works!</p>
+<section>
+    <div class="page-head">
+        <h5>
+           신청인 정보
+        </h5>
+        <p>
+            입력하신 개인정보는 운전자보험에 등록되며,<br>
+            그 외의 용도로는 사용되지 않습니다.
+        </p>
+    </div>
+
+    <div class="form-wrap">
+        <form [formGroup]="userForm">
+            <label for="name">Name: </label>
+            <input type="text" id="name" placeholder="이름">
+
+            <label for="cell">Cell: </label>
+            <input type="text" id="cell" placeholder="휴대폰번호">
+
+            <label for="socialNumber">SocialNumber: </label>
+            <input type="text" id="socialNumber" placeholder="주민등록번호">
+        </form>
+
+    </div>
+
+
+    <div class="join-btn-wrap">
+        <button class="join-btn">
+            입력완료
+        </button>
+    </div>
+</section>

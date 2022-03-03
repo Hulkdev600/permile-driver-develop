@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Output,EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'section-notices',
@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NoticesComponent implements OnInit {
 
+  @Output("changePage") changePage:EventEmitter<any> = new EventEmitter();
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
+
+
+  nextStep(){
+    this.changePage.emit(3)
+  }
 }

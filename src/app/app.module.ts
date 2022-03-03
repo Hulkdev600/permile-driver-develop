@@ -11,6 +11,7 @@ import { ReviewComponent } from './sections/review/review.component';
 import { FinishComponent } from './sections/finish/finish.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   declarations: [
     AppComponent,

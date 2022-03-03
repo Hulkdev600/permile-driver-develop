@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'section-join-information',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class JoinInformationComponent implements OnInit {
 
+  userForm! : FormGroup
   constructor() { }
 
   ngOnInit(): void {

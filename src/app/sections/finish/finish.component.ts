@@ -12,4 +12,8 @@ export class FinishComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+  closeWeb(){
+    
+  }
 }

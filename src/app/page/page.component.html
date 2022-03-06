@@ -3,7 +3,7 @@
 <div [ngSwitch]="STEP">
     <section-product-choice *ngSwitchCase="1" (changePage)="changePage($event)"></section-product-choice>
     <section-notices *ngSwitchCase="2" (changePage)="changePage($event)"></section-notices>
-    <section-join-information *ngSwitchCase="3" ></section-join-information>
+    <section-join-information *ngSwitchCase="3" (changePage)="changePage($event)" ></section-join-information>
     <section-review *ngSwitchCase="4"></section-review>
     <section-finish  *ngSwitchDefault></section-finish>
 </div>

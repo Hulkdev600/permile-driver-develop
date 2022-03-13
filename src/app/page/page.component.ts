@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-page',
   templateUrl: './page.component.html',
@@ -7,12 +7,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PageComponent implements OnInit {
 
-  // STEP : number = 1
   STEP : number = 1
-  constructor() { }
+  constructor(
+    private activatedRoute : ActivatedRoute,
+  ) { }
 
   ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe(params => {
+      
+      let queryParams = params;
+      console.log(queryParams)
+
+
     
+
+    })
   }
 
   changePage(page : string | number){

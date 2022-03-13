@@ -29,7 +29,7 @@
 
 
     <div class="join-btn-wrap">
-        <button class="join-btn" (click)="onSubmit()">
+        <button class="join-btn" (click)="onSubmit()" [disabled]="userForm.invalid">
             입력완료
         </button>
     </div>

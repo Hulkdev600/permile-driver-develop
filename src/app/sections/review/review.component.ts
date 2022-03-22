@@ -12,5 +12,7 @@ export class ReviewComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  submit(){}
+  submit(){
+    
+  }
 }

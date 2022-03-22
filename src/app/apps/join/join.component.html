@@ -1,0 +1,14 @@
+
+<div class="join-container">
+    <header class="header">
+        뒤로가기 버튼
+    </header>
+    <div [ngSwitch]="PAGE">
+        <page-insurance-information *ngSwitchCase="'insurance-information'" (changePage)="changePage($event)"></page-insurance-information>
+        <!-- <section-notices *ngSwitchCase="2" (changePage)="changePage($event)"></section-notices>
+        <section-join-information *ngSwitchCase="3" (changePage)="changePage($event)" ></section-join-information>
+        <section-review *ngSwitchCase="4"></section-review>
+        <section-finish  *ngSwitchDefault></section-finish> -->
+    </div>
+    
+</div> 

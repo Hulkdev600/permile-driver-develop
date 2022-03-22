@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PageComponent } from './page/page.component';
+import { JoinComponent } from './apps/join/join.component';
+import { InsuRequestComponent } from './apps/insu-request/insu-request.component';
 
 const routes: Routes = [
   {
@@ -10,7 +11,11 @@ const routes: Routes = [
   },
   {
     path:'join',
-    component : PageComponent
+    component : JoinComponent
+  },
+  {
+    path:'insuRequest',
+    component : InsuRequestComponent
   }
 ];
 

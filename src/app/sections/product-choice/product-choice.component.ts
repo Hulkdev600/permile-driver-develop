@@ -10,13 +10,13 @@ export class ProductChoiceComponent implements OnInit {
 
   @Output("changePage") changePage:EventEmitter<any> = new EventEmitter();
   plan :String=''
-  planForm! : FormGroup
+  // planForm! : FormGroup
   constructor(private fb : FormBuilder) { }
 
   ngOnInit(): void {
-    this.planForm = this.fb.group({
-      plan : ['',[Validators.required]]
-    })
+    // this.planForm = this.fb.group({
+    //   plan : ['',[Validators.required]]
+    // })
   }
 
 

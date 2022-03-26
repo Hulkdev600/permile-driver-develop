@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input, ViewChild, Renderer2,ElementRef } from '@angular/core';
-import { FormGroup,FormControl,FormBuilder, Validators } from '@angular/forms';
+import { FormGroup,FormControl,FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { MyValidator} from '../../../shared/myValidators'
 
@@ -10,7 +10,7 @@ import { MyValidator} from '../../../shared/myValidators'
   styleUrls: ['./user-form.component.scss']
 })
 export class UserFormComponent implements OnInit {
-  myValidator = new MyValidator();
+  // myValidator = new MyValidator();
   faCircleXmark = faCircleXmark
   @Input() user:any
   @Output() nextStep:EventEmitter<any> = new EventEmitter();
@@ -72,7 +72,6 @@ export class UserFormComponent implements OnInit {
         placeholder :'피보험자명',
         maxLength : 20,
         initialValue : this.TESTUSER.driverName,
-        event : null,
         validators: [
           Validators.required,
   
@@ -84,10 +83,10 @@ export class UserFormComponent implements OnInit {
         placeholder:'주민등록번호',
         maxLength : 16,
         initialValue : '',
-        event : 'input',
-        handler : this.cellControl,
         validators: [
           Validators.required,
+          MyValidator.validRegistrationNumber()
+          
         ]
       },
       {
@@ -96,11 +95,9 @@ export class UserFormComponent implements OnInit {
         placeholder :'휴대폰',
         maxLength : 17,
         initialValue : this.TESTUSER.driverCell,
-        event : 'input',
-        handler : this.socialNumberControl,
         validators: [
           Validators.required,
-          this.myValidator.validateCell
+          MyValidator.validateCell()
         ]
       },
     ]
@@ -126,9 +123,6 @@ export class UserFormComponent implements OnInit {
       let controlName = currFormControl.formControlName;
       let initialValue = currFormControl.initialValue;
       let validators = currFormControl.validators
-      let event = currFormControl.event;
-      let eventHandler = currFormControl.eventHandler
-      
 
       if(i > 0){
         prevFormControl= this.formDataArr[i-1];
@@ -140,11 +134,11 @@ export class UserFormComponent implements OnInit {
       
       // 추가하려는 것이 없어서 추가가능한 상태 && 이전 input이 검증 유효한상태일 때 추가
       if(!this.userForm.get(controlName) && prevFormControlValid){
-
+        console.log(validators)
         this.userForm.addControl(controlName ,new FormControl(initialValue, validators))
 
         this.userForm.get(controlName)?.valueChanges.subscribe(result => {
-          console.log(controlName,' : ', result)
+          // console.log(controlName,' : ', result)
         })
 
         // html에 나타낼 input 배열, 화면상에 기존것이 아래로 내려가게하기위해 unshift한다.
@@ -245,11 +239,15 @@ export class UserFormComponent implements OnInit {
   }
 
 
-  // 폼의 값으로는 실제값을 넣어주지만
+  /**
+   * 
+   * @param value // Input value
+   * @param char // 입력데이터(키보드 한번 눌렀을떄의 해당 데이터)
+   * @param el // View에서 해당하는 Input
+   * @param formControlName 
+   */
   socialNumberControl(value:string, char:string, el:any, formControlName:string):void{    
-    // console.log('주민번호Input길이 : ',value.length)
-    // console.log('문자 : ',char)
-
+    
     let valueLength = value.replace(/[^0-9•]/gi,'').length;
     this.driverSocialNumber += char; 
     this.driverSocialNumber = this.driverSocialNumber.substr(0, valueLength);
@@ -271,3 +269,14 @@ export class UserFormComponent implements OnInit {
 
 
 }
+
+
+// function validateSample(control:AbstractControl) : {[key:string] : any} |null{
+//   const socialNumber = control.value;
+//   console.log(socialNumber)
+//   if(socialNumber === '9502051081421'){
+//     return null;
+//   } else {
+//     return { 'invalid' : true}
+//   }
+// }

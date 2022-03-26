@@ -1,13 +1,16 @@
 <main class="insurance-information-container">
     <header class="header title-area">
         <h1 class="title">
-            탄만큼 운전자보험<br>가입내용을 확인해주세요.
+            <span class="color-blue">탄만큼 운전자보험</span><br>가입내용을 확인해주세요.
         </h1>
         <h2 class="sub-title">언제 어디서든 원하는 시간에 <br>내비를 사용해서 탄 만큼만 내는 운전자보험</h2>
     </header>
     
-    <section class="img-container">
-    
+    <section class="image-area">
+        <div class="image-box">
+            <img src="/assets/image/img_insurance_join_driver.svg" alt="">
+        </div>
+        
     </section>
     
     <section class="insurance-information-area">
@@ -25,7 +28,7 @@
                 <dl>가입연령</dl>
                 <dd>19세부터 70세까지</dd>
             </li>   
-            <li class="description-content">
+            <li class="description-content" id="premium-content">
                 <dl>보험료</dl>
                 <dd>1km당 2원 / 월말 후불결제</dd>
             </li> 
@@ -33,14 +36,18 @@
     
         <ul class="description-box">
             <li class="description-content">
-                <div></div>
+                <div>
+                    <img src="/assets/image/repair.svg" alt="">
+                </div>
                 <div>
                     형사합의금 <br>
                     교통사고 처리지원금
                 </div>
             </li>
             <li class="description-content">
-                <div></div>
+                <div>
+                    <img src="/assets/image/carpool.svg" alt="">
+                </div>
                 <div>
                     변호사 선입비 <br>
                     공소제기 또는 구속 시
@@ -48,7 +55,9 @@
                 
             </li>
             <li class="description-content">
-                <div></div>
+                <div>
+                    <img src="/assets/image/tpointtown.svg" alt="">
+                </div>
                 <div>
                     벌금보상 <br>
                     벌금형이 판결된 경우
@@ -59,27 +68,27 @@
     
         <p id="guarantee-content">카카오내비를 사용하여 길안내, 안전운전으로 운행하는 상황에만 보험 보장을 받을 수 있습니다.</p>
     
-        <ul class="description-box">
+        <ul class="description-box modal-list">
             <li class="description-content">
                 <dl>꼭 알아두실 내용</dl>
-                <dd (click)="open(essentialContent)">arrow</dd>
+                <dd (click)="open(essentialContent)"><fa-icon [icon]="faAngleRight"></fa-icon></dd>
             </li>
             <li class="description-content">
                 <dl>보장 내용</dl>
-                <dd (click)="open(damboContent)">arrow</dd>
+                <dd (click)="open(guaranteeContent)"><fa-icon [icon]="faAngleRight"></fa-icon></dd>
                 
             </li>
             <li class="description-content">
                 <dl>보험료 안내</dl>
-                <dd (click)="open(premiumContent)">arrow</dd>
+                <dd (click)="open(premiumContent)"><fa-icon [icon]="faAngleRight"></fa-icon></dd>
             </li>
             <li class="description-content">
                 <dl>보험금 지급 제한 사항</dl>
-                <dd (click)="open(premiumLimitContent)">arrow</dd>
+                <dd (click)="open(payoutsLimitContent)"><fa-icon [icon]="faAngleRight"></fa-icon></dd>
             </li>
             <li class="description-content">
                 <dl>청구 안내</dl>
-                <dd (click)="open(insuRequestGuide)">arrow</dd>
+                <dd (click)="open(claimGuideContent)"><fa-icon [icon]="faAngleRight"></fa-icon></dd>
             </li>
         </ul>
     
@@ -88,10 +97,10 @@
     <section class="bottom-area">
         <p>탄 만큼 운전자보험은 DB손해보험에서 제공합니다.</p>
         
-        <button class="btn btn-primary" id="next-button" (click)="changePage.emit('next')">
+        <button class="btn btn-primary" id="next-button" (click)="open(checkJoinAvailable,'my-class-check-join-available-modal')">
             다음
-        </button>
-
+        </button>   
+        
         
     </section>
     
@@ -102,7 +111,9 @@
 <ng-template #essentialContent let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title"></h4>
-      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      <div class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <fa-icon [icon]="faX"></fa-icon>
+      </div>
     </div>
     <div class="modal-body">
         <div class="content-box">
@@ -150,10 +161,12 @@
     
 </ng-template>
 
-<ng-template #damboContent let-modal>
+<ng-template #guaranteeContent let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title"></h4>
-      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      <div class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <fa-icon [icon]="faX"></fa-icon>
+      </div>
     </div>
     <div class="modal-body">
         <div class="content-box">
@@ -216,7 +229,9 @@
 <ng-template #premiumContent let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title"></h4>
-      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+      <div class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <fa-icon [icon]="faX"></fa-icon>
+      </div>
     </div>
     <div class="modal-body">
         <div class="content-box">
@@ -261,9 +276,12 @@
     
 </ng-template>
 
-<ng-template #premiumLimitContent let-modal>
+<ng-template #payoutsLimitContent let-modal>
     <div class="modal-header">
-      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        <h4 class="modal-title" id="modal-basic-title"></h4>
+        <div class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <fa-icon [icon]="faX"></fa-icon>
+        </div>
     </div>
     <div class="modal-body">
 
@@ -295,9 +313,12 @@
 </ng-template>
 
 
-<ng-template #insuRequestGuide let-modal>
+<ng-template #claimGuideContent let-modal>
     <div class="modal-header">
-      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        <h4 class="modal-title" id="modal-basic-title"></h4>
+        <div class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <fa-icon [icon]="faX"></fa-icon>
+        </div>
     </div>
     <div class="modal-body">
         <div class="content-box">
@@ -310,3 +331,36 @@
     </div>
     
 </ng-template>
+
+<ng-template #checkJoinAvailable let-modal>
+    <div class="modal-body">
+        <div class="content-box">
+            <h3 class="title"><span class="color-blue">이륜차, 영업용 차량, 영업 목적</span>으로 운전하고 있습니까?</h3>
+        
+            <p class="sub-title">답변이 사실과 다를 경우, 보험 유지 및 보험금 지급이 거절될 수 있습니다.</p>
+            <div class="check-button-box">
+                <button class="btn check-button fail-button" (click)="checkFail()">예</button>
+                <button ngbAutofocus class="btn check-button success-button" (click)="checkSuccess()">아니오</button>    
+            </div>          
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #checkFailModal let-modal>
+
+    <div class="modal-body">
+        <div class="content-box">
+            
+            <div class="faCircleExclamation-box">
+                <fa-icon [icon]="faCircleExclamation"></fa-icon>
+            </div>
+        
+            <p class="content">해당 사항이 있다면 <br> 가입이 어렵습니다.</p>
+                <button class="btn btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">확인</button> 
+            <div class="button-box"></div>
+                
+                   
+        </div>
+    </div>
+</ng-template>
+

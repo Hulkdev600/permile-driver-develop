@@ -1,21 +1,94 @@
 .insurance-information-container{
-    padding: 0px 20px;
+    padding: 0px 20px 20px 20px;
     
 }
 
-.title {
-    text-align: left;
+.title-area{
+
+    .title {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 30px;
+        margin-bottom: 10px;
+        .color-blue{
+            color: #3581FF;
+        }
+    }
+
+    .sub-title{
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        color: rgba(38, 45, 57, 0.52);
+
+    }
 }
 
+.description-box{
+    padding-left: 0;
 
-.description-content{
-    display: flex;
-    justify-content: space-between;
+    .description-content{
+        display: flex;
+        justify-content: space-between;
+
+        dl{
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            color: rgba(38, 45, 57, 0.52);
+            margin-bottom: 0;
+        }
+        dd{
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            color: #262D39;
+        }
+    }
+
+    #premium-content{
+        color: #3581FF;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 22px;
+        border-top: 1px solid rgba(38, 45, 57, 0.32);
+        border-bottom: 1px solid rgba(38, 45, 57, 0.32);
+    }
+}
+
+.modal-list {
+    li{
+        height: 50px;
+        border-top: 1px solid #F5F6F7;
+    }
+    li:last-child{
+        border-bottom: 1px solid #F5F6F7;
+    }
+    
+}
+
+.image-box{
+    text-align: center;
 }
 
 
 #guarantee-content{
-    text-align: center;
+    padding: 16px;
+    background: rgba(53, 129, 255, 0.08);
+    border-radius: 4px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    color: #2C6EDB;
+
 }
 
 
@@ -30,4 +103,95 @@
 .modal-content{
     margin: 0;
     border-radius: 0;
+}
+
+.modal-header{
+    border-bottom: none;
+}
+
+.modal-dialog{
+    max-width: none;
+}
+::ng-deep .my-class-check-join-available-modal .modal-dialog { 
+
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    .modal-content{
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        padding: 20px 10px 10px 10px;
+    }
+    
+    .title{
+        text-align: center;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 20px;
+    }
+    .sub-title{
+        text-align: center;
+        font-size: 16px;
+        color: rgba(38, 45, 57, 0.72);
+    }
+    .color-blue{
+        color:#3581FF
+    }
+
+    .check-button-box{
+        display: flex;
+        justify-content: center;
+        .check-button{
+            margin: 5px;
+            width: 156px;
+            height: 52px;
+            border-radius: 4px;
+        }
+
+        .fail-button{
+            border: 1px solid rgba(38, 45, 57, 0.16);
+            background-color: white;
+        }
+        .success-button{
+            background: #3581FF;
+            border-radius: 4px;
+            color: white;
+        }
+    }
+    
+}
+
+
+::ng-deep .my-class-check-fail-modal .modal-dialog {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    .modal-content{
+        
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        padding: 20px 10px 10px 10px;
+    }
+
+    .faCircleExclamation-box{
+        color: #DD3B3B;
+        text-align: center;
+        font-size: 36px;
+    }
+
+    .content{
+        font-weight: 700;
+        font-size: 18px;
+        color: #262D39;
+        text-align: center;
+    }
+
+    .btn-close{
+        width: 100%;
+        background: #3581FF;
+        border-radius: 4px;
+        color: white;
+        height: 52px;
+    }
 }

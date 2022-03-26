@@ -1,1 +1,46 @@
-<p>user-form works!</p>
+<main class="user-form-container">
+
+    <header class="header">
+        피보험자 정보
+    </header>
+
+    <section class="form-area">
+
+        <!-- <div class="validation-message" *ngIf="userForm.controls['driverName']">dfdsf</div> -->
+        
+
+        <form [formGroup]="userForm" #form>
+
+            <div *ngFor = "let formControl of formControls">
+                <div class="input-box">
+                    <input 
+                        class="input"  
+                        [id]="formControl.formControlName" 
+                        [formControlName]="formControl.formControlName" 
+                        [type]="formControl.type" 
+                        [placeholder]="formControl.placeholder"
+                        [maxLength]="formControl.maxLength"
+                        (input)="customizeValue($event)"
+                    >
+                    <div class="icon-box" (click)="clearFormControl(formControl)">
+                        <fa-icon [icon]="faCircleXmark"></fa-icon>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+            <!-- <input #test id="test" type="text"> -->
+        </form>
+
+
+        <button class="btn btn-primary next-button" (click)="next()" [disabled]="userForm.invalid">다음</button>
+
+        
+    </section>
+    
+
+
+
+
+</main>

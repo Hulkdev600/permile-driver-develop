@@ -1,14 +1,17 @@
 
-<div class="join-container">
-    <header class="header">
-        뒤로가기 버튼
+<main class="join-container">
+    <header class="top-toolbar">
+        <div class="font-back-box">
+            <fa-icon [icon]="faArrowLeft"></fa-icon>
+        </div>
+        
     </header>
-    <div [ngSwitch]="PAGE">
-        <page-insurance-information *ngSwitchCase="'insurance-information'" (changePage)="changePage($event)"></page-insurance-information>
-        <!-- <section-notices *ngSwitchCase="2" (changePage)="changePage($event)"></section-notices>
-        <section-join-information *ngSwitchCase="3" (changePage)="changePage($event)" ></section-join-information>
-        <section-review *ngSwitchCase="4"></section-review>
-        <section-finish  *ngSwitchDefault></section-finish> -->
-    </div>
+    <section [ngSwitch]="PAGE">
+        <page-insurance-information *ngSwitchCase="'insurance-information'" (nextStep)="renewal($event)"></page-insurance-information>
+        <page-user-form *ngSwitchCase="'user-form'" (nextStep)="renewal($event)" [user]="user"></page-user-form>
+        <page-confirm *ngSwitchCase="'confirm'" (changePage)="renewal($event)" [user]="user"></page-confirm>
+
+    </section>
     
-</div> 
+
+</main> 

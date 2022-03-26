@@ -1,1 +1,62 @@
-<p>confirm works!</p>
+<main class="confirm-container">
+    <header class="header title-area">
+        <h1 class="title">
+            <span class="color-blue">탄만큼 운전자보험</span><br>가입내용은 아래와 같아요.
+        </h1>
+        <h2 class="sub-title">입력하신 정보가 맞는지 최종 확인해주세요.<br>가입 완료 버튼을 누르면 보험 적용이 가능합니다.</h2>
+    </header>
+
+    <section class="contract-information-area">
+
+        <h3>보험 계약정보</h3>
+        <ul>
+            <li class="information-content">
+                <dl>상품명</dl>
+                <dd>{{productName}}</dd>
+            </li>
+            <li class="information-content">
+                <dl>보험사</dl>
+                <dd>{{insuranceCompanyName}}</dd>
+            </li>
+            <li class="information-content">
+                <dl>가입기간</dl>
+                <dd>테스트</dd>
+            </li>
+            <li class="information-content">
+                <dl>보험형태</dl>
+                <dd>{{productType}}</dd>
+            </li>
+        </ul>
+    </section>
+
+    <div class="divide"></div>
+
+    <section class="insured-information-area">
+
+        <h3>피보험자 정보</h3>
+        <ul>
+            <li class="information-content">
+                <dl>이름</dl>
+                <dd>{{user.driverName}}</dd>
+            </li>
+            <li class="information-content">
+                <dl>주민등록번호</dl>
+                <dd>{{user.driverSocialNumber}}</dd>
+            </li>
+            <li class="information-content">
+                <dl>휴대폰</dl>
+                <dd>{{user.driverCell}}</dd>
+            </li>
+        </ul>
+    </section>
+
+    <div class="divide"></div>
+
+    <section class="bottom-area">
+        <p>제공처 (주)SIMG 손해보험협회 심의필 제 43424호(2022.02.26)</p>
+
+        <button class="btn btn-primary" id="join-button">
+            가입 완료
+        </button>
+    </section>
+</main>

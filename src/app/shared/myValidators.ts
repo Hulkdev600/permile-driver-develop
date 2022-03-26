@@ -3,12 +3,6 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export class MyValidator{
 
-    ValidateSocialNumber(control: AbstractControl){
-        if(control.value){}
-    }
-
-
-
     static validateCell():ValidatorFn | null {
         return (control:AbstractControl): ValidationErrors | null => {
             let regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
@@ -20,10 +14,9 @@ export class MyValidator{
             return {'invalidCell' : true}
         }
         
-
     }
 
-    static validRegistrationNumber():ValidatorFn | null {
+    static validSocialNumber():ValidatorFn | null {
         return (control:AbstractControl): ValidationErrors | null => {
             let rn = control.value;
             
@@ -37,7 +30,6 @@ export class MyValidator{
             var rrnMatch = (11-(checkSum%11))%10 == rn.substr(12,1);
             var frnMatch = (13-(checkSum%11))%10 == rn.substr(12,1);
          
-            console.log(rrnMatch)
             if((rrnMatch || frnMatch)){
                 return null
             } else {
@@ -50,31 +42,4 @@ export class MyValidator{
         
     }
 
-    validRegistrationNumber2():ValidatorFn | null {
-        return (control:AbstractControl): ValidationErrors | null => {
-            let rn = control.value;
-            console.log(rn)
-            // console.log('rn : ',rn)
-            rn = rn.split("-").join('');
-            // if( rn.length !== 13 ) return false;
-            if( rn.length !== 13 ) return null;
-         
-            var checkSum = 0;
-            for(var i=0; i<12; i++) checkSum += ((rn.substr(i,1)>>0)*((i%8)+2));
-         
-            var rrnMatch = (11-(checkSum%11))%10 == rn.substr(12,1);
-            var frnMatch = (13-(checkSum%11))%10 == rn.substr(12,1);
-         
-            console.log(rrnMatch)
-            if((rrnMatch || frnMatch)){
-                return {'validation' : true}
-            } else {
-                return null
-            }
-            // if( type === 'rrn' ) return rrnMatch;
-            // else if( type === 'frn' ) return frnMatch; 
-            // else return rrnMatch || frnMatch;
-        }
-        
-    }
 }

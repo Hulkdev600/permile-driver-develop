@@ -7,8 +7,8 @@
         
     </header>
     <section [ngSwitch]="PAGE">
-        <page-insurance-information *ngSwitchCase="'insurance-information'" (nextStep)="renewal($event)"></page-insurance-information>
-        <page-user-form *ngSwitchCase="'user-form'" (nextStep)="renewal($event)" [user]="user"></page-user-form>
+        <page-insurance-information *ngSwitchCase="'insurance-information'"  [user]="user" (nextStep)="renewal($event)"></page-insurance-information>
+        <page-user-form *ngSwitchCase="'user-form'" [user]="user" (nextStep)="renewal($event)"></page-user-form>
         <page-confirm *ngSwitchCase="'confirm'" (changePage)="renewal($event)" [user]="user"></page-confirm>
 
     </section>

@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild,ViewContainerRef } from '@angular/core';
+import { Component, OnInit,SimpleChange,ViewChild,ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CryptoService } from 'src/app/services/crypto.service';
@@ -14,7 +14,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 export class JoinComponent implements OnInit {
 
   faArrowLeft = faArrowLeft;
-  PAGE : string = 'insurance-information'
+  PAGE : string = ''
   
   decrpytEndPoint : string = 'decrypt'
 
@@ -25,6 +25,10 @@ export class JoinComponent implements OnInit {
     private activatedRoute : ActivatedRoute,
     private _httpService : HttpService,
   ) { }
+
+  ngOnChanges(changes:SimpleChange){
+    console.log(changes)
+  }
 
   ngOnInit(): void {
     
@@ -44,10 +48,11 @@ export class JoinComponent implements OnInit {
         enc : encryptedData
       }
       
-      this.decryptHttp(this.decrpytEndPoint, body).subscribe(response => {
+      this.decryptHttp(this.decrpytEndPoint, body).subscribe((response:any) => {
         
-        this.user = response;
-        console.log('user : ', this.user)
+        this.user = response['payload']; // 1
+        this.PAGE = 'insurance-information' // 2
+        
       })
     })
   }
@@ -63,10 +68,8 @@ export class JoinComponent implements OnInit {
 
 
   renewal(data : any){
-    console.log(data)
-    let currPage = data.changePage
-    this.user = data.user;
-    this.PAGE = (currPage)
-    
+    let changePage = data['changePage']
+    this.user = data['userData'];
+    this.PAGE = changePage
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, TemplateRef,ViewChild,ViewContainerRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, TemplateRef,ViewChild,ViewContainerRef, Input } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
@@ -12,6 +12,8 @@ import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 })
 export class InsuranceInformationComponent implements OnInit {
   
+  @Input() user!:object | undefined
+
   /*fontAwesome*/
   faAngleRight = faAngleRight
   faX = faX
@@ -29,20 +31,20 @@ export class InsuranceInformationComponent implements OnInit {
   
     ) { }
 
-  ngOnInit(): void {
-
+  ngOnInit(): void {  
+    console.log(this.user)
   }
 
 
   open(content:any,myClass?:string) {
-    console.log(content)
+    // console.log(content)
     let ngbModalOption:any = {ariaLabelledBy: 'modal-basic-title'}
     if(myClass){
       ngbModalOption['windowClass'] = myClass
     }
 
     this.modalService.open(content, ngbModalOption).result.then((result:any) => {
-      console.log('모달 result : ',result)
+      // console.log('모달 result : ',result)
       this.closeResult = `Closed with: ${result}`;
     }, (reason:any) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -63,17 +65,17 @@ export class InsuranceInformationComponent implements OnInit {
 
 
   checkFail(){
-    this.modalService.dismissAll('test')
+    this.modalService.dismissAll('')
     
     this.open(this.checkFailModal,'my-class-check-fail-modal')
   }
   
   checkSuccess(){
-    this.modalService.dismissAll('test')
+    this.modalService.dismissAll('')
 
     let emitData = {
       changePage : 'user-form',
-      userData : ''
+      userData : this.user
     }
     this.nextStep.emit(emitData)
   }

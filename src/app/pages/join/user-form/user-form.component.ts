@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, ViewChild, Renderer2,ElementRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild ,ElementRef, SimpleChanges } from '@angular/core';
 import { FormGroup,FormControl,FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { MyValidator} from '../../../shared/myValidators'
@@ -10,41 +10,32 @@ import { MyValidator} from '../../../shared/myValidators'
   styleUrls: ['./user-form.component.scss']
 })
 export class UserFormComponent implements OnInit {
-  // myValidator = new MyValidator();
   faCircleXmark = faCircleXmark
   @Input() user:any
   @Output() nextStep:EventEmitter<any> = new EventEmitter();
-  @ViewChild('input') input : ElementRef | undefined
-  @ViewChild('form',{static:false}) form : ElementRef | undefined
-
-  TESTUSER = {
-    driverName : '테스터',
-    driverCell : '01012345678'
-  }
-  userForm!:FormGroup
-
-  formDataArr:any[] = []
-  formControls:any[] =[ ]
-
-  driverSocialNumber:string =''
-
   
+  userForm!:FormGroup
+  formDataArr:any[] = []
+  formControls:any[] =[]
+  driverSocialNumber:string =''
 
 
   constructor(
     private formBuilder: FormBuilder,
-    private renderer: Renderer2,
-    private elementRef : ElementRef
+    private element : ElementRef
     ) { }
 
+
+  ngOnChanges(changes: SimpleChanges){
+    console.log(changes)
+  }
+  
+
   ngOnInit(): void {
-    // console.log(typeof this.testObject)
-    // console.log(typeof this.user)
-    // console.log(this.user)
+    console.log(this.user)
     this.initialFormContent()
-    
-    this.userForm = this.formBuilder.group({})
-    this.addFormControl()
+    this.userForm = this.formBuilder.group({}) // formBuilder 무상태 초기화
+    this.addFormControl() // 첫 ngOninit 주기에 운전자Input만 세팅하기 위해 addFormControl 실행
 
   }
 
@@ -62,7 +53,6 @@ export class UserFormComponent implements OnInit {
     
   }
 
-
   initialFormContent(){
     // console.log(JSON.parse(this.user))
     this.formDataArr = [
@@ -71,7 +61,7 @@ export class UserFormComponent implements OnInit {
         type : 'text',
         placeholder :'피보험자명',
         maxLength : 20,
-        initialValue : this.TESTUSER.driverName,
+        initialValue : this.user.driverName,
         validators: [
           Validators.required,
   
@@ -85,7 +75,7 @@ export class UserFormComponent implements OnInit {
         initialValue : '',
         validators: [
           Validators.required,
-          MyValidator.validRegistrationNumber()
+          MyValidator.validSocialNumber()
           
         ]
       },
@@ -94,7 +84,7 @@ export class UserFormComponent implements OnInit {
         type : 'text',
         placeholder :'휴대폰',
         maxLength : 17,
-        initialValue : this.TESTUSER.driverCell,
+        initialValue : this.user.driverCell,
         validators: [
           Validators.required,
           MyValidator.validateCell()
@@ -113,7 +103,7 @@ export class UserFormComponent implements OnInit {
    * 
    * */
   addFormControl(){
-    // console.log(this.driverName)
+    
     for(let i = 0; i < this.formDataArr.length; i++){
       
       let prevFormControl;
@@ -132,41 +122,54 @@ export class UserFormComponent implements OnInit {
       }
       
       
-      // 추가하려는 것이 없어서 추가가능한 상태 && 이전 input이 검증 유효한상태일 때 추가
+      /* 추가하려는 것이 없어서 추가가능한 상태 && 이전 input이 검증 유효한상태일 때 추가 */
       if(!this.userForm.get(controlName) && prevFormControlValid){
-        console.log(validators)
+        
+        
         this.userForm.addControl(controlName ,new FormControl(initialValue, validators))
+        console.log(this.userForm.get(controlName))
+        
 
+        /* 값변경 할때마다 observable 구독하여 원하는 Handler 세팅하기 */
         this.userForm.get(controlName)?.valueChanges.subscribe(result => {
           // console.log(controlName,' : ', result)
         })
 
-        // html에 나타낼 input 배열, 화면상에 기존것이 아래로 내려가게하기위해 unshift한다.
+        /* html에 나타낼 input 배열, 화면상에 기존것이 아래로 내려가게하기위해 unshift메소드 사용 */
         this.formControls.unshift(currFormControl)
 
+        console.log(controlName)
+        let input = this.element.nativeElement.querySelector('#'+controlName)
+        // let input = this.element.nativeElement.querySelector('#'+controlName);
+        console.log(input)
+        // console.log(Object.getOwnPropertyNames(input))
+        input.focus()
         break;
       }
 
     }
+    console.log(this.userForm.value)
     
 
   }
 
   nextPage(){
-
-    // console.log('nextPage TEST')
-    // console.log(this.userForm.valid)
     if(this.userForm.valid){
 
       let emitData = {
         changePage : 'confirm',
-        user : this.userForm.value
+        userData : this.userForm.value
       }
       this.nextStep.emit(emitData)
     }
 
   }
 
+  /**
+   * 
+   * Input Value Clear(삭제)
+   * @param formControl 
+   */
   clearFormControl(formControl:any){
     let formControlName = formControl.formControlName
     this.userForm.get(formControlName)?.setValue('')
@@ -208,8 +211,6 @@ export class UserFormComponent implements OnInit {
   cellControl(cell:string, el:any, formControlName:string):void{
     
     cell = cell.replace(/[^0-9]/gi,'');
-    // console.log('입력 :',cell)
-    // console.log('길이 : ',cell.length)
     
     let cellChanged = '';
     if(cell.length < 4 ){

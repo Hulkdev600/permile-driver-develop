@@ -204,7 +204,7 @@ export class UserFormComponent implements OnInit {
     // 숫자 입력한다면 입력문자들은 컨트롤한다.
     switch(FORMCONTROL){
       case 'driverSocialNumber' :  this.socialNumberControl(VALUE, CHAR, TARGET, FORMCONTROL); break;
-      case 'driverCell'         :  this.cellControl(CHAR, TARGET, FORMCONTROL); break; 
+      case 'driverCell'         :  this.cellControl(VALUE, TARGET, FORMCONTROL); break; 
     }
     
     console.log(this.userForm.value)
@@ -263,7 +263,6 @@ export class UserFormComponent implements OnInit {
       numberChanged += ' - ';
       numberChanged += this.driverSocialNumber.substr(6).replace(/[0-9]/gi, '•')
     }
-
 
     this.userForm.get(formControlName)?.setValue(this.driverSocialNumber);
     el.value = numberChanged;

@@ -31,8 +31,15 @@ export class HttpService {
   }
 
 
-  httpPost(endpoint :any, data:any, header?:any){
+  sendPostRequest(endpoint :any, data:any, header?:any){
     return this.http.post(this.getRouter(endpoint), data)
   }
+
+
+  sendGetRequest(endpoint:any, queryParams?:object | any){
+      const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+      return this.http.get<any>(this.getRouter(endpoint),{headers : httpHeaders, params : queryParams, observe: 'response'})  
+      
+    }
 
 }

@@ -37,15 +37,15 @@
         <ul>
             <li class="information-content">
                 <dl>이름</dl>
-                <dd>{{user.driverName}}</dd>
+                <dd>{{payload.driverName}}</dd>
             </li>
             <li class="information-content">
                 <dl>주민등록번호</dl>
-                <dd>{{user.driverSocialNumber}}</dd>
+                <dd>{{payload.driverSocialNumber | hiddenSocialNumber}}</dd>
             </li>
             <li class="information-content">
                 <dl>휴대폰</dl>
-                <dd>{{user.driverCell}}</dd>
+                <dd>{{payload.driverCell}}</dd>
             </li>
         </ul>
     </section>

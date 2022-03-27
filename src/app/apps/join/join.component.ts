@@ -18,7 +18,7 @@ export class JoinComponent implements OnInit {
   
   decrpytEndPoint : string = 'decrypt'
 
-  user:object | undefined;
+  payload:object | undefined;
 
 
   constructor(
@@ -27,7 +27,7 @@ export class JoinComponent implements OnInit {
   ) { }
 
   ngOnChanges(changes:SimpleChange){
-    console.log(changes)
+    // console.log(changes)
   }
 
   ngOnInit(): void {
@@ -36,30 +36,25 @@ export class JoinComponent implements OnInit {
     
   }
 
-  
-
   private getUser(){
 
     this.setParams().subscribe(params => {
       
       let encryptedData = encodeURI(params.enc).replace(/%20/gi,'+')
-      
+      // console.log(encryptedData)
       let body = {
         enc : encryptedData
       }
       
-      this.decryptHttp(this.decrpytEndPoint, body).subscribe((response:any) => {
+      this._httpService.sendGetRequest(this.decrpytEndPoint, body).subscribe((response:any) => {
         
-        this.user = response['payload']; // 1
+        let body = response.body
+        this.payload = body['payload']; // 1
         this.PAGE = 'insurance-information' // 2
+        // this.PAGE = 'confirm' // 2
         
       })
     })
-  }
-
-
-  decryptHttp(endpoint:string, data:any){    
-    return this._httpService.httpPost(endpoint, data)
   }
 
   setParams(){
@@ -69,7 +64,37 @@ export class JoinComponent implements OnInit {
 
   renewal(data : any){
     let changePage = data['changePage']
-    this.user = data['userData'];
+    this.payload = data['userData'];
     this.PAGE = changePage
   }
+
+  moveBack(){
+    if(this.PAGE =='user-form'){
+      this.PAGE = 'insurance-information'
+    }else if(this.PAGE == 'confirm'){
+      this.PAGE = 'user-form'
+    }
+  }
+
+
+    //원본
+  // private getUser(){
+
+  //   this.setParams().subscribe(params => {
+      
+  //     let encryptedData = encodeURI(params.enc).replace(/%20/gi,'+')
+  //     console.log(encryptedData)
+  //     let body = {
+  //       enc : encryptedData
+  //     }
+      
+  //     this._httpService.sendPostRequest(this.decrpytEndPoint, body).subscribe((response:any) => {
+        
+  //       this.user = response['payload']; // 1
+  //       this.PAGE = 'insurance-information' // 2
+  //       // this.PAGE = 'confirm' // 2
+        
+  //     })
+  //   })
+  // }
 }

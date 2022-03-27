@@ -5,13 +5,31 @@
     </header>
 
     <section class="form-area">
-
-        <!-- <div class="validation-message" *ngIf="userForm.controls['driverName']">dfdsf</div> -->
         
 
-        <form [formGroup]="userForm" #form>
+        <form [formGroup]="form">
 
-            <div *ngFor = "let formControl of formControls">
+            <!-- <ng-container formArray="userForm">
+                <ng-container *ngFor="let formControl of userForm.controls; let i = index">
+                    <div class="input-box">
+                        <input
+                            class="input"
+                            [type]="formDataArr[i].type"
+                            
+                            [id]="formDataArr[i].formControlName"
+                            [placeholder]="formDataArr[i].placeholder"
+                            [maxLength]="formDataArr[i].maxLength"
+                            (input)="customizeValue($event)"
+                        >
+                        <div class="icon-box">
+                            <fa-icon [icon]="faCircleXmark"></fa-icon>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container> -->
+
+
+            <div *ngFor = "let formControl of formControlsList">
                 <div class="input-box">
                     <input 
                         class="input"  
@@ -30,11 +48,13 @@
                 
             </div>
             
-            <!-- <input #test id="test" type="text"> -->
+            
+
+            
         </form>
 
 
-        <button class="btn btn-primary next-button" (click)="next()" [disabled]="userForm.invalid">다음</button>
+        <button class="btn btn-primary next-button" (click)="next()" [disabled]="form.invalid">다음</button>
 
         
     </section>

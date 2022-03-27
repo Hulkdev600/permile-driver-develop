@@ -19,6 +19,7 @@ import { GuaranteeContentComponent } from './modals/join/insurance-information/g
 import { PremiumContentComponent } from './modals/join/insurance-information/premium-content/premium-content.component';
 import { PayoutsLimitContentComponent } from './modals/join/insurance-information/payouts-limit-content/payouts-limit-content.component';
 import { ClaimGuideContentComponent } from './modals/join/insurance-information/claim-guide-content/claim-guide-content.component';
+import { HiddenSocialNumberPipe } from './shared/pipe/hidden-social-number.pipe';
 
 
 
@@ -34,7 +35,8 @@ import { ClaimGuideContentComponent } from './modals/join/insurance-information/
     GuaranteeContentComponent,
     PremiumContentComponent,
     PayoutsLimitContentComponent,
-    ClaimGuideContentComponent
+    ClaimGuideContentComponent,
+    HiddenSocialNumberPipe
   ],
   imports: [
     BrowserModule,

@@ -1,15 +1,15 @@
 
 <main class="join-container">
     <header class="top-toolbar">
-        <div class="font-back-box">
+        <div class="font-back-box" (click)="moveBack()">
             <fa-icon [icon]="faArrowLeft"></fa-icon>
         </div>
         
     </header>
     <section [ngSwitch]="PAGE">
-        <page-insurance-information *ngSwitchCase="'insurance-information'"  [user]="user" (nextStep)="renewal($event)"></page-insurance-information>
-        <page-user-form *ngSwitchCase="'user-form'" [user]="user" (nextStep)="renewal($event)"></page-user-form>
-        <page-confirm *ngSwitchCase="'confirm'" (changePage)="renewal($event)" [user]="user"></page-confirm>
+        <page-insurance-information *ngSwitchCase="'insurance-information'"  [payload]="payload" (nextStep)="renewal($event)"></page-insurance-information>
+        <page-user-form *ngSwitchCase="'user-form'" [payload]="payload" (nextStep)="renewal($event)"></page-user-form>
+        <page-confirm *ngSwitchCase="'confirm'" [payload]="payload" (changePage)="renewal($event)"></page-confirm>
 
     </section>
     

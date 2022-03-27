@@ -7,7 +7,7 @@ import { HttpService } from 'src/app/services/http.service';
 })
 export class ConfirmComponent implements OnInit {
 
-  @Input() user:any
+  @Input() payload:any
   @Output("changePage") changePage:EventEmitter<any> = new EventEmitter();
 
   getProductEndpoint : string ='product'
@@ -22,11 +22,13 @@ export class ConfirmComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.payload)
+
     this.getProduct()
   }
 
   getProduct(){
-    this._httpService.httpPost(this.getProductEndpoint, undefined).subscribe((result:any) => {
+    this._httpService.sendPostRequest(this.getProductEndpoint, undefined).subscribe((result:any) => {
       this.productName = result.pdName;
       this.productType = result.pdType;
       this.policyEndDay = result.policyEndDay;

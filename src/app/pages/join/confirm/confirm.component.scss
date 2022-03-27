@@ -8,30 +8,29 @@ header, section {
 }
 
 .title-area{
-    .title{
-    
+    padding-top: 10px;
+    .title {
+        font-family: 'Roboto';
+        font-style: normal;
         font-weight: 700;
         font-size: 24px;
+        line-height: 30px;
+        margin-bottom: 10px;
+        .color-blue{
+            color: #3581FF;
+        }
     }
 
     .sub-title{
-        font-size: 14px;
-        font-weight: 400;
-        color: rgba(38, 45, 57, 0.52);
-    }
-} 
-
-.bottom-area{
-    padding: 24px 20px 20px 20px;
-
-    p{
-        font-size: 14px;
-        color: rgba(38, 45, 57, 0.52);
-        font-style: normal;
-        font-weight: 400;       
         font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        color: rgba(38, 45, 57, 0.52);
     }
 }
+
 
 .contract-information-area,.insured-information-area{
     padding: 20px;
@@ -41,6 +40,8 @@ header, section {
 .contract-information-area h3,.insured-information-area h3{
     font-size: 16px;
     font-weight: 700;
+    margin-bottom: 14px;
+    padding-top: 16px;
 }
 
 .contract-information-area ul, .insured-information-area ul{
@@ -65,9 +66,25 @@ header, section {
         font-style: normal;
         font-weight: 400;
         font-size: 14px;
-        
+        padding-left: 10px;
+        width: calc(100% - 80px);
     }
 }
+
+
+
+.bottom-area{
+    padding: 24px 20px 20px 20px;
+
+    p{
+        font-size: 14px;
+        color: rgba(38, 45, 57, 0.52);
+        font-style: normal;
+        font-weight: 400;       
+        font-family: 'Roboto';
+    }
+}
+
 
 .color-blue{
     color: #3581FF;

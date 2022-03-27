@@ -12,7 +12,7 @@ import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 })
 export class InsuranceInformationComponent implements OnInit {
   
-  @Input() user!:object | undefined
+  @Input() payload!:object | undefined
 
   /*fontAwesome*/
   faAngleRight = faAngleRight
@@ -32,7 +32,7 @@ export class InsuranceInformationComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {  
-    console.log(this.user)
+    console.log(this.payload)
   }
 
 
@@ -75,7 +75,7 @@ export class InsuranceInformationComponent implements OnInit {
 
     let emitData = {
       changePage : 'user-form',
-      userData : this.user
+      userData : this.payload
     }
     this.nextStep.emit(emitData)
   }

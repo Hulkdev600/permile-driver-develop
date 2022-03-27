@@ -5,7 +5,7 @@ export class MyValidator{
 
     static validateCell():ValidatorFn | null {
         return (control:AbstractControl): ValidationErrors | null => {
-            let regPhone = /^01([0|1|6|7|8|9])\s-\s?([0-9]{3,4})\s-\s?([0-9]{4})$/;
+            let regPhone = /^01([0|1|6|7|8|9])(\s-\s)?([0-9]{3,4})(\s-\s)?([0-9]{4})$/;
             let cell = control.value
 
             if(regPhone.test(cell)){

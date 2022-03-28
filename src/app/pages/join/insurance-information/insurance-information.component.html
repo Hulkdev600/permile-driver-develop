@@ -108,6 +108,11 @@
 </main>
 
 
+
+
+<!-- ngbModal -->
+
+<!-- 꼭알아두실 내용 modal -->
 <ng-template #essentialContent let-modal>
     <div class="modal-header">
       <h4 class="" id="modal-basic-title"></h4>
@@ -158,9 +163,10 @@
             <p>보험계약자가 기존에 체결했던 보험계약을 해지하고 다른 보험계약을 체결하면 보험인수가 거절되거나 보험료가 인상되거나 보장내용이 달라질 수 있습니다.</p>
         </div>
     </div>
-    
 </ng-template>
 
+
+<!-- 보장내용 modal -->
 <ng-template #guaranteeContent let-modal>
     <div class="modal-header">
       <h4 id="modal-basic-title"></h4>
@@ -226,6 +232,7 @@
 </ng-template>
 
 
+<!-- 보험료안내 modal -->
 <ng-template #premiumContent let-modal>
     <div class="modal-header">
       <h4 id="modal-basic-title"></h4>
@@ -273,9 +280,10 @@
 
         </div>
     </div>
-    
 </ng-template>
 
+
+<!-- 보험금 지급제한 사항 modal -->
 <ng-template #payoutsLimitContent let-modal>
     <div class="modal-header">
         <h4 id="modal-basic-title"></h4>
@@ -308,11 +316,11 @@
             </ul>
             <p>보다 자세한 내용은 첨부된 약관을 참고해 주시기 바랍니다.</p>
         </div>
-    </div>
-    
+    </div>    
 </ng-template>
 
 
+<!-- 청구서류 안내 modal -->
 <ng-template #claimGuideContent let-modal>
     <div class="modal-header">
         <h4 id="modal-basic-title"></h4>
@@ -374,10 +382,10 @@
         <ul>
             <li></li>
         </ul>
-    </div>
-    
+    </div>    
 </ng-template>
 
+<!-- 채크 modal -->
 <ng-template #checkJoinAvailable let-modal>
     <div class="modal-body">
         <div class="content-box">
@@ -392,6 +400,7 @@
     </div>
 </ng-template>
 
+<!-- 가입거절 modal -->
 <ng-template #checkFailModal let-modal>
 
     <div class="modal-body">

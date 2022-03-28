@@ -37,9 +37,9 @@ export class HttpService {
 
 
   sendGetRequest(endpoint:any, queryParams?:object | any){
-      const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
-      return this.http.get<any>(this.getRouter(endpoint),{headers : httpHeaders, params : queryParams, observe: 'response'})  
+    const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.get<any>(this.getRouter(endpoint),{headers : httpHeaders, params : queryParams, observe: 'response'})  
       
-    }
+  }
 
 }

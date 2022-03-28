@@ -17,6 +17,8 @@ export class ConfirmComponent implements OnInit {
   insuranceCompanyName :string ='';
   policyEndDay:string=''
 
+  contractURLEndpoint ='contract'
+
   constructor(
     private _httpService : HttpService
   ) { }
@@ -41,5 +43,12 @@ export class ConfirmComponent implements OnInit {
     // promise.then(result => {
     //   console.log(result)
     // })
+  }
+
+  contract(){
+    console.log(this.payload)
+    this._httpService.sendPostRequest(this.contractURLEndpoint, this.payload).subscribe((response:any)=> {
+      console.log(response)
+    })
   }
 }

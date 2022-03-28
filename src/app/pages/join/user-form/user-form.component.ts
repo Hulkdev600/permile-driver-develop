@@ -18,7 +18,6 @@ export class UserFormComponent implements OnInit {
   formDataArr:any[] = []
   formControlsList:any[] =[]
   driverSocialNumber:string =''
-  try:any ={}
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,7 +26,7 @@ export class UserFormComponent implements OnInit {
 
 
   ngOnChanges(changes: SimpleChanges){
-    console.log(changes)
+    // console.log(changes)
   }
   
 
@@ -35,11 +34,7 @@ export class UserFormComponent implements OnInit {
     console.log(this.payload)
     this.initialFormContent()
 
-    this.form = this.formBuilder.group({
-
-    }) // formBuilder 무상태 초기화
-
-    console.log(this.userForm)
+    this.form = this.formBuilder.group({ }) // formBuilder 무상태 초기화
     
     this.addFormControl() // 첫 ngOninit 주기에 운전자Input만 세팅하기 위해 addFormControl 실행
     
@@ -61,9 +56,6 @@ export class UserFormComponent implements OnInit {
     
   }
 
-  get userForm(){
-    return this.form.get('user') as FormArray
-  }
 
   initialFormContent(){
     // console.log(JSON.parse(this.user))
@@ -106,17 +98,17 @@ export class UserFormComponent implements OnInit {
   }
 
 
-  //현재 View의 control개수를 확인하고 이전 Control의 valid를 검사하여 유효하면 그다음 control을 밀어넣는다.
-
-
+/**
+ * 현재 View의 control개수를 확인하고 이전 Control의 valid를 검사하여 유효하면 그다음 control을 밀어넣는다.
+ */
   addFormControl(){
     let inputs = this.formControlsList;
 
     let attacthFormIndex = inputs.length; //개수 = 넣어야할 인덱스
 
     let attachForm = this.formDataArr[attacthFormIndex];
-    
-    console.log(attachForm)
+    let attachFormControlName = attachForm['formControlName']
+    let attachInitialValue = attachForm['initialValue']
     
     
     let prevForm = null
@@ -126,31 +118,151 @@ export class UserFormComponent implements OnInit {
       prevValid = true;
 
     } else {
-
       prevForm = this.formDataArr[attacthFormIndex - 1]
       prevFormControlName = prevForm.formControlName;
       prevValid = this.form.get(prevFormControlName)?.valid
 
     }
 
-    console.log(prevForm)
-    console.log(prevValid)
+    // 이전 formControl의 validation이 유효하면 다음 control 추가한다.
     if(prevValid){
       this.form.addControl(attachForm.formControlName, new FormControl(attachForm.initialValue, attachForm.validators))
       this.formControlsList.unshift(attachForm)
     }
 
-    
+    // nativeElement에 접근할 떄 setTimeout으로 접근해야 Detect가 가능
+    // Reactive Form의 addControl메소드가 비동기처리로 작동해서 그런 것 같다.
     setTimeout(() => {
-      // console.log(this.element.nativeElement.querySelector('#'+attachForm.formControlName))  
-      // console.log(attachForm.formControlName)
-      this.element.nativeElement.querySelector('#'+attachForm.formControlName).focus()
+      
+      let formElement = this.element.nativeElement.querySelector('#'+attachForm.formControlName)
+
+      if(attachFormControlName === 'driverCell') this.cellControl(attachInitialValue, formElement, attachFormControlName)
+
+      formElement.focus();
+      
     }, 0);
     
 
   }
 
-  /*
+ 
+  nextPage(){
+    // console.log(this.payload)
+    if(this.form.valid){
+
+      let emitData = {
+        changePage : 'confirm',
+        userData : this.form.value
+      }
+      this.nextStep.emit(emitData)
+    }
+
+  }
+
+  /**
+   * 
+   * Input Value Clear(삭제)
+   * @param formControl 
+   */
+  clearFormControl(formControl:any){
+    let formControlName = formControl.formControlName
+    this.form.get(formControlName)?.setValue('')
+  }
+
+
+  
+  customizeValue(event:any):void{
+    let TARGET = event.target;            // element
+    let FORMCONTROL :string = TARGET.id;  // ReactiveForm formControl 이름
+    let VALUE :string = TARGET.value;     // input의 VALUE
+    let CHAR = event.data;                // 입력 데이터 ex_'A'
+    
+    // 운전자명만 입력그대로 허용
+    if(FORMCONTROL === 'driverName'){ 
+      this.form.get(FORMCONTROL)?.setValue(VALUE);
+      return
+    }   
+  
+    // 운전자휴대폰,운전자주민등록번호 입력 시 숫자가 아닌 문자값들은 입력되지 않도록 한다.
+    if(isNaN(CHAR)){
+      let limitValue = VALUE.substring(0,VALUE.length - 1);
+      this.form.get(FORMCONTROL)?.setValue(limitValue)
+      return
+    }
+    
+    // 숫자 입력한다면 입력문자들은 컨트롤한다.
+    switch(FORMCONTROL){
+      case 'driverSocialNumber' :  this.socialNumberControl(VALUE, CHAR, TARGET, FORMCONTROL); break;
+      case 'driverCell'         :  this.cellControl(VALUE, TARGET, FORMCONTROL); break; 
+    }
+    
+  }
+
+
+  cellControl(cell:string, el:any, formControlName:string):void{
+    
+    cell = cell.replace(/[^0-9]/gi,'');
+    
+    let cellChanged = '';
+    if(cell.length < 4 ){
+      cellChanged = cell;
+    } else if(cell.length < 7){
+      cellChanged += cell.substr(0,3);
+      cellChanged += " - ";
+      cellChanged += cell.substr(3)
+    } else if(cell.length < 11){
+      cellChanged += cell.substr(0,3);
+      cellChanged += " - ";
+      cellChanged += cell.substr(3,3)
+      cellChanged += " - "; 
+      cellChanged += cell.substr(6)
+    } else {
+      cellChanged += cell.substr(0,3);
+      cellChanged += " - ";
+      cellChanged += cell.substr(3,4)
+      cellChanged += " - "; 
+      cellChanged += cell.substr(7)
+    }
+
+    this.form.get(formControlName)?.setValue(cell);
+    el.value = cellChanged;
+    // this.form.get(formControlName)?.setValue(cellChanged);
+    
+  }
+
+
+  /**
+   * 
+   * @param value // Input value
+   * @param char // 입력데이터(키보드 한번 눌렀을떄의 해당 데이터)
+   * @param el // View에서 해당하는 Input
+   * @param formControlName 
+   */
+  socialNumberControl(value:string, char:string, el:any, formControlName:string):void{    
+    
+    let valueLength = value.replace(/[^0-9•]/gi,'').length;
+    this.driverSocialNumber += char; 
+    this.driverSocialNumber = this.driverSocialNumber.substr(0, valueLength);
+    let numberChanged = '';
+
+    if(this.driverSocialNumber.length< 7){
+      numberChanged = this.driverSocialNumber
+    } else {
+      numberChanged += this.driverSocialNumber.substr(0,6);
+      numberChanged += ' - ';
+      numberChanged += this.driverSocialNumber.substr(6).replace(/[0-9]/gi, '•')
+    }
+
+    this.form.get(formControlName)?.setValue(this.driverSocialNumber);
+    el.value = numberChanged;
+  
+  }
+
+
+
+}
+
+ /*
    * formDatas의 요소를 동적으로 추가한다.
    * 이전 배열을 돌면서 이전(prev) Input의 validation이 유효해야 다음 Input을 생성한다.
    * html에서 동적 생성하기 위해서 formControls 배열을 이용한다.
@@ -216,163 +328,3 @@ export class UserFormComponent implements OnInit {
 
   // }
 
-  nextPage(){
-    console.log(this.payload)
-    if(this.form.valid){
-
-      let emitData = {
-        changePage : 'confirm',
-        userData : this.form.value
-      }
-      this.nextStep.emit(emitData)
-    }
-
-  }
-
-  /**
-   * 
-   * Input Value Clear(삭제)
-   * @param formControl 
-   */
-  clearFormControl(formControl:any){
-    let formControlName = formControl.formControlName
-    this.form.get(formControlName)?.setValue('')
-  }
-
-
-  
-  customizeValue(event:any):void{
-    
-    
-    let TARGET = event.target;            // element
-    let FORMCONTROL :string = TARGET.id;  // ReactiveForm formControl 이름
-    let VALUE :string = TARGET.value;     // input의 VALUE
-    let CHAR = event.data;                // 입력 데이터 ex_'A'
-    
-    // 운전자명만 입력그대로 허용
-    if(FORMCONTROL === 'driverName'){ 
-      this.form.get(FORMCONTROL)?.setValue(VALUE);
-      return
-    }   
-  
-    // 운전자휴대폰,운전자주민등록번호 입력 시 숫자가 아닌 문자값들은 입력되지 않도록 한다.
-    if(isNaN(CHAR)){
-      let limitValue = VALUE.substring(0,VALUE.length - 1);
-      this.form.get(FORMCONTROL)?.setValue(limitValue)
-      return
-    }
-    
-    // 숫자 입력한다면 입력문자들은 컨트롤한다.
-    switch(FORMCONTROL){
-      case 'driverSocialNumber' :  this.socialNumberControl(VALUE, CHAR, TARGET, FORMCONTROL); break;
-      case 'driverCell'         :  this.cellControl(VALUE, FORMCONTROL); break; 
-    }
-    
-    console.log(this.form.value)
-  }
-
-
-  cellControl(cell:string, formControlName:string):void{
-    
-    cell = cell.replace(/[^0-9]/gi,'');
-    
-    let cellChanged = '';
-    if(cell.length < 4 ){
-      cellChanged = cell;
-    } else if(cell.length < 7){
-      cellChanged += cell.substr(0,3);
-      cellChanged += " - ";
-      cellChanged += cell.substr(3)
-    } else if(cell.length < 11){
-      cellChanged += cell.substr(0,3);
-      cellChanged += " - ";
-      cellChanged += cell.substr(3,3)
-      cellChanged += " - "; 
-      cellChanged += cell.substr(6)
-    } else {
-      cellChanged += cell.substr(0,3);
-      cellChanged += " - ";
-      cellChanged += cell.substr(3,4)
-      cellChanged += " - "; 
-      cellChanged += cell.substr(7)
-    }
-
-    // this.form.get(formControlName)?.setValue(cell);
-    this.form.get(formControlName)?.setValue(cellChanged);
-    // el.value = cellChanged;
-
-    
-  }
-
-
-  /**
-   * 
-   * @param value // Input value
-   * @param char // 입력데이터(키보드 한번 눌렀을떄의 해당 데이터)
-   * @param el // View에서 해당하는 Input
-   * @param formControlName 
-   */
-  socialNumberControl(value:string, char:string, el:any, formControlName:string):void{    
-    
-    let valueLength = value.replace(/[^0-9•]/gi,'').length;
-    this.driverSocialNumber += char; 
-    this.driverSocialNumber = this.driverSocialNumber.substr(0, valueLength);
-    this.try['test'] =''
-    let numberChanged = '';
-
-    if(this.driverSocialNumber.length< 7){
-      numberChanged = this.driverSocialNumber
-    } else {
-      numberChanged += this.driverSocialNumber.substr(0,6);
-      numberChanged += ' - ';
-      numberChanged += this.driverSocialNumber.substr(6).replace(/[0-9]/gi, '•')
-    }
-
-    this.form.get(formControlName)?.setValue(this.driverSocialNumber);
-    this.payload.hiddenSocialNumber = numberChanged;
-    el.value = numberChanged;
-  
-  }
-
-
-
-  // addFormControl(){
-  //   for(let i = 0; this.formDataArr.length; i++){
-  //     let prevFormControl;
-  //     let prevFormControlValid:boolean | undefined = false 
-  //     let currFormControl  = this.formDataArr[i]
-
-  //     let controlName = currFormControl.formControlName;
-  //     let initialValue = currFormControl.initialValue;
-  //     let validators = currFormControl.validators
-
-      
-  //     if(i > 0){
-  //       prevFormControl= this.formDataArr[i-1];
-  //       prevFormControlValid = this.userForm.controls[i-1].valid
-  //     } else {
-  //       prevFormControlValid = true;
-  //     }
-
-  //     if(!this.userForm.controls[i-1] && prevFormControlValid){
-  //       let newForm = new FormControl(initialValue, validators)
-  //       this.userForm.push(newForm)
-  //       console.log(this.userForm)
-  //       break;
-  //     }
-  //   } 
-  // }
-
-
-}
-
-
-// function validateSample(control:AbstractControl) : {[key:string] : any} |null{
-//   const socialNumber = control.value;
-//   console.log(socialNumber)
-//   if(socialNumber === '9502051081421'){
-//     return null;
-//   } else {
-//     return { 'invalid' : true}
-//   }
-// }

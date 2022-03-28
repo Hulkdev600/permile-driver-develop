@@ -46,14 +46,17 @@ export class JoinComponent implements OnInit {
         enc : encryptedData
       }
       
-      this._httpService.sendGetRequest(this.decrpytEndPoint, body).subscribe((response:any) => {
-        
-        let body = response.body
-        this.payload = body['payload']; // 1
-        this.PAGE = 'insurance-information' // 2
-        // this.PAGE = 'confirm' // 2
-        
-      })
+      this._httpService.sendGetRequest(this.decrpytEndPoint, body).subscribe(
+        (response:any) => {
+          let body = response.body
+          this.payload = body['payload']; // 1
+          this.PAGE = 'insurance-information' // 2
+          // this.PAGE = 'confirm' // 2
+      },
+        (error) => {
+          alert(error)
+        }
+      )
     })
   }
 

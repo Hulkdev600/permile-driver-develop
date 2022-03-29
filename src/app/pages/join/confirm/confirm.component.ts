@@ -49,6 +49,8 @@ export class ConfirmComponent implements OnInit {
     console.log(this.payload)
     this._httpService.sendPostRequest(this.contractURLEndpoint, this.payload).subscribe((response:any)=> {
       console.log(response)
+      alert(response.message);
+      window.location.reload()
     })
   }
 }

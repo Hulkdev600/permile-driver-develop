@@ -16,7 +16,7 @@ export class JoinComponent implements OnInit {
   faArrowLeft = faArrowLeft;
   PAGE : string = ''
   
-  decrpytEndPoint : string = 'decrypt'
+  decrpytEndPoint : string = 'user'
 
   payload:object | undefined;
 
@@ -26,9 +26,6 @@ export class JoinComponent implements OnInit {
     private _httpService : HttpService,
   ) { }
 
-  ngOnChanges(changes:SimpleChange){
-    // console.log(changes)
-  }
 
   ngOnInit(): void {
     
@@ -40,8 +37,10 @@ export class JoinComponent implements OnInit {
 
     this.setParams().subscribe(params => {
       
+      // let encryptedData = encodeURI(params.enc).replace(/%20/gi,'+')
       let encryptedData = encodeURI(params.enc).replace(/%20/gi,'+')
-      // console.log(encryptedData)
+      
+      console.log(encryptedData)
       let body = {
         enc : encryptedData
       }
@@ -53,8 +52,11 @@ export class JoinComponent implements OnInit {
           this.PAGE = 'insurance-information' // 2
           // this.PAGE = 'confirm' // 2
       },
-        (error) => {
-          alert(error)
+        (errObj) => {
+          // console.log(errObj)
+          let errorBody = errObj.error
+          // console.log(errorBody)
+          alert(errorBody.message)
         }
       )
     })
@@ -67,7 +69,7 @@ export class JoinComponent implements OnInit {
 
   renewal(data : any){
     let changePage = data['changePage']
-    this.payload = data['userData'];
+    this.payload = data['payload'];
     this.PAGE = changePage
   }
 

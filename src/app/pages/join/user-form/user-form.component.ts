@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input, ViewChild ,ElementRef, SimpleChanges } from '@angular/core';
-import { FormGroup,FormControl,FormBuilder, Validators, AbstractControl, FormArray } from '@angular/forms';
+import { FormGroup,FormControl,FormBuilder, Validators, AbstractControl, FormArray, FormControlName } from '@angular/forms';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { MyValidator} from '../../../shared/myValidators'
 
@@ -11,14 +11,14 @@ import { MyValidator} from '../../../shared/myValidators'
 })
 export class UserFormComponent implements OnInit {
   faCircleXmark = faCircleXmark
-  @Input() payload:any
+  @Input() payload:object | any
   @Output() nextStep:EventEmitter<any> = new EventEmitter();
   
   form!:FormGroup
   formDataArr:any[] = []
   formControlsList:any[] =[]
   driverSocialNumber:string =''
-
+  onFormControl=''
   constructor(
     private formBuilder: FormBuilder,
     private element : ElementRef
@@ -128,6 +128,16 @@ export class UserFormComponent implements OnInit {
     if(prevValid){
       this.form.addControl(attachForm.formControlName, new FormControl(attachForm.initialValue, attachForm.validators))
       this.formControlsList.unshift(attachForm)
+
+      this.onFormControl = attachFormControlName
+      this.form.valueChanges.subscribe(d => {
+        this.form.errors
+        console.log(this.form.get(attachFormControlName)?.errors)
+        // console.log(this.form.get(attachFormControlName)?.errors)
+      })
+
+
+      // console.log(this.form.get(attachFormControlName)?.errors)
     }
 
     // nativeElement에 접근할 떄 setTimeout으로 접근해야 Detect가 가능
@@ -152,7 +162,8 @@ export class UserFormComponent implements OnInit {
 
       let emitData = {
         changePage : 'confirm',
-        userData : this.form.value
+        // payload : this.form.value
+        payload : Object.assign(this.payload, this.form.value)
       }
       this.nextStep.emit(emitData)
     }
@@ -172,11 +183,15 @@ export class UserFormComponent implements OnInit {
 
   
   customizeValue(event:any):void{
+    
     let TARGET = event.target;            // element
     let FORMCONTROL :string = TARGET.id;  // ReactiveForm formControl 이름
     let VALUE :string = TARGET.value;     // input의 VALUE
     let CHAR = event.data;                // 입력 데이터 ex_'A'
     
+    this.onFormControl = FORMCONTROL // 
+    
+
     // 운전자명만 입력그대로 허용
     if(FORMCONTROL === 'driverName'){ 
       this.form.get(FORMCONTROL)?.setValue(VALUE);
@@ -259,6 +274,11 @@ export class UserFormComponent implements OnInit {
   }
 
 
+  onCursor(event:any){
+    // console.log(event)
+    let formControl = event.target.id
+    this.onFormControl = formControl
+  }
 
 }
 

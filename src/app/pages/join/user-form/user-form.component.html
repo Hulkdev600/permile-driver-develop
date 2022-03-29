@@ -6,6 +6,24 @@
 
     <section class="form-area">
         
+        <div [ngSwitch]='onFormControl' class="form-message">
+
+            <div *ngSwitchCase="'driverCell'">
+                <p class="invalid-color" *ngIf="form.controls.driverCell.errors?.required">휴대폰번호를 입력해주세요</p>
+                <p class="invalid-color" *ngIf="!form.controls.driverCell.errors?.required && form.controls.driverCell.dirty && form.controls.driverCell.errors?.invalidCell">휴대폰번호를 확인해주세요</p>
+                <p class="valid-color" *ngIf="!form.controls.driverCell.errors">휴대폰번호를 입력하였습니다</p>
+            </div>
+            <div *ngSwitchCase="'driverSocialNumber'">
+                <p class="invalid-color" *ngIf="form.controls.driverSocialNumber.errors?.required">주민등록번호를 입력해주세요</p>
+                <p class="invalid-color" *ngIf="!form.controls.driverSocialNumber.errors?.required && form.controls.driverSocialNumber.dirty && form.controls.driverSocialNumber.errors?.invalidSocialNumber">주민등록번호를 확인해주세요</p>
+                <p class="valid-color" *ngIf="!form.controls.driverSocialNumber.errors">주민등록번호를 입력하였습니다</p>
+            </div>
+            <div *ngSwitchCase="'driverName'">
+                <p class="invalid-color" *ngIf="form.controls.driverName.errors?.required">이름을 입력해주세요</p>
+                <p class="valid-color" *ngIf="!form.controls.driverName.errors">이름을 확인해주세요</p>
+            </div>
+            
+        </div>
 
         <form [formGroup]="form">
 
@@ -39,6 +57,8 @@
                         [placeholder]="formControl.placeholder"
                         [maxLength]="formControl.maxLength"
                         (input)="customizeValue($event)"
+                        (click)="onCursor($event)"
+                        [ngClass]="{'ng-inValid' : form.controls[formControl.formControlName].errors}"
                     >
                     <div class="icon-box" (click)="clearFormControl(formControl)">
                         <fa-icon [icon]="faCircleXmark"></fa-icon>

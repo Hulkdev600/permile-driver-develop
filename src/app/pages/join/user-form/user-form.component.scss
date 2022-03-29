@@ -12,6 +12,10 @@
     
 }
 
+.form-message{
+    margin-bottom: 20px;
+}
+
 .input{
     height: 56px;
     width: 100%;
@@ -49,3 +53,18 @@
     }
 
 }
+
+.invalid-color{
+    // color: red;
+    font-weight: 700;
+    font-size: 16px;
+}
+.valid-color{
+    color: #3581FF;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.ng-inValid  {
+    border: 2px solid red; /* green */
+  }

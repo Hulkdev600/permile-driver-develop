@@ -4,6 +4,9 @@ import { Subscription } from 'rxjs';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { faRightLong } from '@fortawesome/free-solid-svg-icons';
+import { faLeftLong } from '@fortawesome/free-solid-svg-icons';
+import { faDownLong } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'page-insurance-information',
@@ -18,7 +21,10 @@ export class InsuranceInformationComponent implements OnInit {
   faAngleRight = faAngleRight
   faX = faX
   faCircleExclamation = faCircleExclamation
-
+  faLeftLong = faLeftLong
+  faRightLong = faRightLong
+  faDownLong = faDownLong
+  
   /** modal 프로퍼티 */
   closeResult = '';
   
@@ -75,7 +81,7 @@ export class InsuranceInformationComponent implements OnInit {
 
     let emitData = {
       changePage : 'user-form',
-      userData : this.payload
+      payload : this.payload
     }
     this.nextStep.emit(emitData)
   }

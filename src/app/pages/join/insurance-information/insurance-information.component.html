@@ -328,17 +328,87 @@
           <fa-icon [icon]="faX"></fa-icon>
         </div>
     </div>
-    <div class="modal-body">
+    <div class="modal-body" id="claim-guide-body">
         <div class="content-box">
           <h3 class="modal-title">청구안내</h3>
 
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="circle">
+                                사고발생
+                            </div>
+                        </td>
+                        <td>
+                            <div class="arrow">
+                                <fa-icon [icon]="faRightLong"></fa-icon>
+                            </div>
+                            
+                        </td>
+                        <td>
+                            <div class="circle">
+                                고객사고<br>접수
+                            </div>
+                        </td>
+                        <td>
+                            <div class="arrow">
+                                <fa-icon [icon]="faRightLong"></fa-icon>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="circle">
+                                청구서류<br>안내
+                            </div>
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <div class="arrow">
+                                <fa-icon [icon]="faDownLong"></fa-icon>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="circle circle-color">
+                                보상금결정<br>및 지급
+                            </div>
+                        </td>
+                        <td>
+                            <div class="arrow">
+                                <fa-icon [icon]="faLeftLong"></fa-icon>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="circle">
+                                보상심사<br>및 사고조사
+                            </div>
+                        </td>
+                        <td>
+                            <div class="arrow">
+                                <fa-icon [icon]="faLeftLong"></fa-icon>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="circle">
+                                청구서류<br>접수
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-          <h4>청구서류</h4>
-          보류
-          
         </div>
 
-        <div class="content-box">
+        <h4 class="content-title">청구서류</h4>
+
+        <div class="content-box line-divide line-divide-bold-top">
             <h5 class="content-sub-title">공통</h5>
             <ul class="no-list-style no-padding-left-0">
                 <li>보험금청구서</li>
@@ -349,7 +419,7 @@
             </ul>
         </div>
 
-        <div class="content-box">
+        <div class="content-box line-divide">
             <h5 class="content-sub-title">벌금</h5>
             <ul class="no-list-style no-padding-left-0">
                 <li>법원 판결문, 약식명령문</li>
@@ -357,7 +427,7 @@
             </ul>
         </div>
 
-        <div class="content-box">
+        <div class="content-box line-divide">
             <h5 class="content-sub-title">변호사 선임비용</h5>
             <ul class="no-list-style no-padding-left-0">
                 <li>판결문, 구속영장(재소 출소 증명서)</li>
@@ -368,7 +438,7 @@
             </ul>
         </div>
 
-        <div class="content-box">
+        <div class="content-box line-divide line-divide-bold-bottom">
             <h5 class="content-sub-title">교통사고 처리지원금</h5>
             <ul class="no-list-style no-padding-left-0">
                 <li>피해진단서</li>
@@ -379,9 +449,9 @@
             </ul>
         </div>
 
-        <ul>
-            <li></li>
-        </ul>
+        <p id="claim-guide-" class="no-padding-left">
+            <span>• 제출서류의 대체 또는 또는 추가서류를 요청할 수 있습니다.</span>
+        </p>
     </div>    
 </ng-template>
 

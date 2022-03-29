@@ -340,5 +340,72 @@
         }
     }
 
+    .content{
+        font-size:18px;
+        font-weight: 700;
+        color: black;
+    }
+
+
+}
+
+
+#claim-guide-body{
+    .content-box{
+        padding: 20px 0;
+        
+        ul{
+            margin-bottom: 0;
+        }
+        
+    }
+    .line-divide{
+        border-top: 1px solid #F5F6F7;
+        border-bottom: 1px solid #F5F6F7;
+    }
+
+    .line-divide-bold-top{
+        border-top: 1px solid #262D39;
+    }
+
+
+    .line-divide-bold-bottom{
+        border-bottom: 1px solid #262D39;
+    }
+
+    p{
+        margin-top: 20px;
+    }
+
+    table{
+        margin-bottom: 0;
+        margin: 20px 0;
+        vertical-align: middle;
+        text-align: center;
+        border-top: none;
+        td{
+            div{
+                margin: 0 auto;
+            }
+        }
+        .circle{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+            width: 100px;
+            border-radius: 50%;
+            text-align: center;
+            border: 1px solid #DFEBFF;
+            color:#2C6EDB
+        }
+        .circle-color{
+            background: rgba(53, 129, 255, 0.08);
+        }
+        .arrow{
+            // border: 1.3px solid #3581FF;
+            color: #3581FF;
+        }
+    }
 
 }

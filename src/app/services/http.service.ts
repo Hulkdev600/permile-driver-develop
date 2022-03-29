@@ -9,7 +9,7 @@ export class HttpService {
 
 
   URLMode = 'TEST';
-  rUrl = 'http://13.209.97.118';
+  rUrl = 'http://15.165.176.124';
 
   testUrl = this.rUrl+':3001'
   prodUrl = this.rUrl+':3000'

@@ -1,7 +1,7 @@
 <main class="insurance-information-container">
     <header class="header title-area">
         <h1 class="title">
-            <span class="color-blue">탄만큼 운전자보험</span><br>가입내용을 확인해주세요.
+            <span class="color-blue">탄 만큼 내는 운전자보험</span><br>가입내용을 확인해주세요.
         </h1>
         <h2 class="sub-title">언제 어디서든 원하는 시간에 <br>내비를 사용해서 탄 만큼만 내는 운전자보험</h2>
     </header>
@@ -30,7 +30,7 @@
             </li>   
             <li class="description-content" id="premium-content">
                 <dl>보험료</dl>
-                <dd>1km당 2원 / 월말 후불결제</dd>
+                <dd>1km당 3원 / 익일 1일 후불결제</dd>
             </li> 
         </ul>
     
@@ -69,26 +69,41 @@
         <p id="guarantee-content">카카오내비를 사용하여 길안내, 안전운전으로 운행하는 상황에만 보험 보장을 받을 수 있습니다.</p>
     
         <ul class="description-box" id="modal-list">
-            <li class="description-content">
+            <li class="description-content" (click)="open(essentialContent,'my-class-modal-full-height')">
                 <dl>꼭 알아두실 내용</dl>
-                <dd (click)="open(essentialContent)"><fa-icon [icon]="faAngleRight"></fa-icon></dd>
+                <dd>
+                    <!-- <fa-icon [icon]="faAngleRight"></fa-icon> -->
+                    <img src="/assets/image/right_arrow.svg" alt="">
+                </dd>
             </li>
-            <li class="description-content">
+            <li class="description-content" (click)="open(guaranteeContent,'my-class-modal-full-height')">
                 <dl>보장 내용</dl>
-                <dd (click)="open(guaranteeContent)"><fa-icon [icon]="faAngleRight"></fa-icon></dd>
+                <dd>
+                    <!-- <fa-icon [icon]="faAngleRight"></fa-icon> -->
+                    <img src="/assets/image/right_arrow.svg" alt="">
+                </dd>
                 
             </li>
-            <li class="description-content">
+            <li class="description-content" (click)="open(premiumContent,'my-class-modal-full-height')">
                 <dl>보험료 안내</dl>
-                <dd (click)="open(premiumContent)"><fa-icon [icon]="faAngleRight"></fa-icon></dd>
+                <dd>
+                    <!-- <fa-icon [icon]="faAngleRight"></fa-icon> -->
+                    <img src="/assets/image/right_arrow.svg" alt="">
+                </dd>
             </li>
-            <li class="description-content">
+            <li class="description-content" (click)="open(payoutsLimitContent,'my-class-modal-full-height')">
                 <dl>보험금 지급 제한 사항</dl>
-                <dd (click)="open(payoutsLimitContent)"><fa-icon [icon]="faAngleRight"></fa-icon></dd>
+                <dd>
+                    <!-- <fa-icon [icon]="faAngleRight"></fa-icon> -->
+                    <img src="/assets/image/right_arrow.svg" alt="">
+                </dd>
             </li>
-            <li class="description-content">
+            <li class="description-content" (click)="open(claimGuideContent,'my-class-modal-full-height')">
                 <dl>청구 안내</dl>
-                <dd (click)="open(claimGuideContent)"><fa-icon [icon]="faAngleRight"></fa-icon></dd>
+                <dd>
+                    <!-- <fa-icon [icon]="faAngleRight"></fa-icon> -->
+                    <img src="/assets/image/right_arrow.svg" alt="">
+                </dd>
             </li>
         </ul>
     
@@ -96,14 +111,15 @@
     
     <section class="bottom-area">
         <p>탄 만큼 운전자보험은 DB손해보험에서 제공합니다.</p>
-        
-        <button class="btn btn-primary" id="next-button" (click)="open(checkJoinAvailable,'my-class-check-join-available-modal')">
-            다음
-        </button>   
-        
-        
     </section>
-    
+
+    <div class="sticky-button-area">
+
+        <button [disabled]="!isAccessOk" class="btn btn-primary" id="next-button" (click)="open(checkJoinAvailable,'my-class-check-join-available-modal')">
+            다음
+        </button> 
+    </div>
+  
 
 </main>
 
@@ -117,7 +133,8 @@
     <div class="modal-header">
       <h4 class="" id="modal-basic-title"></h4>
       <div class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <fa-icon [icon]="faX"></fa-icon>
+        <!-- <fa-icon [icon]="faX"></fa-icon> -->
+        <img src="/assets/image/close_x.svg" alt="">
       </div>
     </div>
     <div class="modal-body">
@@ -171,7 +188,8 @@
     <div class="modal-header">
       <h4 id="modal-basic-title"></h4>
       <div class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <fa-icon [icon]="faX"></fa-icon>
+        <!-- <fa-icon [icon]="faX"></fa-icon> -->
+        <img src="/assets/image/close_x.svg" alt="">
       </div>
     </div>
     <div class="modal-body">
@@ -237,7 +255,8 @@
     <div class="modal-header">
       <h4 id="modal-basic-title"></h4>
       <div class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <fa-icon [icon]="faX"></fa-icon>
+        <!-- <fa-icon [icon]="faX"></fa-icon> -->
+        <img src="/assets/image/close_x.svg" alt="">
       </div>
     </div>
     <div class="modal-body">
@@ -266,7 +285,7 @@
                     </tr>
                     <tr id="premium-cell">
                         <td class="cell-left color-blue">보험료</td>
-                        <td class="cell-right color-blue">1km 당 2원</td>
+                        <td class="cell-right color-blue">1km 당 3원</td>
                     </tr>
                 </tbody>
 
@@ -288,7 +307,8 @@
     <div class="modal-header">
         <h4 id="modal-basic-title"></h4>
         <div class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <fa-icon [icon]="faX"></fa-icon>
+          <!-- <fa-icon [icon]="faX"></fa-icon> -->
+          <img src="/assets/image/close_x.svg" alt="">
         </div>
     </div>
     <div class="modal-body">
@@ -325,7 +345,8 @@
     <div class="modal-header">
         <h4 id="modal-basic-title"></h4>
         <div class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <fa-icon [icon]="faX"></fa-icon>
+          <!-- <fa-icon [icon]="faX"></fa-icon> -->
+          <img src="/assets/image/close_x.svg" alt="">
         </div>
     </div>
     <div class="modal-body" id="claim-guide-body">
@@ -459,12 +480,12 @@
 <ng-template #checkJoinAvailable let-modal>
     <div class="modal-body">
         <div class="content-box">
-            <h3 class="title"><span class="color-blue">이륜차, 영업용 차량, 영업 목적</span>으로 운전하고 있습니까?</h3>
+            <h3 class="title"><span class="color-blue">이륜차, 영업용 차량, 영업 목적</span>으로<br>운전하고 있습니까?</h3>
         
-            <p class="sub-title">답변이 사실과 다를 경우, 보험 유지 및 보험금 지급이 거절될 수 있습니다.</p>
+            <p class="sub-title">답변이 사실과 다를 경우, 보험 유지 및<br>보험금 지급이 거절될 수 있습니다.</p>
             <div class="check-button-box">
                 <button class="btn check-button fail-button" (click)="checkFail()">예</button>
-                <button ngbAutofocus class="btn check-button success-button" (click)="checkSuccess()">아니오</button>    
+                <button class="btn check-button success-button" (click)="checkSuccess()">아니오</button>    
             </div>          
         </div>
     </div>

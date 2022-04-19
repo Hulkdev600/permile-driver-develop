@@ -101,3 +101,64 @@ header, section {
     height: 8px;
     background-color: #F5F6F7;
 }
+
+.sticky-button-area{
+    position: sticky;
+    bottom: 0px;
+    background-color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+
+
+::ng-deep .my-class-kakao-payment-app-modal .modal-dialog { 
+
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    .modal-content{
+        box-shadow: 0px 4px 16px 0px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        padding: 20px 10px 10px 10px;
+    }
+    
+    .title{
+        text-align: center;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 20px;
+    }
+    .sub-title{
+        text-align: center;
+        font-size: 16px;
+        color: rgba(38, 45, 57, 0.72);
+    }
+    .color-blue{
+        color:#3581FF
+    }
+
+    .check-button-box{
+        display: flex;
+        justify-content: center;
+        .check-button{
+            margin: 5px;
+            width: 156px;
+            height: 52px;
+            border-radius: 4px;
+        }
+
+        .fail-button{
+            border: 1px solid rgba(38, 45, 57, 0.16);
+            background-color: white;
+        }
+        .success-button{
+            background: #3581FF;
+            border-radius: 4px;
+            color: white;
+        }
+    }
+    
+}

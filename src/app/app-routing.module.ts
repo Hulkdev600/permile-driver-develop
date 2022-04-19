@@ -2,16 +2,17 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { JoinComponent } from './apps/join/join.component';
 import { InsuRequestComponent } from './apps/insu-request/insu-request.component';
+import { RedirectGuard } from './shared/guard/redirect.guard';
 
 const routes: Routes = [
   {
     path :'',
-    redirectTo:'/join',
+    redirectTo:'join',
     pathMatch :'full'
   },
   {
     path:'join',
-    component : JoinComponent
+    component : JoinComponent,
   },
   {
     path:'insuRequest',

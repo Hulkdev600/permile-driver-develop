@@ -9,10 +9,10 @@ export class HttpService {
 
 
   URLMode = 'TEST';
-  rUrl = 'http://15.165.176.124';
-
-  testUrl = this.rUrl+':3001'
-  prodUrl = this.rUrl+':3000'
+  testUrl = 'https://toggle-driver-insu-dev.simgbiz.net';
+  prodUrl = 'https://toggle-driver-insu.simgbiz.net';
+  localUrl = 'http://localhost:3001'
+  
   constructor(private http:HttpClient,) { }
 
 
@@ -22,8 +22,10 @@ export class HttpService {
     let sendURL;
     if(this.URLMode === 'TEST'){
        sendURL = this.testUrl
-    } else {
+    } else if(this.URLMode === 'PROD'){
       sendURL = this.prodUrl
+    } else if(this.URLMode === 'LOCAL'){
+      sendURL = this.localUrl
     }
 
     return sendURL+'/api/join/'+endpoint
@@ -38,6 +40,7 @@ export class HttpService {
 
   sendGetRequest(endpoint:any, queryParams?:object | any){
     const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    console.log(this.getRouter(endpoint))
     return this.http.get<any>(this.getRouter(endpoint),{headers : httpHeaders, params : queryParams, observe: 'response'})  
       
   }

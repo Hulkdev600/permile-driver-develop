@@ -3,13 +3,40 @@
 body{
     margin: 0;
 }
+
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
 
-.modal-content{
-    border-radius:0%
-}
-
+/** 부트스트랩 정훈 Customizng 부분**/
 .modal-dialog{
     margin:0;
+}
+
+.modal-content{
+    border-radius:0%;
+    border: none;
+}
+
+
+.btn:disabled{
+    background-color: rgba(38, 45, 57, 0.08);
+}
+.btn-primary:disabled{
+    background-color: rgba(38, 45, 57, 0.08);
+    
+}
+.btn:focus, .btn:active:focus, .btn.active:focus{
+    outline:none;
+    box-shadow:none;
+    border: none;
+}
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+    border: none;
+}
+.btn-primary:focus, .btn-primary:active:focus, .btn-primary.active:focus{
+    outline: none;
+    box-shadow: none;
+    border: none;
 }

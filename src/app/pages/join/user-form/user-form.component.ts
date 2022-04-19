@@ -2,6 +2,8 @@ import { Component, OnInit, Output, EventEmitter, Input, ViewChild ,ElementRef, 
 import { FormGroup,FormControl,FormBuilder, Validators, AbstractControl, FormArray, FormControlName } from '@angular/forms';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { MyValidator} from '../../../shared/myValidators'
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpService } from 'src/app/services/http.service';
 
 
 @Component({
@@ -21,7 +23,9 @@ export class UserFormComponent implements OnInit {
   onFormControl=''
   constructor(
     private formBuilder: FormBuilder,
-    private element : ElementRef
+    private element : ElementRef,
+    private activatedRoute : ActivatedRoute,
+    private _httpService : HttpService,
     ) { }
 
 
@@ -31,7 +35,9 @@ export class UserFormComponent implements OnInit {
   
 
   ngOnInit(): void {
-    console.log(this.payload)
+    
+    this.getUser()
+
     this.initialFormContent()
 
     this.form = this.formBuilder.group({ }) // formBuilder 무상태 초기화
@@ -40,11 +46,42 @@ export class UserFormComponent implements OnInit {
     
   }
 
+  private getUser(){
+
+    this.setParams().subscribe(params => {
+      
+      let encryptedData = encodeURI(params.enc).replace(/%20/gi,'+')
+      
+      let body = {
+        enc : encryptedData,
+        onPage : 'user-form'
+      }
+      
+      this._httpService.sendGetRequest('user', body).subscribe(
+        (response:any) => {
+          let body = response.body
+          // console.log(body)
+          this.payload = body['payload']; // 1
+      },
+        (errObj) => {
+          
+          let errorBody = errObj.error
+          
+          alert(errorBody.message)
+        }
+      )
+    })
+  }
+
+  setParams(){
+    return this.activatedRoute.queryParams
+  }
+
 
 
   next(){
     
-    if(Object.keys(this.form.value).length === this.formDataArr.length && this.form.valid){
+    if(Object.keys(this.form.controls).length === this.formDataArr.length && this.form.valid){
       
       this.nextPage()
 
@@ -281,70 +318,4 @@ export class UserFormComponent implements OnInit {
   }
 
 }
-
- /*
-   * formDatas의 요소를 동적으로 추가한다.
-   * 이전 배열을 돌면서 이전(prev) Input의 validation이 유효해야 다음 Input을 생성한다.
-   * html에서 동적 생성하기 위해서 formControls 배열을 이용한다.
-   * 입력사항이 아래로 내려가야하기에 unshift 메소드를 사용한다.
-   * 
-   * */
-  // addFormControl(){
-    
-  //   for(let i = 0; i < this.formDataArr.length; i++){
-      
-  //     let prevFormControl;
-  //     let prevFormControlValid:boolean | undefined = false 
-  //     let currFormControl  = this.formDataArr[i]
-
-  //     let controlName = currFormControl.formControlName;
-  //     let initialValue = currFormControl.initialValue;
-  //     let validators = currFormControl.validators
-
-  //     if(i > 0){
-  //       prevFormControl= this.formDataArr[i-1];
-  //       console.log(this.form.get(prevFormControl.formControlName))
-  //       prevFormControlValid = this.form.get(prevFormControl.formControlName)?.valid 
-  //     } else {
-  //       prevFormControlValid = true;
-  //     }
-      
-      
-  //     /* 추가하려는 것이 없어서 추가가능한 상태 && 이전 input이 검증 유효한상태일 때 추가 */
-  //     if(!this.form.get(controlName) && prevFormControlValid){
-        
-        
-
-  //       this.form.addControl(controlName ,new FormControl(initialValue, validators))
-  //       console.log(this.form.controls)
-  //       if(controlName =='driverCell'){
-  //         this.cellControl(initialValue, controlName)
-  //       }
-  //       console.log(this.form.get(controlName))
-        
-
-  //       /* 값변경 할때마다 observable 구독하여 원하는 Handler 세팅하기 */
-  //       this.form.get(controlName)?.valueChanges.subscribe(result => {
-  //         // console.log(controlName,' : ', result)
-  //       })
-
-  //       /* html에 나타낼 input 배열, 화면상에 기존것이 아래로 내려가게하기위해 unshift메소드 사용 */
-  //       this.formControls.unshift(currFormControl)
-
-
-  //       // console.log(controlName)
-  //       let input = this.element.nativeElement.querySelector('#'+controlName)
-  //       console.log(input)
-  //       // input.focus()
-        
-        
-        
-  //     }
-      
-  //     // console.log(this.element.nativeElement.querySelector('#'+controlName))
-  //     // break;
-  //   }
-  //   console.log(this.form.value)
-
-  // }
 

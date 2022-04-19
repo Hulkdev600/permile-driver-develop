@@ -1,6 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, TemplateRef,ViewChild,ViewContainerRef, Input } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpService } from 'src/app/services/http.service';
+
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs';
+
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
@@ -24,7 +27,9 @@ export class InsuranceInformationComponent implements OnInit {
   faLeftLong = faLeftLong
   faRightLong = faRightLong
   faDownLong = faDownLong
-  
+
+  isAccessOk = false
+
   /** modal 프로퍼티 */
   closeResult = '';
   
@@ -34,11 +39,98 @@ export class InsuranceInformationComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-  
+    private activatedRoute : ActivatedRoute,
+    private _httpService : HttpService,
     ) { }
 
   ngOnInit(): void {  
-    console.log(this.payload)
+    // console.log(this.payload)
+    this.getUser()
+  }
+
+  private getUser(){
+
+    this.setParams().subscribe(params => {
+      
+      let encryptedData = encodeURI(params.enc).replace(/%20/gi,'+')
+      
+      // console.log(encryptedData)
+      let body = {
+        enc : encryptedData,
+        onPage : 'insurance-information'
+      }
+      
+      this._httpService.sendGetRequest('user', body).subscribe(
+        (response:any) => {
+          console.log(response)
+          let responseStatus = response.status
+          let responseBody = response.body
+          
+
+          if(responseBody.type === 'RENEWAL'){
+            
+            this.isAccessOk = true;
+
+            if(responseStatus !== '200'){
+              alert(responseBody.message)
+            }
+
+
+          } else {
+
+            
+
+            if(responseStatus == 200){
+              this.isAccessOk = true;
+            }
+  
+  
+            let payload = responseBody['payload']; // 1
+  
+            
+            // 가입 중 이탈 확인하였을 때 처리
+            if(responseBody.findHistory){
+              let changePage = confirm('작성 중이신 가입정보가 있습니다. 이동하시겠습니까?')
+              
+              //  이동 'Y' 일 때 이전데이터로 변환하여 페이지 이동
+              if(changePage){
+                payload.driverName = payload.past.driverName;
+                payload.driverCell = payload.past.driverCell;
+                payload.driverSocialNumber = payload.past.driverSocialNumber;
+  
+                this.payload = payload;
+  
+                let emitData = {
+                  changePage : 'confirm',
+                  payload : this.payload
+                }
+                this.nextStep.emit(emitData)
+  
+                return
+              }
+  
+            } 
+  
+            delete payload.past;
+            this.payload = payload
+            
+          }
+
+
+
+      },
+        (errObj) => {
+          // console.log(errObj)
+          let errorBody = errObj.error
+          // console.log(errorBody)
+          alert(errorBody.message)
+        }
+      )
+    })
+  }
+
+  setParams(){
+    return this.activatedRoute.queryParams
   }
 
 

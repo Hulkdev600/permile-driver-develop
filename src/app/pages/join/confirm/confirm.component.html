@@ -1,7 +1,7 @@
 <main class="confirm-container">
     <header class="header title-area">
         <h1 class="title">
-            <span class="color-blue">탄만큼 운전자보험</span><br>가입내용은 아래와 같아요.
+            <span class="color-blue">탄 만큼 내는 운전자보험</span><br>가입내용은 아래와 같아요.
         </h1>
         <h2 class="sub-title">입력하신 정보가 맞는지 최종 확인해주세요.<br>가입 완료 버튼을 누르면 보험 적용이 가능합니다.</h2>
     </header>
@@ -20,7 +20,7 @@
             </li>
             <li class="information-content">
                 <dl>가입기간</dl>
-                <dd>테스트</dd>
+                <dd>{{validStartDay | dateDot}} ~ {{ policyEndDay | dateDot}}</dd>
             </li>
             <li class="information-content">
                 <dl>보험형태</dl>
@@ -54,9 +54,46 @@
 
     <section class="bottom-area">
         <p>제공처 (주)SIMG 손해보험협회 심의필 제 43424호(2022.02.26)</p>
-
-        <button class="btn btn-primary" id="join-button" (click)="contract()">
+        <!-- <button class="btn btn-primary" id="join-button" (click)="openKakaoPaymentApp()">
             가입 완료
-        </button>
+        </button> -->
     </section>
+
+    <div class="sticky-button-area">
+        <button class="btn btn-primary" id="join-button" (click)="openKakaoPaymentApp()">
+            <!-- <button class="btn btn-primary" id="join-button" (click)="contract()"> -->
+                가입 완료
+            </button>
+    </div>
 </main>
+
+
+
+
+<!-- 결제창 modal -->
+<ng-template #kakaoPaymentAppModal let-modal>
+
+    <div class="modal-body">
+        <!-- <iframe width="100%" src="https://www.youtube.com/watch?v=FmLAe-MHDSg" frameborder="0"></iframe> -->
+        <iframe *ngIf="payAppOnOff" #iframe [src]="appSchemeURL | safe" width="100%" allowfullscreen></iframe>
+    </div>
+</ng-template>
+
+
+
+<ng-template #contractSuccessModal let-modal>
+    <div class="modal-body">
+        <p>{{contractMessage}}</p>
+        <!-- <button (click)="closeTest()modal.dismiss('Cross click')">
+            닫기ㅣ테스트
+        </button> -->
+        <button (click)="closeTest()">닫기테스트</button>
+    </div>
+</ng-template>
+
+
+<ng-template #contractFailModal let-modal>
+    <div class="modal-body">
+        <p>{{contractMessage}}</p>
+    </div>
+</ng-template>

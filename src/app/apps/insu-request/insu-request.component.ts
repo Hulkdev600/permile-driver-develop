@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./insu-request.component.scss']
 })
 export class InsuRequestComponent implements OnInit {
-
+  public isMenuCollapsed = true;
   constructor() { }
 
   ngOnInit(): void {

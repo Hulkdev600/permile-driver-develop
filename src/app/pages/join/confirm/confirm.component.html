@@ -54,16 +54,13 @@
 
     <section class="bottom-area">
         <p>제공처 (주)SIMG 손해보험협회 심의필 제 43424호(2022.02.26)</p>
-        <!-- <button class="btn btn-primary" id="join-button" (click)="openKakaoPaymentApp()">
-            가입 완료
-        </button> -->
     </section>
 
     <div class="sticky-button-area">
-        <button class="btn btn-primary" id="join-button" (click)="openKakaoPaymentApp()">
-            <!-- <button class="btn btn-primary" id="join-button" (click)="contract()"> -->
-                가입 완료
-            </button>
+        <button class="btn btn-primary" id="join-button" (click)="openKakaoPaymentApp()">가입완료</button>
+            <!-- <button class="btn btn-primary" id="join-button" (click)="contract()">가입 완료</button> -->
+            <!-- <button class="btn btn-primary" id="join-button" (click)="open(contractFailModal,'my-class-contract-fail-modal')">가입 완료</button> -->
+            <!-- <button class="btn btn-primary" id="join-button" (click)="open(contractSuccessModal,'my-class-contract-success-modal')">가입 완료</button> -->
     </div>
 </main>
 
@@ -74,26 +71,35 @@
 <ng-template #kakaoPaymentAppModal let-modal>
 
     <div class="modal-body">
-        <!-- <iframe width="100%" src="https://www.youtube.com/watch?v=FmLAe-MHDSg" frameborder="0"></iframe> -->
         <iframe *ngIf="payAppOnOff" #iframe [src]="appSchemeURL | safe" width="100%" allowfullscreen></iframe>
     </div>
 </ng-template>
 
 
-
+<!-- 계약완료 시 알림 Modal 창 -->
 <ng-template #contractSuccessModal let-modal>
     <div class="modal-body">
-        <p>{{contractMessage}}</p>
-        <!-- <button (click)="closeTest()modal.dismiss('Cross click')">
-            닫기ㅣ테스트
-        </button> -->
-        <button (click)="closeTest()">닫기테스트</button>
+        <div class="content-box">
+            <div class="faCircleCheck-box">
+                <fa-icon [icon]="faCircleCheck"></fa-icon>
+            </div>
+            <p class="content">{{contractMessage}}</p>
+            <button class="btn btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">확인</button>
+        </div>
     </div>
 </ng-template>
 
-
+<!-- 계약실패 시 알림 Modal 창 -->
 <ng-template #contractFailModal let-modal>
     <div class="modal-body">
-        <p>{{contractMessage}}</p>
+        
+        <div class="content-box">
+            <div class="faCircleExclamation-box">
+                <fa-icon [icon]="faCircleExclamation"></fa-icon>
+            </div>
+            <p class="content">{{contractMessage}}</p>
+            <button class="btn btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">확인</button> 
+        </div>
+        
     </div>
 </ng-template>

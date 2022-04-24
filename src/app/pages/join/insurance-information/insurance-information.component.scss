@@ -197,6 +197,7 @@
 
 .modal-header{
     border-bottom: none;
+    padding-bottom: 0;
 }
 
 .modal-dialog{
@@ -245,6 +246,9 @@
     ul.no-padding-left-0{
         padding-left: 0;
     }
+    ul.padding-left-38{
+        padding-left: 38px;
+    }
     p{
         color: rgba(38, 45, 57, 0.52);
         font-size: 14px;
@@ -269,6 +273,9 @@
         .table-head{
             height: 56px;
             vertical-align: middle;
+            th{
+                height: 56px;
+            }
         }
         .table-body{
             color: rgba(38, 45, 57, 0.72);
@@ -300,6 +307,8 @@
 #claim-guide-body{
     .content-box{
         padding: 20px 0;
+        padding-left: 8px;
+        padding-right: 8px;
         
         ul{
             margin-bottom: 0;
@@ -307,17 +316,17 @@
         
     }
     .line-divide{
-        border-top: 1px solid #F5F6F7;
+        // border-top: 1px solid #F5F6F7;
         border-bottom: 1px solid #F5F6F7;
     }
 
     .line-divide-bold-top{
-        border-top: 1px solid #262D39;
+        border-top: 1px solid rgba(38, 45, 57, 0.72);
     }
 
 
     .line-divide-bold-bottom{
-        border-bottom: 1px solid #262D39;
+        border-bottom: 1px solid rgba(38, 45, 57, 0.72);
     }
 
     p{
@@ -325,8 +334,9 @@
     }
 
     table{
-        margin-bottom: 0;
-        margin: 20px 0;
+        
+        margin: 20px 0 40px;
+        
         vertical-align: middle;
         text-align: center;
         border-top: none;
@@ -407,6 +417,11 @@
             color: white;
         }
     }
+
+    .button-font-sm{
+        font-size: 14px;
+        line-height: 19px;
+    }
     
 }
 
@@ -454,4 +469,63 @@
         min-height: 100%;
         border: none;
     }
+}
+
+
+::ng-deep .my-class-change-page-choice-modal .modal-dialog { 
+
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    
+    .modal-content{
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        padding: 20px 10px 10px 10px;
+        box-shadow: 0px 4px 16px 0px;
+    }
+    
+    .faCircleExclamation-box{
+        color: #DD3B3B;
+        text-align: center;
+        font-size: 36px;
+    }
+
+    .content{
+        font-weight: 700;
+        font-size: 18px;
+        color: #262D39;
+        text-align: center;
+    }
+    
+    .color-blue{
+        color:#3581FF
+    }
+
+    .check-button-box{
+        display: flex;
+        justify-content: center;
+        .check-button{
+            margin: 5px;
+            width: 156px;
+            height: 52px;
+            border-radius: 4px;
+        }
+
+        .fail-button{
+            border: 1px solid rgba(38, 45, 57, 0.16);
+            background-color: white;
+        }
+        .success-button{
+            background: #3581FF;
+            border-radius: 4px;
+            color: white;
+        }
+    }
+
+    .button-font-sm{
+        font-size: 14px;
+        line-height: 19px;
+    }
+    
 }

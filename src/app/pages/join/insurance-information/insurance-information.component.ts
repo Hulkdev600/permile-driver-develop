@@ -18,7 +18,7 @@ import { faDownLong } from '@fortawesome/free-solid-svg-icons';
 })
 export class InsuranceInformationComponent implements OnInit {
   
-  @Input() payload!:object | undefined
+  @Input() payload!:any | undefined
 
   /*fontAwesome*/
   faAngleRight = faAngleRight
@@ -28,12 +28,16 @@ export class InsuranceInformationComponent implements OnInit {
   faRightLong = faRightLong
   faDownLong = faDownLong
 
+  /** 접근가능여부(다음버튼 활성화)**/
   isAccessOk = false
 
   /** modal 프로퍼티 */
   closeResult = '';
-  
+  alertMessage='';
+  userPastData:any = undefined
   @ViewChild('checkFailModal') checkFailModal: TemplateRef<any> | undefined
+  @ViewChild('alertModal') alertModal: TemplateRef<any> | undefined
+  @ViewChild('changePageChoiceModal') changePageChoiceModal: TemplateRef<any> | undefined
   @Output() nextStep:EventEmitter<any> = new EventEmitter();
   
 
@@ -44,6 +48,8 @@ export class InsuranceInformationComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {  
+ 
+
     // console.log(this.payload)
     this.getUser()
   }
@@ -63,57 +69,48 @@ export class InsuranceInformationComponent implements OnInit {
       this._httpService.sendGetRequest('user', body).subscribe(
         (response:any) => {
           console.log(response)
-          let responseStatus = response.status
           let responseBody = response.body
-          
-
+        
           if(responseBody.type === 'RENEWAL'){
-            
+            // 갱신일 떄
+
+
             this.isAccessOk = true;
 
-            if(responseStatus !== '200'){
+            if(responseBody.code !== '200'){
               alert(responseBody.message)
             }
 
 
           } else {
-
+            // 신규일 떄
             
 
-            if(responseStatus == 200){
-              this.isAccessOk = true;
+            /**
+             * User의 상태확인하여 가입 진행여부 결정
+             * 계약된 인원이라면 진행 X
+             * 
+             * **/
+            if(responseBody.code === '200'){
+            
+              this.isAccessOk = true; // 다음버튼 활성화
+
+            } else {
+
+              this.alertMessage = responseBody.message
+              this.open(this.alertModal,'my-class-check-fail-modal') // 
+              return
+
             }
-  
-  
-            let payload = responseBody['payload']; // 1
-  
             
-            // 가입 중 이탈 확인하였을 때 처리
+            this.payload = responseBody['payload']; // 1
+  
+            // 가입 중 이탈한 이력(findHistory)를 확인하였을 경우, 가입정보확인하는 페이지로 이동할 것인지 선택하는 모달을 띄운다.
             if(responseBody.findHistory){
-              let changePage = confirm('작성 중이신 가입정보가 있습니다. 이동하시겠습니까?')
-              
-              //  이동 'Y' 일 때 이전데이터로 변환하여 페이지 이동
-              if(changePage){
-                payload.driverName = payload.past.driverName;
-                payload.driverCell = payload.past.driverCell;
-                payload.driverSocialNumber = payload.past.driverSocialNumber;
-  
-                this.payload = payload;
-  
-                let emitData = {
-                  changePage : 'confirm',
-                  payload : this.payload
-                }
-                this.nextStep.emit(emitData)
-  
-                return
-              }
-  
-            } 
-  
-            delete payload.past;
-            this.payload = payload
-            
+              this.userPastData = responseBody.payload.past
+              this.open(this.changePageChoiceModal,'my-class-change-page-choice-modal')
+            }
+                        
           }
 
 
@@ -129,6 +126,21 @@ export class InsuranceInformationComponent implements OnInit {
     })
   }
 
+  changePage(){
+
+    this.modalService.dismissAll()
+    this.payload['driverName'] = this.userPastData.driverName
+    this.payload['driverCell'] = this.userPastData.driverCell
+    this.payload['driverSocialNumber'] = this.userPastData.driverSocialNumber
+     
+    let emitData = {
+      changePage : 'confirm',
+      payload : this.payload
+    }
+    this.nextStep.emit(emitData)
+
+  }
+
   setParams(){
     return this.activatedRoute.queryParams
   }
@@ -136,6 +148,7 @@ export class InsuranceInformationComponent implements OnInit {
 
   open(content:any,myClass?:string) {
     // console.log(content)
+
     let ngbModalOption:any = {ariaLabelledBy: 'modal-basic-title'}
     if(myClass){
       ngbModalOption['windowClass'] = myClass

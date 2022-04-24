@@ -5,7 +5,8 @@ import { CryptoService } from 'src/app/services/crypto.service';
 import { HttpService } from 'src/app/services/http.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-
+import { PlatformLocation } from '@angular/common';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-join',
   templateUrl: './join.component.html',
@@ -24,15 +25,21 @@ export class JoinComponent implements OnInit {
   constructor(
     private activatedRoute : ActivatedRoute,
     private _httpService : HttpService,
-  ) { }
+    
+    private modalService: NgbModal,
+  ) { 
+    
+  }
 
 
   ngOnInit(): void {
     
-    // this.getUser()
-    // this.setParams().subs
+    
+    // const routeParams = this.activatedRoute.snapshot.paramMap;
+    // this.PAGE = String(routeParams.get('page'))
+
     this.activatedRoute.queryParams.subscribe(param => {
-      // console.log(param)
+      console.log(param)
       if(param){
         this.PAGE = 'insurance-information'
       }

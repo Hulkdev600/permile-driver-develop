@@ -21,23 +21,25 @@ export class MyValidator{
             let rn = control.value;
             
             rn = rn.split("-").join('');
-            // if( rn.length !== 13 ) return false;
+            
             if( rn.length !== 13 ) return { 'invalidSocialNumber' : true}; // 13자리가 안될때 invalid 상태
          
-            var checkSum = 0;
-            for(var i=0; i<12; i++) checkSum += ((rn.substr(i,1)>>0)*((i%8)+2));
+            //테스트용 return null 추가
+            return null
+
+            /** 원상태 **/
+            // var checkSum = 0;
+            // for(var i=0; i<12; i++) checkSum += ((rn.substr(i,1)>>0)*((i%8)+2));
          
-            var rrnMatch = (11-(checkSum%11))%10 == rn.substr(12,1);
-            var frnMatch = (13-(checkSum%11))%10 == rn.substr(12,1);
+            // var rrnMatch = (11-(checkSum%11))%10 == rn.substr(12,1);
+            // var frnMatch = (13-(checkSum%11))%10 == rn.substr(12,1);
          
-            if((rrnMatch || frnMatch)){
-                return null
-            } else {
-                return {'invaliSocialNumber' : true}
-            }
-            // if( type === 'rrn' ) return rrnMatch;
-            // else if( type === 'frn' ) return frnMatch; 
-            // else return rrnMatch || frnMatch;
+            // if((rrnMatch || frnMatch)){
+            //     return null
+            // } else {
+            //     return {'invaliSocialNumber' : true}
+            // }
+           
         }
         
     }

@@ -75,12 +75,13 @@
     border: 1px solid red; /* green */
   }
 
-  .sticky-button-area{
+  .fixed-button-area{
     // width: 90%;
     position: fixed;
     bottom: 0px;
     left: 20px;
     right: 20px;
     background-color: white;
+    padding-top: 8px;
     padding-bottom: 20px;
 }

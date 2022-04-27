@@ -18,14 +18,15 @@ import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 export class ConfirmComponent implements OnInit {
   modalRef: NgbModalRef | undefined;
   @Input() payload:any
-  @Output("changePage") changePage:EventEmitter<any> = new EventEmitter();
+  @Output("renewal") renewal:EventEmitter<any> = new EventEmitter();
   @Output("moveBack") moveBack:EventEmitter<any> = new EventEmitter();
   /** 모달 View **/
   @ViewChild('kakaoPaymentAppModal') kakaoPaymentAppModal: TemplateRef<any> | undefined
   @ViewChild('contractSuccessModal') contractSuccessModal: TemplateRef<any> | undefined
   @ViewChild('contractFailModal') contractFailModal: TemplateRef<any> | undefined
   @ViewChild('iframe') iframe: ElementRef<any> | undefined
-  
+  @Input() queryString_enc:string | undefined
+
   faCircleCheck = faCircleCheck;
   faCircleExclamation = faCircleExclamation
 
@@ -42,45 +43,35 @@ export class ConfirmComponent implements OnInit {
   closeResult = '';
   payAppOnOff = false;
   contractMessage =''
+  visibilityOn=false;
 
   constructor(
     private _httpService : HttpService,
     private activatedRoute : ActivatedRoute,
     private modalService: NgbModal,
-    private location: PlatformLocation
+    private location: PlatformLocation,
+    private router:Router
   ) { 
-    location.onPopState((event)=>{
-      console.log(this.modalRef)
-      if(this.modalRef !== undefined) {
-        this.modalRef.close();
-        // this.modalService.dismissAll()
-        console.log('colse bmodal')
-        return
-      }
-      if(this.modalRef == undefined){
-        console.log('emit page')
-        
-        this.moveBack.emit();
-      }
-      
-
-
-    })
-  }
-
-  ngOnInit(): void {
-    history.pushState(null, '', 'page3');
-    console.log(this.payload)
-    this.getUser()
-
-    this.getProduct()
+    // if(!this.payload){
+    //   this.router.navigate(['/join/insurance-information'],{queryParams : {enc : this.queryString_enc}})
+    //   return
+    // }
     
   }
 
-  ngOnDestroy() {
-    this.modalService.dismissAll()
-  }
+  ngOnInit(): void {
+    
+    
+    if(!this.payload){
+      this.router.navigate(['/join/insurance-information'],{queryParams : {enc : this.queryString_enc}})
+    } else{
+      this.getUser()
 
+      this.getProduct()
+    }
+    
+    
+  }
 
   private getUser(){
 
@@ -105,11 +96,12 @@ export class ConfirmComponent implements OnInit {
         (errObj) => {
           
           let errorBody = errObj.error
+          console.log(errObj)
           
-          alert(errorBody.message)
+          // alert(errorBody.message)
         }
       )
-    })
+    }).unsubscribe()
   }
 
   setParams(){
@@ -146,16 +138,8 @@ export class ConfirmComponent implements OnInit {
       })
     }
 
-    console.log(varUA);
+    // console.log(varUA);
 
-
-    // const modalState = {
-    //   modal : true,
-    //   desc : 'fake state for our modal'
-    // };
-    // history.pushState(modalState, '');
-
-    // history.pushState(null, 'modalOpened');
     /**
      * 
      * 결제창 띄우기
@@ -221,48 +205,12 @@ export class ConfirmComponent implements OnInit {
     // alert('닫기.')
   }
 
-  
-
 
   /**
    * Modal 열기 
    * @param content 
    * @param myClass 
    */
-  // open(content:any,myClass?:string):void {
-
-  //   let ngbModalOption:any = {ariaLabelledBy: 'modal-basic-title'}
-  //   if(myClass){
-  //     ngbModalOption['windowClass'] = myClass
-  //   }
-
-  //   history.pushState(null, '', 'modalOpened');
-
-
-  //   this.modalService.open(content, ngbModalOption).result.then((result:any) => {
-  //     // console.log('모달 result : ',result)
-  //     this.closeResult = `Closed with: ${result}`;
-  //   }, (reason:any) => {
-  //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-  //   });
-  // }
-
-  // private getDismissReason(reason: any): string {
-
-    
-
-  //   if (reason === ModalDismissReasons.ESC) {
-  //     return 'by pressing ESC';
-  //   } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-  //     return 'by clicking on a backdrop';
-  //   } else {
-  //     return `with: ${reason}`;
-  //   }
-  // }
-
-
-
-
   open(content:any,myClass?:string):void {
 
     let ngbModalOption:any = {ariaLabelledBy: 'modal-basic-title'}
@@ -270,35 +218,39 @@ export class ConfirmComponent implements OnInit {
       ngbModalOption['windowClass'] = myClass
     }
 
-    history.pushState(null, '', 'modalOpened');
-
-
     this.modalRef = this.modalService.open(content,ngbModalOption);
 
-     // push new state to history
-     history.pushState(null, '', 'modalOpened');
-
-     this.modalRef.result.then((result) => {
+    this.modalRef.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
       }, (reason) => {
         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
-
+    
+    // push new state to history
+    history.pushState(null, '', `/join/confirm/enc?=${this.queryString_enc}&modal=open`);
   }
 
   private getDismissReason(reason: any): string {
       // go back in history if the modal is closed normal (ESC, backdrop click, cross click, close click)
-      history.back();
-    // history.go(1); // 이거로 하면 이상함
-    
+
+      // 모달이 닫히는 이유가 ESC키 누르거나 백드랍화면을 클릭해서 클때 history.back해준다.    
       if (reason === ModalDismissReasons.ESC) {
+          history.back();
           return 'by pressing ESC';
       } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+          history.back();
           return 'by clicking on a backdrop';
       } else {
           return  `with: ${reason}`;
       }
   }  
   
+
+  visibilityControl(){
+    this.visibilityOn = true
+    // console.log(';stsefsdfds')
+  }
+
+
 
 }

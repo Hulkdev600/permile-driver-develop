@@ -35,8 +35,16 @@ body{
     box-shadow: none;
     border: none;
 }
-.btn-primary:focus, .btn-primary:active:focus, .btn-primary.active:focus{
-    outline: none;
+.btn-primary:focus, .btn-primary:active:focus, .btn-primary.active:focus, .btn:hover{
+    outline-color: #3581FF;
     box-shadow: none;
-    border: none;
+    border: 1px solid #3581FF;
+}
+input:focus{
+    -webkit-background:#F8F8F8;
+    -moz-background:#F8F8F8;
+    -moz-border : 1px solid #3581FF;
+    -webkit-border : 1px solid #3581FF;
+    -moz-border : 1px solid #3581FF;
+    -webkit-border : 1px solid #3581FF;
 }

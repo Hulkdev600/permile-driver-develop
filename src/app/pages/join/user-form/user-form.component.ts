@@ -14,7 +14,8 @@ import { HttpService } from 'src/app/services/http.service';
 export class UserFormComponent implements OnInit {
   faCircleXmark = faCircleXmark
   @Input() payload:object | any
-  @Output() nextStep:EventEmitter<any> = new EventEmitter();
+  @Input() queryString_enc:string | undefined
+  @Output() renewal:EventEmitter<any> = new EventEmitter();
   
   form!:FormGroup
   formDataArr:any[] = []
@@ -26,25 +27,27 @@ export class UserFormComponent implements OnInit {
     private element : ElementRef,
     private activatedRoute : ActivatedRoute,
     private _httpService : HttpService,
-    ) { }
+    private router : Router
+    ) { }  
 
-
-  ngOnChanges(changes: SimpleChanges){
-    // console.log(changes)
-  }
-  
 
   ngOnInit(): void {
     
-    this.getUser()
+    if(!this.payload){
+      this.router.navigate(['/join/insurance-information'],{queryParams : {enc : this.queryString_enc}})
+     
+    }else {
+      this.getUser()
 
-    this.initialFormContent()
-
-    this.form = this.formBuilder.group({ }) // formBuilder 무상태 초기화
-    
-    this.addFormControl() // 첫 ngOninit 주기에 운전자Input만 세팅하기 위해 addFormControl 실행
+      this.initialFormContent()
+  
+      this.form = this.formBuilder.group({ }) // formBuilder 무상태 초기화
+      
+      this.addFormControl() // 첫 ngOninit 주기에 운전자Input만 세팅하기 위해 addFormControl 실행
+    }
     
   }
+
 
   private getUser(){
 
@@ -70,7 +73,7 @@ export class UserFormComponent implements OnInit {
           alert(errorBody.message)
         }
       )
-    })
+    }).unsubscribe()
   }
 
   setParams(){
@@ -96,6 +99,8 @@ export class UserFormComponent implements OnInit {
 
   initialFormContent(){
     // console.log(JSON.parse(this.user))
+
+
     this.formDataArr = [
       { 
         formControlName : 'driverName',
@@ -198,12 +203,13 @@ export class UserFormComponent implements OnInit {
     if(this.form.valid){
 
       let emitData = {
-        changePage : 'confirm',
         // payload : this.form.value
         payload : Object.assign(this.payload, this.form.value)
       }
-      this.nextStep.emit(emitData)
+      this.renewal.emit(emitData)
     }
+
+    this.router.navigate(['/join/confirm'],{queryParams : {enc : this.queryString_enc}} )
 
   }
 

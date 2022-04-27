@@ -178,6 +178,7 @@
 #next-button{
     height: 52px;
     background-color: #3581FF;
+    
     width: 100%;
 }
 #next-button:disabled{
@@ -186,6 +187,7 @@
     border: none;
     border-radius: 4px;
 }
+
 
 
 .modal-content{
@@ -223,7 +225,7 @@
         font-weight: 700;
     }
     .content-box{
-        padding: 10px 0;
+        padding: 20px 0 0 0;
     }
     ul{
         padding-left: 20px;
@@ -372,15 +374,18 @@
 
     position: fixed;
     bottom: 0;
+    right: 0;
     width: 100%;
-    
+    .modal-body{
+        padding: 0;
+    }
     .modal-content{
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
-        padding: 20px 10px 10px 10px;
+        padding: 20px;
         box-shadow: 0px 4px 16px 0px;
     }
-    
+
     .title{
         text-align: center;
         font-family: 'Roboto';
@@ -388,21 +393,24 @@
         font-weight: 700;
         font-size: 20px;
     }
-    .sub-title{
+    p.sub-title{
         text-align: center;
         font-size: 16px;
-        color: rgba(38, 45, 57, 0.72);
+        color: #262D39;
+        margin-bottom: 24px;
     }
     .color-blue{
         color:#3581FF
     }
 
     .check-button-box{
-        display: flex;
-        justify-content: center;
+        // display: flex;
+        // justify-content: center;
+        position: relative;
+        text-align: center;
+        width: 100%;
         .check-button{
-            margin: 5px;
-            width: 156px;
+            width: calc((100% - 12px) / 2 );
             height: 52px;
             border-radius: 4px;
         }
@@ -415,6 +423,13 @@
             background: #3581FF;
             border-radius: 4px;
             color: white;
+        }
+
+        .left-button{
+            float: left;
+        }
+        .right-button{
+            float: right;
         }
     }
 
@@ -429,12 +444,17 @@
 ::ng-deep .my-class-check-fail-modal .modal-dialog {
     position: fixed;
     bottom: 0;
+    right: 0;
     width: 100%;
+
+    .modal-body{
+        padding: 0;
+    }
     .modal-content{
         box-shadow: 0px 4px 16px 0px;
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
-        padding: 20px 10px 10px 10px;
+        padding: 20px;
     }
 
     .faCircleExclamation-box{
@@ -458,6 +478,7 @@
         height: 52px;
     }
 }
+
 ::ng-deep .my-class-modal-full-height{
     .modal-dialog{
         margin:0;
@@ -469,6 +490,23 @@
         min-height: 100%;
         border: none;
     }
+
+}
+@media (max-width: 768px) {
+    ::ng-deep .my-class-modal-full-height{
+        .modal-dialog{
+            margin:0;
+            height: 100%;
+            min-width: 100%;
+        }
+        
+        .modal-content{
+            border-radius:0%;
+            min-height: 100%;
+            border: none;
+        }
+    
+    }
 }
 
 
@@ -476,12 +514,16 @@
 
     position: fixed;
     bottom: 0;
+    right: 0;
     width: 100%;
     
+    .modal-body{
+        padding: 0;
+    }
     .modal-content{
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
-        padding: 20px 10px 10px 10px;
+        padding: 20px;
         box-shadow: 0px 4px 16px 0px;
     }
     
@@ -503,11 +545,9 @@
     }
 
     .check-button-box{
-        display: flex;
-        justify-content: center;
+        position: relative;
         .check-button{
-            margin: 5px;
-            width: 156px;
+            width: calc((100% - 12px) / 2 );
             height: 52px;
             border-radius: 4px;
         }
@@ -520,6 +560,12 @@
             background: #3581FF;
             border-radius: 4px;
             color: white;
+        }
+        .left-button{
+            float: left;
+        }
+        .right-button{
+            float: right;
         }
     }
 

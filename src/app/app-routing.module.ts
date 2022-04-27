@@ -7,12 +7,12 @@ import { RedirectGuard } from './shared/guard/redirect.guard';
 const routes: Routes = [
   {
     path :'',
-    redirectTo:'join',
+    redirectTo:'join/insurance-information',
     pathMatch :'full'
   },
   {
-    // path:'join/:page',
-    path:'join',
+    path:'join/:page',
+    // path:'join',
     component : JoinComponent,
   },
   {

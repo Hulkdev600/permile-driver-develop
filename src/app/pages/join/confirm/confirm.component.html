@@ -1,4 +1,4 @@
-<main class="confirm-container">
+<main *ngIf="payload" class="confirm-container">
     <header class="header title-area">
         <h1 class="title">
             <span class="color-blue">탄 만큼 내는 운전자보험</span><br>가입내용은 아래와 같아요.
@@ -71,7 +71,7 @@
 <ng-template #kakaoPaymentAppModal let-modal>
 
     <div class="modal-body">
-        <iframe *ngIf="payAppOnOff" #iframe [src]="appSchemeURL | safe" width="100%" allowfullscreen></iframe>
+        <iframe *ngIf="payAppOnOff" (load)="visibilityControl()" [ngClass]="visibilityOn ? 'iframeOn' : 'iframeOff'" #iframe [src]="appSchemeURL | safe" width="100%" allowfullscreen></iframe>
     </div>
 </ng-template>
 
@@ -80,10 +80,11 @@
 <ng-template #contractSuccessModal let-modal>
     <div class="modal-body">
         <div class="content-box">
-            <div class="faCircleCheck-box">
-                <fa-icon [icon]="faCircleCheck"></fa-icon>
+            <div class="insurance-image-box">
+                <!-- <fa-icon [icon]="faCircleCheck"></fa-icon> -->
+                <img src="/assets/image/insuranceMark.svg" alt="">
             </div>
-            <p class="content">{{contractMessage}}</p>
+            <p class="content">탄 만큼 내는 운전자보험<br>계약이 완료되었습니다.</p>
             <button class="btn btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">확인</button>
         </div>
     </div>

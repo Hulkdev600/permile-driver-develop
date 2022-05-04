@@ -48,8 +48,8 @@
             font-style: normal;
             font-weight: 400;
             font-size: 14px;
-            // color: rgba(38, 45, 57, 0.52);
-            color: #262D39;
+            color: rgba(38, 45, 57, 0.52);
+            // color: #262D39;
             margin-bottom: 0;
         }
         dd{
@@ -63,7 +63,8 @@
     }
 
     #premium-content {
-        line-height: 22px;
+        // line-height: 22px;
+        height: 56px;
         border-top: 1px solid rgba(38, 45, 57, 0.32);
         border-bottom: 1px solid rgba(38, 45, 57, 0.32);
         
@@ -93,10 +94,17 @@
     }
 }
 
+#payment-guide-list{
+    padding-left: 20px;
+    margin-bottom: 40px;
+    font-size: 14px;
+    color: rgba(38, 45, 57, 0.52);
+}
+
 #guarantee-list{
     list-style: none;
     padding-left: 0;
-    padding: 10px 0;
+    padding: 0px 0px 10px 0;
     .description-content{
         padding: 5px 0;
     }
@@ -114,6 +122,9 @@
         font-weight: 700;
         margin-bottom: 0;
     }
+    .font-weight-basic{
+        font-weight: 400;
+    }
     .guarantee-sub-title{
         color: rgba(38, 45, 57, 0.52);
         font-size: 14px;
@@ -124,7 +135,7 @@
 
 
 #guarantee-content{
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
 
@@ -383,7 +394,7 @@
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
         padding: 20px;
-        box-shadow: 0px 4px 16px 0px;
+        box-shadow: 0px 4px 16px 0px #262D39;
     }
 
     .title{
@@ -451,7 +462,7 @@
         padding: 0;
     }
     .modal-content{
-        box-shadow: 0px 4px 16px 0px;
+        box-shadow: 0px 4px 16px 0px #262D39;
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
         padding: 20px;
@@ -524,7 +535,7 @@
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
         padding: 20px;
-        box-shadow: 0px 4px 16px 0px;
+        box-shadow: 0px 4px 16px 0px #262D39;
     }
     
     .faCircleExclamation-box{

@@ -71,6 +71,7 @@ export class InsuranceInformationComponent implements OnInit {
         onPage : 'insurance-information'
       }
       
+
       this._httpService.sendGetRequest('user', body).subscribe(
         (response:any) => {
           console.log(response)

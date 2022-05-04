@@ -36,6 +36,10 @@ export class ConfirmComponent implements OnInit {
   insuranceCompanyName :string ='';
   validStartDay:string=''
   policyEndDay:string=''
+  guaranteeSettle:string='';
+  guaranteePenalty:string='';
+  guaranteeLawyer:string=''
+
 
   contractURLEndpoint ='contract'
   appSchemeURL:string = ''
@@ -61,8 +65,9 @@ export class ConfirmComponent implements OnInit {
 
   ngOnInit(): void {
     
-    
+    // console.log(this.payload)  
     if(!this.payload){
+      //새로고침 시 첫번째 페이지로 라우팅시킨다
       this.router.navigate(['/join/insurance-information'],{queryParams : {enc : this.queryString_enc}})
     } else{
       this.getUser()
@@ -110,11 +115,15 @@ export class ConfirmComponent implements OnInit {
 
   getProduct(){
     this._httpService.sendPostRequest(this.getProductEndpoint, undefined).subscribe((response:any) => {
+      console.log(response)
       this.productName = response.pdName;
       this.productType = response.pdType;
       this.policyEndDay = response.policyEndDay;
       this.insuranceCompanyName = response.iscName;
       this.validStartDay  = response.validStartDay;
+      this.guaranteeLawyer = response.guaranteeLawyer;
+      this.guaranteePenalty = response.guaranteePenalty
+      this.guaranteeSettle = response.guaranteeSettle
     })
   }
 
@@ -165,7 +174,11 @@ export class ConfirmComponent implements OnInit {
    */
   contract(){
     
-    this._httpService.sendPostRequest(this.contractURLEndpoint, this.payload).subscribe((response:any)=> {
+    let headers = {
+      'X-API-SECRET' : this.payload['X-API-SECRET']
+    }
+
+    this._httpService.sendPostRequest(this.contractURLEndpoint, this.payload, headers).subscribe((response:any)=> {
       
       // console.log(response)
       // console.log(response.body)

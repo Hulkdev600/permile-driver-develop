@@ -6,7 +6,7 @@
         <h2 class="sub-title">입력하신 정보가 맞는지 최종 확인해주세요.<br>가입 완료 버튼을 누르면 보험 적용이 가능합니다.</h2>
     </header>
 
-    <section class="contract-information-area">
+    <section class="information-area" id="contract-information-area">
 
         <h3>보험 계약정보</h3>
         <ul>
@@ -31,7 +31,7 @@
 
     <div class="divide"></div>
 
-    <section class="insured-information-area">
+    <section class="information-area"  id="insured-information-area">
 
         <h3>피보험자 정보</h3>
         <ul>
@@ -52,13 +52,37 @@
 
     <div class="divide"></div>
 
+
+    <section class="information-area"  id="contract-information-area">
+
+        <h3>가입금액</h3>
+        <ul>
+            <li class="information-content">
+                <dl>형사 합의금</dl>
+                <dd>{{guaranteeSettle}}</dd>
+            </li>
+            <li class="information-content">
+                <dl>변호사 선임비</dl>
+                <dd>{{guaranteeLawyer}}</dd>
+            </li>
+            <li class="information-content">
+                <dl>벌금 보상</dl>
+                <dd>{{guaranteePenalty}}</dd>
+            </li>
+        </ul>
+
+    </section>
+
+
+    <div class="divide"></div>
+
     <section class="bottom-area">
         <p>제공처 (주)SIMG 손해보험협회 심의필 제 43424호(2022.02.26)</p>
     </section>
 
     <div class="sticky-button-area">
-        <button class="btn btn-primary" id="join-button" (click)="openKakaoPaymentApp()">가입완료</button>
-            <!-- <button class="btn btn-primary" id="join-button" (click)="contract()">가입 완료</button> -->
+        <!-- <button class="btn btn-primary" id="join-button" (click)="openKakaoPaymentApp()">가입완료</button> -->
+            <button class="btn btn-primary" id="join-button" (click)="contract()">가입 완료</button>
             <!-- <button class="btn btn-primary" id="join-button" (click)="open(contractFailModal,'my-class-contract-fail-modal')">가입 완료</button> -->
             <!-- <button class="btn btn-primary" id="join-button" (click)="open(contractSuccessModal,'my-class-contract-success-modal')">가입 완료</button> -->
     </div>

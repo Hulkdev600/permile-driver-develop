@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InsuRequestComponent implements OnInit {
   public isMenuCollapsed = true;
+  active = 1;
   constructor() { }
 
   ngOnInit(): void {
   }
 
+
+  scrollToElement($element:any): void {
+    console.log($element);
+    $element.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+  }
 }

@@ -28,27 +28,8 @@
 
         <form [formGroup]="form">
 
-            <!-- <ng-container formArray="userForm">
-                <ng-container *ngFor="let formControl of userForm.controls; let i = index">
-                    <div class="input-box">
-                        <input
-                            class="input"
-                            [type]="formDataArr[i].type"
-                            
-                            [id]="formDataArr[i].formControlName"
-                            [placeholder]="formDataArr[i].placeholder"
-                            [maxLength]="formDataArr[i].maxLength"
-                            (input)="customizeValue($event)"
-                        >
-                        <div class="icon-box">
-                            <fa-icon [icon]="faCircleXmark"></fa-icon>
-                        </div>
-                    </div>
-                </ng-container>
-            </ng-container> -->
-
-
-            <div *ngFor = "let formControl of formControlsList">
+            <!-- 기존에 다음버튼 누르면 하나씩 생성됬던 것 -->
+            <!-- <div *ngFor = "let formControl of formControlsList">
                 <div class="input-box">
                     <input 
                         class="input"  
@@ -67,8 +48,25 @@
                     
                 </div>
                 
-            </div>
+            </div> -->
             
+            <div class="input-box">
+                <input class="input" type="text" placeholder="이름" formControlName="driverName">
+                <div class="icon-box" (click)="clearFormControl('driverName')">
+                    <fa-icon [icon]="faCircleXmark"></fa-icon>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <input class="input" type="number" placeholder="휴대폰 번호 '-' 없이 입력"  formControlName="driverName" maxLength="11">
+                <div class="icon-box" (click)="clearFormControl('driverCell')">
+                    <fa-icon [icon]="faCircleXmark"></fa-icon>
+                </div>
+            </div>
+
+            <!-- <div class="input-box">
+                <input type="text">
+            </div> -->
             
 
             

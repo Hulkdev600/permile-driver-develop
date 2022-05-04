@@ -218,12 +218,16 @@ export class UserFormComponent implements OnInit {
    * Input Value Clear(삭제)
    * @param formControl 
    */
-  clearFormControl(formControl:any){
-    let formControlName = formControl.formControlName
-    this.form.get(formControlName)?.setValue('')
+  // // 반복문으로 formControl 추가했을 때
+  // clearFormControl(formControl:any){
+  //   let formControlName = formControl.formControlName
+  //   this.form.get(formControlName)?.setValue('')
+  // }
+
+  clearFormControl(formControl:string){
+  
+    this.form.get(formControl)?.setValue('')
   }
-
-
   
   customizeValue(event:any):void{
     

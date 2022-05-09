@@ -5,8 +5,13 @@ export class MyValidator{
 
     static validateCell():ValidatorFn | null {
         return (control:AbstractControl): ValidationErrors | null => {
-            let regPhone = /^01([0|1|6|7|8|9])(\s-\s)?([0-9]{3,4})(\s-\s)?([0-9]{4})$/;
+            // let regPhone = /^01([0|1|6|7|8|9])(\s-\s)?([0-9]{3,4})(\s-\s)?([0-9]{4})$/;
+            let regPhone = /^01([0|1|6|7|8|9])([0-9]{3,4})([0-9]{4})$/;
             let cell = control.value
+
+            if(!cell){
+                return null;
+            }
 
             if(regPhone.test(cell)){
                 return null;
@@ -14,6 +19,32 @@ export class MyValidator{
             return {'invalidCell' : true}
         }
         
+    }
+
+    static validSocialNumber2(socialNumberFirst:string, socialNumberSecond:string):ValidatorFn | null {
+        return (controls:AbstractControl) : ValidationErrors | null => {
+            const firstControl = controls.get(socialNumberFirst);
+            const secondControl = controls.get(socialNumberSecond);
+
+
+            const rnFirst = String(firstControl!.value);
+            const rnSecond = String(secondControl!.value);
+
+            
+            const rnFinal = rnFirst + rnSecond
+            
+            console.log('rnFinal : ', rnFinal)
+            if( rnFinal.length!==0 && rnFinal.length !== 13 ) {
+                // controls.get(socialNumberFirst)!.setErrors({ invalidSocialNumber: true });
+                controls.get(socialNumberSecond)!.setErrors({ invalidSocialNumber: true });
+                // return { invalidSocialNumber : true }; // 13자리가 안될때 invalid 상태
+            
+                return { invalidSocialNumber: true }
+            }
+            
+            // firstControl?.clearValidators()
+            return null
+        }
     }
 
     static validSocialNumber():ValidatorFn | null {
@@ -43,5 +74,7 @@ export class MyValidator{
         }
         
     }
+
+    
 
 }

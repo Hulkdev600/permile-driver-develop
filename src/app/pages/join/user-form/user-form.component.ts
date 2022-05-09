@@ -16,12 +16,14 @@ export class UserFormComponent implements OnInit {
   @Input() payload:object | any
   @Input() queryString_enc:string | undefined
   @Output() renewal:EventEmitter<any> = new EventEmitter();
-  
+  @ViewChild ('driverSocialNumberFirst') driverSocialNumberFirst : any;
   form!:FormGroup
   formDataArr:any[] = []
   formControlsList:any[] =[]
   driverSocialNumber:string =''
-  onFormControl=''
+  onFormControl='driverName'
+
+  submitted = false;
   constructor(
     private formBuilder: FormBuilder,
     private element : ElementRef,
@@ -39,11 +41,25 @@ export class UserFormComponent implements OnInit {
     }else {
       this.getUser()
 
+      this.form = this.formBuilder.group({
+        driverName : [this.payload.driverName, [Validators.required]],
+        driverCell : [this.payload.driverCell,[Validators.required,MyValidator.validateCell()]],
+        driverSocialNumberFirst:[this.payload.driverSocialNumberFirst ? this.payload.driverSocialNumberFirst : '', Validators.required],
+        driverSocialNumberSecond:[this.payload.driverSocialNumberSecond ? this.payload.driverSocialNumberSecond : '', Validators.required]
+        // driverSocialNumber : ['',[Validators.required, MyValidator.validSocialNumber()]]
+      },
+      {
+        validators : [MyValidator.validSocialNumber2('driverSocialNumberFirst', 'driverSocialNumberSecond')]
+      })
+
+
+
+      // 다음 클릭 버튼 눌렀을 때 입력 폼 하나씩 생성되던 방식 사용안함 -2022-05-04 적용
+      /*
       this.initialFormContent()
-  
       this.form = this.formBuilder.group({ }) // formBuilder 무상태 초기화
-      
       this.addFormControl() // 첫 ngOninit 주기에 운전자Input만 세팅하기 위해 addFormControl 실행
+      */
     }
     
   }
@@ -82,19 +98,7 @@ export class UserFormComponent implements OnInit {
 
 
 
-  next(){
-    
-    if(Object.keys(this.form.controls).length === this.formDataArr.length && this.form.valid){
-      
-      this.nextPage()
 
-    } else {
-
-      this.addFormControl()
-
-    }
-    
-  }
 
 
   initialFormContent(){
@@ -227,8 +231,27 @@ export class UserFormComponent implements OnInit {
   clearFormControl(formControl:string){
   
     this.form.get(formControl)?.setValue('')
+    if(formControl ==='driverSocialNumber'){
+      this.form.get('driverSocialNumberFirst')?.setValue('')
+      this.form.get('driverSocialNumberSecond')?.setValue('')
+    }
   }
   
+  onlyNumber(event:any){
+    console.log(event)
+    let TARGET = event.target;            // element
+    let FORMCONTROL :string = TARGET.id;  // ReactiveForm formControl 이름
+    let VALUE :string = TARGET.value;     // input의 VALUE
+    let CHAR = event.data;                // 입력 데이터 ex_'A'
+
+
+    if(isNaN(CHAR)){
+      let limitValue = VALUE.substring(0,VALUE.length - 1);
+      this.form.get(FORMCONTROL)?.setValue(limitValue)
+      return
+    }
+  }
+
   customizeValue(event:any):void{
     
     let TARGET = event.target;            // element
@@ -322,9 +345,42 @@ export class UserFormComponent implements OnInit {
 
 
   onCursor(event:any){
-    // console.log(event)
+    console.log(event)
     let formControl = event.target.id
     this.onFormControl = formControl
+    console.log('FORM valid : ',this.form.valid)
+    console.log('FORM invalid : ',this.form.invalid)
+    console.log(this.form.errors)
+    console.log('driverName ERROR : ', this.form.get('driverName')?.errors)
+    console.log('driverCell ERROR : ', this.form.get('driverCell')?.errors)
+    console.log('driverSocialNumberFirst ERROR : ', this.form.get('driverSocialNumberFirst')?.errors)
+    console.log('driverSocialNumberSecond ERROR : ', this.form.get('driverSocialNumberSecond')?.errors)
+  }
+
+
+  
+
+
+  /**
+ * next Method Old Version  
+ */
+    next(){
+  
+    if(Object.keys(this.form.controls).length === this.formDataArr.length && this.form.valid){
+      
+      this.nextPage()
+
+    } else {
+
+      this.addFormControl()
+
+    }
+    
+  }
+
+  checkValid(){
+    let validResult = MyValidator.validSocialNumber2('driverSocialNumberFirst', 'driverSocialNumberSecond');
+    console.log(validResult)
   }
 
 }

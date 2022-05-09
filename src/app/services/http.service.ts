@@ -33,13 +33,24 @@ export class HttpService {
   }
 
 
-  sendPostRequest(endpoint :any, data:any, header?:any){
-    return this.http.post(this.getRouter(endpoint), data)
+  sendPostRequest(endpoint :any, data:any, _header?:any){
+    return this.http.post(this.getRouter(endpoint), data, _header)
   }
 
 
-  sendGetRequest(endpoint:any, queryParams?:object | any){
-    const httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+  sendGetRequest(endpoint:any, queryParams?:object | any, header?:any){
+
+    // console.log(header)
+    // let apiKey =''
+    // if(header){
+    //   apiKey = header['X-API-SECRET']
+    // }
+    
+
+    const httpHeaders = new HttpHeaders()
+    .set('Content-Type', 'application/json');
+
+    
     console.log(this.getRouter(endpoint))
     return this.http.get<any>(this.getRouter(endpoint),{headers : httpHeaders, params : queryParams, observe: 'response'})  
       

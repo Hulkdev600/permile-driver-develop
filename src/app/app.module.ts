@@ -23,6 +23,7 @@ import { HiddenSocialNumberPipe } from './shared/pipe/hidden-social-number.pipe'
 import { DashCellPipe } from './shared/pipe/dash-cell.pipe';
 import { DateDotPipe } from './shared/pipe/date-dot.pipe';
 import { SafePipe } from './shared/pipe/safe.pipe';
+import { InsuInformationComponent } from './apps/insu-information/insu-information.component';
 
 
 
@@ -42,7 +43,8 @@ import { SafePipe } from './shared/pipe/safe.pipe';
     HiddenSocialNumberPipe,
     DashCellPipe,
     DateDotPipe,
-    SafePipe
+    SafePipe,
+    InsuInformationComponent
   ],
   imports: [
     BrowserModule,

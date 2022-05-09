@@ -8,20 +8,24 @@
         
         <div [ngSwitch]='onFormControl' class="form-message">
 
-            <div *ngSwitchCase="'driverCell'">
-                <p class="valid-color" *ngIf="form.controls.driverCell.errors?.required">휴대폰번호를 입력해주세요.</p>
-                <p class="valid-color" *ngIf="!form.controls.driverCell.errors?.required && form.controls.driverCell.dirty && form.controls.driverCell.errors?.invalidCell">휴대폰번호를 확인해주세요.</p>
-                <!-- <p class="valid-color" *ngIf="!form.controls.driverCell.errors">휴대폰번호를 입력하였습니다.</p> -->
-                <p class="valid-color" *ngIf="!form.controls.driverCell.errors">휴대폰번호를 확인해주세요.</p>
-            </div>
-            <div *ngSwitchCase="'driverSocialNumber'">
-                <p class="valid-color" *ngIf="form.controls.driverSocialNumber.errors?.required">주민등록번호를 입력해주세요.</p>
-                <p class="valid-color" *ngIf="!form.controls.driverSocialNumber.errors?.required && form.controls.driverSocialNumber.dirty && form.controls.driverSocialNumber.errors?.invalidSocialNumber">주민등록번호를 확인해주세요.</p>
-                <p class="valid-color" *ngIf="!form.controls.driverSocialNumber.errors">주민등록번호를 확인해주세요.</p>
-            </div>
             <div *ngSwitchCase="'driverName'">
                 <p class="valid-color" *ngIf="form.controls.driverName.errors?.required">이름을 입력해주세요.</p>
                 <p class="valid-color" *ngIf="!form.controls.driverName.errors">이름을 확인해주세요.</p>
+            </div>
+            <div *ngSwitchCase="'driverCell'">
+                <p class="valid-color" *ngIf="form.controls.driverCell.errors?.required">휴대폰번호를 입력해주세요.</p>
+                <p class="valid-color" *ngIf="form.controls.driverCell.hasError('invalidCell')">휴대폰번호를 확인해주세요.</p>
+                <p class="valid-color" *ngIf="!form.controls.driverCell.errors">휴대폰번호를 확인해주세요.</p>
+            </div>
+            <div *ngSwitchCase="'driverSocialNumberFirst'">
+                <p class="valid-color" *ngIf="form.controls.driverSocialNumberFirst.errors?.required">주민등록번호를 입력해주세요.</p>
+                <p class="valid-color" *ngIf="form.get('driverSocialNumberFirst')!.hasError('invalidSocialNumber')">주민등록번호를 확인해주세요.</p>
+            </div>
+            <div *ngSwitchCase="'driverSocialNumberSecond'">
+                <p class="valid-color" *ngIf="form.controls.driverSocialNumberFirst.errors?.required && form.controls.driverSocialNumberSecond.errors?.required">주민등록번호를 입력해주세요.</p>
+                <!-- <p class="valid-color" *ngIf="!form.controls.driverSocialNumber.errors?.required && form.controls.driverSocialNumber.dirty && form.controls.driverSocialNumber.errors?.invalidSocialNumber">주민등록번호를 확인해주세요.</p> -->
+                <!-- <p class="valid-color" *ngIf="!form.controls.driverSocialNumber.errors">주민등록번호를 확인해주세요.</p> -->
+                <p class="valid-color" *ngIf="form.get('driverSocialNumberSecond')!.hasError('invalidSocialNumber')">주민등록번호를 확인해주세요.</p>
             </div>
             
         </div>
@@ -51,22 +55,70 @@
             </div> -->
             
             <div class="input-box">
-                <input class="input" type="text" placeholder="이름" formControlName="driverName">
+                <input 
+                    class="input" 
+                    type="text" 
+                    placeholder="이름" 
+                    formControlName="driverName" 
+                    id="driverName"
+                    (focus)="onCursor($event)"
+                    [ngClass]="{'ng-inValid' : form.controls['driverName'].errors && form.controls['driverName'].touched}"
+                />
                 <div class="icon-box" (click)="clearFormControl('driverName')">
                     <fa-icon [icon]="faCircleXmark"></fa-icon>
                 </div>
             </div>
 
             <div class="input-box">
-                <input class="input" type="number" placeholder="휴대폰 번호 '-' 없이 입력"  formControlName="driverName" maxLength="11">
+                <input 
+                    class="input" 
+                    type="text" 
+                    placeholder="휴대폰 번호 '-' 없이 입력" 
+                    formControlName="driverCell" 
+                    id="driverCell"
+                    maxLength="11" 
+                    (focus)="onCursor($event)"
+                    [ngClass]="{'ng-inValid' : form.controls['driverCell'].errors && form.controls['driverCell'].touched}"
+                />
                 <div class="icon-box" (click)="clearFormControl('driverCell')">
                     <fa-icon [icon]="faCircleXmark"></fa-icon>
                 </div>
             </div>
 
-            <!-- <div class="input-box">
-                <input type="text">
-            </div> -->
+            <div class="input-box input-box-driverSocialNumber"
+                [ngClass]="{'ng-inValid' : form.controls['driverSocialNumberSecond'].errors && form.controls['driverSocialNumberSecond'].touched}"
+                >
+
+                <input 
+                    type="text"
+                    formControlName="driverSocialNumberFirst"
+                    class="input-driverSocialNumber"
+                    id="driverSocialNumberFirst" 
+                    #driverSocialNumberFirst
+                    placeholder="주민등록번호" 
+                    maxlength="6" 
+                    (input)="onlyNumber($event)"
+                    (focus)="onCursor($event)"
+                    (blur)="checkValid()"
+                />
+
+                <div class="dash-box">-</div>
+
+                <input 
+                    type="password" 
+                    formControlName="driverSocialNumberSecond" 
+                    class="input-driverSocialNumber" 
+                    id="driverSocialNumberSecond" 
+                    maxlength="7" 
+                    (input)="onlyNumber($event)"
+                    (focus)="onCursor($event)"
+                />
+                
+                <div class="icon-box" (click)="clearFormControl('driverSocialNumber')">
+                    <fa-icon [icon]="faCircleXmark"></fa-icon>
+                </div>
+
+            </div>
             
 
             
@@ -77,7 +129,7 @@
 
     <div class="fixed-button-area">
 
-        <button class="btn btn-primary next-button" (click)="next()" [disabled]="form.invalid">다음</button>
+        <button class="btn btn-primary next-button" (click)="nextPage()" [disabled]="form.invalid">다음</button>
         
     </div>
 

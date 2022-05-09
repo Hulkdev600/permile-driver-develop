@@ -37,6 +37,44 @@
     border:1px solid #3581FF;
   
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.input-box-driverSocialNumber{
+
+    height: 56px;
+    width: 100%;
+    border-radius: 4px;
+    background: #F8F8F8;
+    outline: none;
+    box-sizing: border-box;
+    padding: 16px 12px 16px 16px;
+    border: 1px solid rgba(38, 45, 57, 0.08);
+    
+
+    .input-driverSocialNumber{
+        border : none;
+        background-color: #F8F8F8;
+        outline: none;
+        width: calc((100% - 10px) / 2);
+    }
+    .input-driverSocialNumber-second{
+        padding: 10px;
+    }
+    #driverSocialNumberSecond{
+        padding-left: 10px;
+    }
+    .dash-box{
+        display: inline-block;
+        width: 10px;
+        text-align: center;
+    }
+
+}
+
+
 
 .next-button{
     background: #3581FF;

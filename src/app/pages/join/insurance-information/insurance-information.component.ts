@@ -140,6 +140,8 @@ export class InsuranceInformationComponent implements OnInit {
     this.payload['driverName'] = this.userPastData.driverName
     this.payload['driverCell'] = this.userPastData.driverCell
     this.payload['driverSocialNumber'] = this.userPastData.driverSocialNumber
+    this.payload['driverSocialNumberFirst'] = this.userPastData.driverSocialNumberFirst
+    this.payload['driverSocialNumberSecond'] = this.userPastData.driverSocialNumberSecond
      
     let emitData = {
       // changePage : 'confirm',

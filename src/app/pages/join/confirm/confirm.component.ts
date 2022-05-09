@@ -65,7 +65,7 @@ export class ConfirmComponent implements OnInit {
 
   ngOnInit(): void {
     
-    // console.log(this.payload)  
+    console.log(this.payload)  
     if(!this.payload){
       //새로고침 시 첫번째 페이지로 라우팅시킨다
       this.router.navigate(['/join/insurance-information'],{queryParams : {enc : this.queryString_enc}})
@@ -173,7 +173,7 @@ export class ConfirmComponent implements OnInit {
    * 
    */
   contract(){
-    
+    console.log(this.payload)
     let headers = {
       'X-API-SECRET' : this.payload['X-API-SECRET']
     }

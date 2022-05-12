@@ -1,21 +1,147 @@
 
 
 
-
-section{
-    border: 1px solid #eee
+.section{
+    padding: 0px 20px;
 }
 
+.background-color-gray{
+    background-color: #eee;
+}
 
 
 .section-title{
     text-align: center;
+    margin-bottom: 80px;
+    font-size: 26px;
+    font-weight: 700;
 }
 
-header{
-    margin-top: 100px;
+#header-section{
+
+    text-align: center;
+    padding-top: 70px;
+    padding-bottom  : 70px;
+    #insu-request-button{
+        width: 175px;
+        background-color: #273646;
+        color: #eee;
+        font-size: 17px;
+        height: 70px;
+        line-height: 70px;
+        border-radius: 50px;
+        border: 0px;
+    }
+    .section-title{
+        margin-bottom: 22px;
+    }
 }
 
-.page-header{
-    height: 1000px;
+
+
+#product-section{
+    padding-top: 70px;
+    padding-bottom: 70px;
+
+
+    #table{
+        empty-cells: show;
+        width: 100%;
+        margin: auto;
+        margin-bottom: 20px;
+        thead td{
+            font-family: 'NotoSansCJKkr-Bold';
+            background: #273646;
+            color:#fff;
+            text-align: center;
+            height: 30px;
+        }
+        td{
+            font-family: 'NotoSansCJKkr-Regular';
+            // width: 30px;
+            border: 1px solid #dbdbdb;
+            height: 50px;
+            text-align: center;
+            background-color: #fff;
+            padding: 15px;
+        }
+        .col1{
+            width: 120px;
+        }
+        .col2{
+            width: 160px;
+        }
+        .col3{
+
+        }
+        .col4{
+            width: 125px;
+        }
+        .color-td{
+            // background: #d6f4ee;
+        }
+    }
+}
+
+#term-section{
+
+    padding-top: 70px;
+    padding-bottom: 70px;
+    text-align: center;
+    .terms-button{
+        cursor: pointer;
+        font-size:16px;
+        color: #fff;
+        border: 1px solid  #273646;;
+        background: #273646;
+        width: 200px;
+        border-radius: 50px;
+        padding: 14px;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+}
+
+
+#faq-section{
+    
+    padding-top: 70px;
+    padding-bottom: 70px;
+    
+}
+
+
+
+#contact-us-section{
+
+    padding-top: 70px;
+    padding-bottom: 70px;
+    text-align: center;
+    .contact-text{
+        
+        border-top: 2px solid black;
+        border-bottom: 2px solid black;
+        padding: 30px 0;
+        text-align: center;
+        width: 250px;
+        margin: 0 auto; /* or margin: 0 auto 0 auto */
+        margin-bottom: 50px;
+    }
+
+
+    #contact-info-table{
+        text-align: left;
+        margin: 0 auto; /* or margin: 0 auto 0 auto */
+    }
+    
+}
+
+
+
+#footer{
+
+    padding-top: 20px;
+    padding-bottom: 20px;
 }

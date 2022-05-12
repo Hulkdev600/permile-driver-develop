@@ -6,7 +6,7 @@
 
     <section class="form-area">
         
-        <div [ngSwitch]='onFormControl' class="form-message">
+        <!-- <div [ngSwitch]='onFormControl' class="form-message">
 
             <div *ngSwitchCase="'driverName'">
                 <p class="valid-color" *ngIf="form.controls.driverName.errors?.required">이름을 입력해주세요.</p>
@@ -23,12 +23,10 @@
             </div>
             <div *ngSwitchCase="'driverSocialNumberSecond'">
                 <p class="valid-color" *ngIf="form.controls.driverSocialNumberFirst.errors?.required && form.controls.driverSocialNumberSecond.errors?.required">주민등록번호를 입력해주세요.</p>
-                <!-- <p class="valid-color" *ngIf="!form.controls.driverSocialNumber.errors?.required && form.controls.driverSocialNumber.dirty && form.controls.driverSocialNumber.errors?.invalidSocialNumber">주민등록번호를 확인해주세요.</p> -->
-                <!-- <p class="valid-color" *ngIf="!form.controls.driverSocialNumber.errors">주민등록번호를 확인해주세요.</p> -->
                 <p class="valid-color" *ngIf="form.get('driverSocialNumberSecond')!.hasError('invalidSocialNumber')">주민등록번호를 확인해주세요.</p>
             </div>
             
-        </div>
+        </div> -->
 
         <form [formGroup]="form">
 
@@ -64,7 +62,7 @@
                     (focus)="onCursor($event)"
                     [ngClass]="{'ng-inValid' : form.controls['driverName'].errors && form.controls['driverName'].touched}"
                 />
-                <div class="icon-box" (click)="clearFormControl('driverName')">
+                <div *ngIf="onFormControl==='driverName'" class="icon-box" (click)="clearFormControl('driverName')">
                     <fa-icon [icon]="faCircleXmark"></fa-icon>
                 </div>
             </div>
@@ -80,7 +78,7 @@
                     (focus)="onCursor($event)"
                     [ngClass]="{'ng-inValid' : form.controls['driverCell'].errors && form.controls['driverCell'].touched}"
                 />
-                <div class="icon-box" (click)="clearFormControl('driverCell')">
+                <div *ngIf="onFormControl==='driverCell'" class="icon-box" (click)="clearFormControl('driverCell')">
                     <fa-icon [icon]="faCircleXmark"></fa-icon>
                 </div>
             </div>
@@ -98,8 +96,8 @@
                     placeholder="주민등록번호" 
                     maxlength="6" 
                     (input)="onlyNumber($event)"
+                    (keyup)="focusDriverSocialNumberSecond()"
                     (focus)="onCursor($event)"
-                    (blur)="checkValid()"
                 />
 
                 <div class="dash-box">-</div>
@@ -109,12 +107,13 @@
                     formControlName="driverSocialNumberSecond" 
                     class="input-driverSocialNumber" 
                     id="driverSocialNumberSecond" 
+                    #driverSocialNumberSecond
                     maxlength="7" 
                     (input)="onlyNumber($event)"
                     (focus)="onCursor($event)"
                 />
                 
-                <div class="icon-box" (click)="clearFormControl('driverSocialNumber')">
+                <div *ngIf="onFormControl === 'driverSocialNumberFirst' || onFormControl === 'driverSocialNumberSecond'" class="icon-box" (click)="clearFormControl('driverSocialNumber')">
                     <fa-icon [icon]="faCircleXmark"></fa-icon>
                 </div>
 

@@ -17,6 +17,7 @@ export class UserFormComponent implements OnInit {
   @Input() queryString_enc:string | undefined
   @Output() renewal:EventEmitter<any> = new EventEmitter();
   @ViewChild ('driverSocialNumberFirst') driverSocialNumberFirst : any;
+  @ViewChild ('driverSocialNumberSecond') driverSocialNumberSecond : any;
   form!:FormGroup
   formDataArr:any[] = []
   formControlsList:any[] =[]
@@ -34,7 +35,7 @@ export class UserFormComponent implements OnInit {
 
 
   ngOnInit(): void {
-    
+    console.log(this.payload)
     if(!this.payload){
       this.router.navigate(['/join/insurance-information'],{queryParams : {enc : this.queryString_enc}})
      
@@ -46,7 +47,6 @@ export class UserFormComponent implements OnInit {
         driverCell : [this.payload.driverCell,[Validators.required,MyValidator.validateCell()]],
         driverSocialNumberFirst:[this.payload.driverSocialNumberFirst ? this.payload.driverSocialNumberFirst : '', Validators.required],
         driverSocialNumberSecond:[this.payload.driverSocialNumberSecond ? this.payload.driverSocialNumberSecond : '', Validators.required]
-        // driverSocialNumber : ['',[Validators.required, MyValidator.validSocialNumber()]]
       },
       {
         validators : [MyValidator.validSocialNumber2('driverSocialNumberFirst', 'driverSocialNumberSecond')]
@@ -69,6 +69,7 @@ export class UserFormComponent implements OnInit {
 
     this.setParams().subscribe(params => {
       
+
       let encryptedData = encodeURI(params.enc).replace(/%20/gi,'+')
       
       let body = {
@@ -230,15 +231,20 @@ export class UserFormComponent implements OnInit {
 
   clearFormControl(formControl:string){
   
-    this.form.get(formControl)?.setValue('')
+    
     if(formControl ==='driverSocialNumber'){
       this.form.get('driverSocialNumberFirst')?.setValue('')
       this.form.get('driverSocialNumberSecond')?.setValue('')
+      this.onFormControl = 'driverSocialNumberFirst'
+    } else {
+      this.form.get(formControl)?.setValue('')
+      this.onFormControl = formControl
     }
+    
   }
   
   onlyNumber(event:any){
-    console.log(event)
+    // console.log(event)
     let TARGET = event.target;            // element
     let FORMCONTROL :string = TARGET.id;  // ReactiveForm formControl 이름
     let VALUE :string = TARGET.value;     // input의 VALUE
@@ -345,20 +351,12 @@ export class UserFormComponent implements OnInit {
 
 
   onCursor(event:any){
-    console.log(event)
+    
     let formControl = event.target.id
     this.onFormControl = formControl
-    console.log('FORM valid : ',this.form.valid)
-    console.log('FORM invalid : ',this.form.invalid)
-    console.log(this.form.errors)
-    console.log('driverName ERROR : ', this.form.get('driverName')?.errors)
-    console.log('driverCell ERROR : ', this.form.get('driverCell')?.errors)
-    console.log('driverSocialNumberFirst ERROR : ', this.form.get('driverSocialNumberFirst')?.errors)
-    console.log('driverSocialNumberSecond ERROR : ', this.form.get('driverSocialNumberSecond')?.errors)
+    
   }
-
-
-  
+ 
 
 
   /**
@@ -378,9 +376,11 @@ export class UserFormComponent implements OnInit {
     
   }
 
-  checkValid(){
-    let validResult = MyValidator.validSocialNumber2('driverSocialNumberFirst', 'driverSocialNumberSecond');
-    console.log(validResult)
+  focusDriverSocialNumberSecond(){
+    let length = this.driverSocialNumberFirst.nativeElement.value.length
+    if(length === 6){
+      this.driverSocialNumberSecond.nativeElement.focus()
+    }
   }
 
 }

@@ -15,7 +15,11 @@
 .form-message{
     margin-bottom: 20px;
 }
-
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus{
+    transition: background-color 5000s ease-in-out 0s; // autocomplite 될 때 색깔 blue로 background 차는 거 없애기
+}
 .input{
     height: 56px;
     width: 100%;

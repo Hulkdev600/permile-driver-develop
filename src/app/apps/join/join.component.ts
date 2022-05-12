@@ -55,13 +55,15 @@ export class JoinComponent implements OnInit {
 
     this.setParam();
     
+    console.log(this.queryString_enc)
     if(!this.payload){
       console.log(this.payload)
       console.log('payload 업다니까 ',)
-      this.router.navigate(['/join/insurance-information'],{queryParams : {enc : this.queryString_enc}})
+      // this.router.navigate(['/join/insurance-information'],{queryParams : {enc : this.queryString_enc}})
       
     }
 
+    console.log()
     this.routeSub = this.activatedRoute.params.subscribe(result => {
       
       let page = result['page']  
@@ -73,7 +75,7 @@ export class JoinComponent implements OnInit {
   }
 
   ngOnDestroy():void{
-    this.routeSub?.remove
+    // this.routeSub?.remove
     
   }
 

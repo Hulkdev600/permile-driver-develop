@@ -1,4 +1,4 @@
-<main>
+<main id="insurequest-container">
     
   
     <!-- Navigation -->
@@ -31,59 +31,135 @@
     </nav>
       
       
-      <header #firstSection class="page-header">
+      <header #firstSection class="section" id="header-section">
         <h1 class="page-title section-title">탄 만큼 내는 운전자보험</h1>
         <p>운전자보험 간단 설명</p>
 
-        <button>
+        <button id="insu-request-button">
             사고접수하기
         </button>
 
       </header>
       
-      <section #secondSection>
+      <section #secondSection id="product-section" class="section background-color-gray">
         <h2 class="section-title">상품내용</h2>
 
-
-        <h6>담보 및 보험료 내용</h6>
-        <table>
-          <thead>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </thead>
-          <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            
-          </tbody>
-        </table>
+        <div class="table-area">
+          <h6>담보 및 보험료 내용</h6>
+          <table id="table">
+            <thead>
+              <tr>
+                <td class="col1">담보</td>
+                <td class="col2">보상하는 손해</td>
+                <td class="col3">가입금액(원)</td>
+                <!-- <td class="col4"></td> -->
+              </tr>
+              
+            </thead>
+            <tbody>
+              <tr>
+                <td>교통사고처리지원금<br>(동승자포함)</td>
+                <td></td>
+                <td>1.5억원</td>
+              </tr>
+              <tr>
+                <td>자동차사고변호사선임비용<br>(약식기소제외)</td>
+                <td></td>
+                <td>3,000만원</td>
+              </tr>
+              <tr>
+                <td>벌금</td>
+                <td></td>
+                <td>3,000만원</td>
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+        
       </section>
 
-      <section #thirdSection>
+      <section #thirdSection id="term-section">
         <h2 class="section-title">약관안내</h2>
+
+        <div class="terms-button">
+          탄 만큼 내는 운전자보험<br>
+          약관 확인하기
+        </div>
+        
       </section>
 
-      <section #fourthSection>
+      <section #fourthSection id="faq-section" class="section background-color-gray">
         <h2 class="section-title">자주 묻는 질문</h2>
+
+        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+          <ngb-panel title="Simple">
+            <ng-template ngbPanelContent>
+              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
+              aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+              sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+              craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+              occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+              labore sustainable VHS.
+            </ng-template>
+          </ngb-panel>
+          <ngb-panel>
+            <ng-template ngbPanelTitle>
+              <span>&#9733; <b>Fancy</b> title &#9733;</span>
+            </ng-template>
+            <ng-template ngbPanelContent>
+              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
+              aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+              sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+              craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+              occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+              labore sustainable VHS.
+            </ng-template>
+          </ngb-panel>
+        </ngb-accordion>
+        
+
       </section>
 
-      <section #fifthSection>
+      <section #fifthSection id="contact-us-section" class="section">
         <h2 class="section-title">문의하기</h2>
+
+      
+
+        <div class="contact-text">
+          사고접수 및 보험상품 문의는<br>
+          아래 정보로 연락주시기 바랍니다.
+        </div>
+
+        
+          
+        <table id="contact-info-table">
+          <tr>
+            <td>대표번호</td>
+            <td>1877 - 3006</td>
+          </tr>
+          <tr>
+            <td>이메일</td>
+            <td>sj@simg.kr</td>
+          </tr>
+        </table>
+
+        
+        
+
       </section>
 
-      <footer>
+      <footer id="footer" class="section background-color-gray">
+        <div class="company-information-box">
+          보험대리점 : (주)에스아이엠지 <br>
+          대리점번호 : 201411098 <br>
+          대표자 : 오 성 준 <br>
+          사업자번호 : 129 - 87 - 16058 <br>
+          주소 : 서울특별시 강남구 테헤란로 416 연봉빌딩, 16층
+        </div>
 
+        <!-- <div class="company-logo-box">
+          <img class="company-logo-img" src="./img/footer/SIMG_logo.png" alt="">
+        </div> -->
       </footer>
 </main>

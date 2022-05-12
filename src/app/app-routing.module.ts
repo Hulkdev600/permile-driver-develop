@@ -13,7 +13,10 @@ const routes: Routes = [
   },
   {
     path:'join/:page',
-    // path:'join',
+    component : JoinComponent,
+  },
+  {
+    path:'joindev/:page',
     component : JoinComponent,
   },
   {

@@ -26,24 +26,32 @@ export class MyValidator{
             const firstControl = controls.get(socialNumberFirst);
             const secondControl = controls.get(socialNumberSecond);
 
-
+            // console.log(firstControl)
+            // console.log(secondControl)
             const rnFirst = String(firstControl!.value);
             const rnSecond = String(secondControl!.value);
 
             
             const rnFinal = rnFirst + rnSecond
             
-            console.log('rnFinal : ', rnFinal)
+            // console.log('rnFinal : ', rnFinal)
             if( rnFinal.length!==0 && rnFinal.length !== 13 ) {
                 // controls.get(socialNumberFirst)!.setErrors({ invalidSocialNumber: true });
-                controls.get(socialNumberSecond)!.setErrors({ invalidSocialNumber: true });
+                // controls.get(socialNumberSecond)!.setErrors({ invalidSocialNumber: true });
                 // return { invalidSocialNumber : true }; // 13자리가 안될때 invalid 상태
             
                 return { invalidSocialNumber: true }
+                
+            } else {
+
+                // 주민등록번호 첫번쨰 driverSocialNumberFirst만 error null처리한다.
+                firstControl?.setErrors(null)
+                // secondControl?.setErrors(null) // 이것까지해버리면 아예 invalid 풀려버려서 주석처리해야된다.
+
+                return null
             }
             
-            // firstControl?.clearValidators()
-            return null
+            
         }
     }
 

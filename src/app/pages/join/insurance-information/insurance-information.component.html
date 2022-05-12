@@ -1,11 +1,12 @@
 <main class="insurance-information-container">
-    <header class="header title-area">
+    <header class="header title-area padding-side">
         <h1 class="title">
             <span class="color-blue">탄 만큼 내는 운전자보험</span><br>가입내용을 확인해주세요.
         </h1>
         <h2 class="sub-title">언제 어디서든 원하는 시간에 <br>내비를 사용해서 탄 만큼만 내는 운전자보험</h2>
     </header>
-    
+
+
     <section class="image-area">
         <div class="image-box">
             <!-- <img src="/assets/image/img.svg" alt=""> -->
@@ -13,24 +14,24 @@
         </div>
         
     </section>
-    
-    <section class="insurance-information-area">
+
+    <section class="insurance-information-area padding-side">
     
         <ul class="description-box" id="product-information-list">
             <li class="description-content">
-                <dl>보험기간</dl>
+                <dl class="font-color-gray">보험기간</dl>
                 <dd>가입일로부터 1년</dd>    
             </li>
             <li class="description-content">
-                <dl>상품종류</dl>
+                <dl class="font-color-gray">상품종류</dl>
                 <dd>순수보장형</dd>
             </li>
             <li class="description-content">
-                <dl>가입연령</dl>
+                <dl class="font-color-gray">가입연령</dl>
                 <dd>19세부터 70세까지</dd>
             </li>   
             <li class="description-content" id="premium-content">
-                <dl>보험료</dl>
+                <dl class="font-color-gray">보험료</dl>
                 <dd>1km당 3원 / 익월 1일 후불결제</dd>
             </li> 
         </ul>
@@ -117,11 +118,12 @@
     
     </section>
     
-    <section class="bottom-area">
-        <p>탄 만큼 운전자보험은 DB손해보험에서 제공합니다.</p>
+    <section class="bottom-area padding-side">
+        <!-- <p>탄 만큼 운전자보험은 DB손해보험에서 제공합니다.</p> -->
+        <p (click)="open(SIMG_information,'my-class-modal-full-height')">탄 만큼 내는 운전자보험은 DB손해보험에서 제공하며, 본 페이지는 DB손해보험의 <span class="color-blue">보험대리점 SIMG</span>에서 운영/관리합니다.</p>
     </section>
 
-    <div class="sticky-button-area">
+    <div class="sticky-button-area padding-side">
 
         <button [disabled]="!isAccessOk" class="btn btn-primary" id="next-button" (click)="open(checkJoinAvailable,'my-class-check-join-available-modal')">
             다음
@@ -640,6 +642,70 @@
                 <button class="btn check-button fail-button left-button" (click)="modal.dismiss('Cross click')">다시 작성</button>    
                 <button class="btn check-button success-button right-button" (click)="changePage()">네</button>
             </div>          
+        </div>
+    </div>
+</ng-template>
+
+<!-- 페이지 이동 Modal -->
+<ng-template #SIMG_information let-modal>
+    <div class="modal-header">
+        <h4 id="modal-basic-title"></h4>
+        <div class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <!-- <fa-icon [icon]="faX"></fa-icon> -->
+          <img src="/assets/image/close_x.svg" alt="">
+        </div>
+    </div>
+    <div class="modal-body">
+
+        <div class="content-box">
+            
+           <h4 class="content-title">보험대리점 정보</h4>
+           <table id="SIMG-info-table">
+   
+                <tbody>
+                    <tr>
+                        <td class="td-title">상호</td>
+                        <td class="td-content">SIMG</td>
+                    </tr>
+                    <tr>
+                        <td class="td-title">법인명</td>
+                        <td class="td-content">(주)에스아이엠지</td>
+                     </tr>
+                     <tr>
+                        <td class="td-title">홈페이지</td>
+                        <td class="td-content"><a href="https://www.simg.kr" target="_black">www.simg.kr</a></td>
+                    </tr>
+                     <tr>
+                         <td class="td-title">사업자번호</td>
+                         <td class="td-content">128-87-16058</td>
+                     </tr>
+                     <tr>
+                        <td class="td-title">대리점번호</td>
+                        <td class="td-content">2014110098</td>
+                    </tr>
+                     <tr>
+                         <td class="td-title">대표자</td>
+                         <td class="td-content">오성준</td>
+                     </tr>
+                     <tr>
+                        <td class="td-title">주소</td>
+                        <td class="td-content">서울특별시 강남구 테헤란로 416 연봉빌딩, 16층</td>
+                    </tr>
+                </tbody>
+           </table>
+           <p><a href="/assets/file/SIMG_certi.pdf" target="_blank">DB손해보험•SIMG 위탁관계 증명서 확인하기</a></p>
+           
+
+            <!-- <ul>
+                <li>상호 : SIMG</li>
+                <li>법인명 : (주)에스아이엠지</li>
+                <li>홈페이지 : <a href="https://www.simg.kr" target="_black">www.simg.kr</a></li>
+                <li>사업자번호 : 128-87-16058</li>
+                <li>대리점번호 : 2014110098</li>
+                <li>주소 : 서울특별시 강남구 테헤란로 416 연봉빌딩, 16층</li>
+                <li>대표자 : 오 성 준</li>
+                <li>DB손해보험•SIMG 위탁관계 증명서 확인하기</li>
+            </ul> -->
         </div>
     </div>
 </ng-template>

@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, TemplateRef,ViewChild,ViewContainerRef, Input, ComponentFactoryResolver } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from 'src/app/services/http.service';
+import { Subscription } from 'rxjs';
 
 import {NgbModal, ModalDismissReasons, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 
@@ -37,6 +38,8 @@ export class InsuranceInformationComponent implements OnInit {
   closeResult = '';
   alertMessage='';
 
+  sub!: Subscription;
+
   userPastData:any = undefined
   @ViewChild('checkFailModal') checkFailModal: TemplateRef<any> | undefined
   @ViewChild('alertModal') alertModal: TemplateRef<any> | undefined
@@ -55,14 +58,25 @@ export class InsuranceInformationComponent implements OnInit {
     }
 
   ngOnInit(): void {  
-    console.log('ngOninit Test')
+    this.sub = this.setParams().subscribe(params => {
+      console.log('test setParam,s')
+    })
+
     this.getUser()
   }
+
+  ngDestroy(){
+    console.log('DESTROPYD')
+    this.sub.unsubscribe()
+  }
+
 
   private getUser(){
     console.log('GET USER')
     let observer = this.setParams().subscribe(params => {
-      
+ 
+
+
       let encryptedData = encodeURI(params.enc).replace(/%20/gi,'+')
       
       // console.log(encryptedData)

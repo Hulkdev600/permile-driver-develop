@@ -7,6 +7,7 @@ import { PlatformLocation } from '@angular/common'
 import { DomSanitizer} from '@angular/platform-browser';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -16,6 +17,8 @@ import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 })
 
 export class ConfirmComponent implements OnInit {
+  page : string ='confirm';
+  mode : string | null = '';
   modalRef: NgbModalRef | undefined;
   @Input() payload:any
   @Output("renewal") renewal:EventEmitter<any> = new EventEmitter();
@@ -25,8 +28,9 @@ export class ConfirmComponent implements OnInit {
   @ViewChild('contractSuccessModal') contractSuccessModal: TemplateRef<any> | undefined
   @ViewChild('contractFailModal') contractFailModal: TemplateRef<any> | undefined
   @ViewChild('iframe') iframe: ElementRef<any> | undefined
+  
   @Input() queryString_enc:string | undefined
-
+  @Input() queryParams : any | undefined
   faCircleCheck = faCircleCheck;
   faCircleExclamation = faCircleExclamation
 
@@ -48,74 +52,64 @@ export class ConfirmComponent implements OnInit {
   payAppOnOff = false;
   contractMessage =''
   visibilityOn=false;
-
+  sub!: Subscription;
+  // queryParams:any = {
+  //   enc: '',
+  //   mode : null
+  // };
   constructor(
     private _httpService : HttpService,
     private activatedRoute : ActivatedRoute,
     private modalService: NgbModal,
-    private location: PlatformLocation,
-    private router:Router
-  ) { 
-    // if(!this.payload){
-    //   this.router.navigate(['/join/insurance-information'],{queryParams : {enc : this.queryString_enc}})
-    //   return
-    // }
     
-  }
+    private router:Router
+  ) { }
 
   ngOnInit(): void {
     
-    console.log(this.payload)  
+    // console.log(this.payload)  
+    
     if(!this.payload){
       //새로고침 시 첫번째 페이지로 라우팅시킨다
-      this.router.navigate(['/join/insurance-information'],{queryParams : {enc : this.queryString_enc}})
-    } else{
-      this.getUser()
+      this.router.navigate(['/join/insurance-information'],{queryParams : this.queryParams})
 
+    } else{
+
+      this.logUser()
       this.getProduct()
+
     }
-    
-    
   }
 
-  private getUser(){
+  ngOnDestroy():void{
+    this.sub?.unsubscribe()
+    // console.log('ngOnDestroy Confirm Component ')
+  }
 
-    this.setParams().subscribe(params => {
-      
-      let encryptedData = encodeURI(params.enc).replace(/%20/gi,'+')
-      
-      // console.log(encryptedData)
-      // console.log(this.payload)
-      let body = {
-        enc : encryptedData,
-        onPage : 'confirm',
-        userForm : JSON.stringify(this.payload)
-      }
-      
-      this._httpService.sendGetRequest('user', body).subscribe(
+  private logUser(){
+
+      let queryParam = {...this.queryParams}; // 깊은복사로 참조주소 다른 새로운 객체 생성한다.
+      queryParam['onPage'] = this.page
+
+      this.sub = this._httpService.sendGetRequest('user', queryParam).subscribe(
         (response:any) => {
           let body = response.body
           // this.payload = body['payload']; // 1
-          console.log(body['payload'])
+          // console.log(body['payload'])
       },
         (errObj) => {
           
           let errorBody = errObj.error
           console.log(errObj)
           
-          // alert(errorBody.message)
         }
       )
-    }).unsubscribe()
   }
 
-  setParams(){
-    return this.activatedRoute.queryParams
-  }
 
   getProduct(){
     this._httpService.sendPostRequest(this.getProductEndpoint, undefined).subscribe((response:any) => {
-      console.log(response)
+      
       this.productName = response.pdName;
       this.productType = response.pdType;
       this.policyEndDay = response.policyEndDay;
@@ -128,10 +122,14 @@ export class ConfirmComponent implements OnInit {
   }
 
   openKakaoPaymentApp(){
-    // console.log(this.payload)
-    let leafletId = this.payload.byPassField.leafletId
-    // console.log('leafletid :',leafletId)
     
+    if(this.mode ==='demo'){
+      alert('demo Version')
+      return 
+    }
+
+    let leafletId = this.payload.byPassField.leafletId
+       
     
     var varUA = navigator.userAgent
     
@@ -173,7 +171,12 @@ export class ConfirmComponent implements OnInit {
    * 
    */
   contract(){
-    console.log(this.payload)
+    
+    if(this.mode ==='demo'){
+      alert('demo Version')
+      return 
+    }
+
     let headers = {
       'X-API-SECRET' : this.payload['X-API-SECRET']
     }
@@ -261,7 +264,6 @@ export class ConfirmComponent implements OnInit {
 
   visibilityControl(){
     this.visibilityOn = true
-    // console.log(';stsefsdfds')
   }
 
 

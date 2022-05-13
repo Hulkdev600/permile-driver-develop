@@ -24,6 +24,7 @@ import { DashCellPipe } from './shared/pipe/dash-cell.pipe';
 import { DateDotPipe } from './shared/pipe/date-dot.pipe';
 import { SafePipe } from './shared/pipe/safe.pipe';
 import { InsuInformationComponent } from './apps/insu-information/insu-information.component';
+import { HttpService } from './services/http.service';
 
 
 
@@ -54,7 +55,7 @@ import { InsuInformationComponent } from './apps/insu-information/insu-informati
     HttpClientModule,
     FontAwesomeModule
   ],
-  providers: [],
+  providers: [HttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

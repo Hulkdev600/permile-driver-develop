@@ -8,10 +8,13 @@
         
     </header>
     <section [ngSwitch]="PAGE">
-        <page-insurance-information *ngSwitchCase="'insurance-information'"  [payload]="payload" [queryString_enc]="queryString_enc" (renewal)="renewal($event)"></page-insurance-information>
+        <!-- <page-insurance-information *ngSwitchCase="'insurance-information'"  [payload]="payload" [queryString_enc]="queryString_enc" (renewal)="renewal($event)"></page-insurance-information>
         <page-user-form *ngSwitchCase="'user-form'" [payload]="payload" [queryString_enc]="queryString_enc" (renewal)="renewal($event)"></page-user-form>
-        <page-confirm *ngSwitchCase="'confirm'" [payload]="payload" [queryString_enc]="queryString_enc" (renewal)="renewal($event)"></page-confirm>
+        <page-confirm *ngSwitchCase="'confirm'" [payload]="payload" [queryString_enc]="queryString_enc" (renewal)="renewal($event)"></page-confirm> -->
 
+        <page-insurance-information *ngSwitchCase="'insurance-information'"  [payload]="payload" [queryParams]="queryParams" (renewal)="renewal($event)"></page-insurance-information>
+        <page-user-form *ngSwitchCase="'user-form'" [payload]="payload" [queryParams]="queryParams" (renewal)="renewal($event)"></page-user-form>
+        <page-confirm *ngSwitchCase="'confirm'" [payload]="payload" [queryParams]="queryParams" (renewal)="renewal($event)"></page-confirm>
     </section>
     
 

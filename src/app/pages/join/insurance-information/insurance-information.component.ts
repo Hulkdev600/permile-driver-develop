@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, TemplateRef,ViewChild,ViewContainerRef, Input, ComponentFactoryResolver } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, TemplateRef,ViewChild,ViewContainerRef, Input, ComponentFactoryResolver, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from 'src/app/services/http.service';
 import { Subscription } from 'rxjs';
@@ -19,9 +19,12 @@ import { PlatformLocation } from '@angular/common'
   styleUrls: ['./insurance-information.component.scss']
 })
 export class InsuranceInformationComponent implements OnInit {
+  page : string ='insurance-information'
   modalRef: NgbModalRef | undefined;
+  
   @Input() payload!:any | undefined
-  @Input() queryString_enc:string | undefined
+  @Input() queryString_enc!:string
+  @Input() queryParams : any | undefined
 
   /*fontAwesome*/
   faAngleRight = faAngleRight
@@ -41,6 +44,12 @@ export class InsuranceInformationComponent implements OnInit {
   sub!: Subscription;
 
   userPastData:any = undefined
+  // queryParams:any = {
+  //   enc: '',
+  //   mode : null
+  // };
+  
+
   @ViewChild('checkFailModal') checkFailModal: TemplateRef<any> | undefined
   @ViewChild('alertModal') alertModal: TemplateRef<any> | undefined
   @ViewChild('changePageChoiceModal') changePageChoiceModal: TemplateRef<any> | undefined
@@ -52,98 +61,89 @@ export class InsuranceInformationComponent implements OnInit {
     private activatedRoute : ActivatedRoute,
     private _httpService : HttpService,
     private router : Router,
-    private location: PlatformLocation
     ) { 
       
     }
 
+  // ngOnChanges(changes: SimpleChanges){
+  //  console.log('changes : ',changes)
+  // }
+
   ngOnInit(): void {  
-    this.sub = this.setParams().subscribe(params => {
-      console.log('test setParam,s')
-    })
+    
+    console.log('this.queryParams:',this.queryParams)
 
-    this.getUser()
+    this.logUser()
+
   }
 
-  ngDestroy(){
-    console.log('DESTROPYD')
-    this.sub.unsubscribe()
+  ngOnDestroy():void{
+    this.sub?.unsubscribe()
+    console.log('ngOnDestroy InsuranceInformation Component ')
   }
 
 
-  private getUser(){
-    console.log('GET USER')
-    let observer = this.setParams().subscribe(params => {
- 
 
+  private logUser(){    
 
-      let encryptedData = encodeURI(params.enc).replace(/%20/gi,'+')
-      
-      // console.log(encryptedData)
-      let body = {
-        enc : encryptedData,
-        onPage : 'insurance-information'
-      }
-      
+    let queryParams = {...this.queryParams}; // 깊은복사로 참조주소 다른 새로운 객체 생성한다. -> 공유하는 queryParam에 영향주지 않고 onPage프로퍼티 추가해서 request보내기 위함
+    
+    queryParams['onPage'] = this.page 
+    
+    this.sub = this._httpService.sendGetRequest('user', queryParams).subscribe(
+      (response:any) => {
+        // console.log(response)
+        let responseBody = response.body
+        if(responseBody.type === 'RENEWAL'){
+          // 갱신일 떄
+          this.isAccessOk = true;
 
-      this._httpService.sendGetRequest('user', body).subscribe(
-        (response:any) => {
-          console.log(response)
-          let responseBody = response.body
-        
-          if(responseBody.type === 'RENEWAL'){
-            // 갱신일 떄
-
-
-            this.isAccessOk = true;
-
-            if(responseBody.code !== '200'){
-              alert(responseBody.message)
-            }
-
-
-          } else {
-            // 신규일 떄
-            
-
-            /**
-             * User의 상태확인하여 가입 진행여부 결정
-             * 계약된 인원이라면 진행 X
-             * 
-             * **/
-            if(responseBody.code === '200'){
-            
-              this.isAccessOk = true; // 다음버튼 활성화
-
-            } else {
-
-              this.alertMessage = responseBody.message
-              this.open(this.alertModal,'my-class-check-fail-modal') // 
-              return
-
-            }
-            
-            this.payload = responseBody['payload']; // 1
-  
-            // 가입 중 이탈한 이력(findHistory)를 확인하였을 경우, 가입정보확인하는 페이지로 이동할 것인지 선택하는 모달을 띄운다.
-            if(responseBody.findHistory){
-              this.userPastData = responseBody.payload.past
-              this.open(this.changePageChoiceModal,'my-class-change-page-choice-modal')
-            }
-                        
+          if(responseBody.code !== '200'){
+            alert(responseBody.message)
           }
 
+        } else {
+          // 신규일 떄
+          
 
+          /**
+           * User의 상태확인하여 가입 진행여부 결정
+           * 계약된 인원이라면 진행 X
+           * 
+           * **/
+          if(responseBody.code === '200'){
+          
+            this.isAccessOk = true; // 다음버튼 활성화
 
-      },
-        (errObj) => {
-          // console.log(errObj)
-          let errorBody = errObj.error
-          // console.log(errorBody)
-          alert(errorBody.message)
+          } else {
+
+            this.alertMessage = responseBody.message
+            this.open(this.alertModal,'my-class-check-fail-modal') // 
+            return
+
+          }
+          
+          this.payload = responseBody['payload']; // 1
+
+          // 가입 중 이탈한 이력(findHistory)를 확인하였을 경우, 가입정보확인하는 페이지로 이동할 것인지 선택하는 모달을 띄운다.
+          if(responseBody.findHistory){
+            this.userPastData = responseBody.payload.past
+            this.open(this.changePageChoiceModal, 'my-class-change-page-choice-modal')
+          }
+                      
         }
-      )
-    }).unsubscribe()
+
+
+
+    },
+      (errObj) => {
+        
+        let errorBody = errObj.error        
+        this.alertMessage = errorBody.message
+        this.open(this.alertModal,'my-class-check-fail-modal') // 
+
+      }
+    )
   }
 
   changePage(){
@@ -158,8 +158,7 @@ export class InsuranceInformationComponent implements OnInit {
     this.payload['driverSocialNumberSecond'] = this.userPastData.driverSocialNumberSecond
      
     let emitData = {
-      // changePage : 'confirm',
-      payload : this.payload
+      payload : this.payload,
     }
     this.renewal.emit(emitData)
     this.router.navigate(['/join/confirm'],{queryParams : {enc : this.queryString_enc}} )
@@ -231,13 +230,18 @@ export class InsuranceInformationComponent implements OnInit {
 
     this.renewal.emit(emitData)
 
-    // 히스토리를 변경한다.
-    // 이 method가 실행될 때 this.open 모달메소드로 인해 쿼리스트링을 추가하도록 해놓은 상태이기때문에 user-form페이지에서 뒤로가기 버튼 클릭하여 다시 해당 페이지로 돌아올 때 기존 URL로 변경시키기 위함
+    /**
+     * 히스토리를 변경한다.
+     * 이 method가 실행될 때 this.open 모달메소드로 인해 쿼리스트링을 추가하도록 해놓은 상태이기때문에 user-form페이지에서 뒤로가기 버튼 클릭하여 다시 해당 페이지로 돌아올 때 기존 URL로 변경시키기 위함
+     *  */  
     history.replaceState(null, '', `/join/insurance-information?enc=${this.queryString_enc}`);
 
-    // URL변경 :: 페이지 이동한다.
-    this.router.navigate(['/join/user-form'],{queryParams : {enc : this.queryString_enc}} )
-  
+    /** 
+     * URL변경 :: 페이지 이동한다.
+     * */ 
+    // this.router.navigate(['/join/user-form'],{queryParams : {enc : this.queryString_enc}} ) // V1
+    // this.router.navigate(['/join/user-form'],{queryParams : this.activatedRoute.snapshot.queryParams} ) //V2_2022-05-12
+    this.router.navigate(['/join/user-form'],{queryParams : this.queryParams} ) // V3
   }
 
 }

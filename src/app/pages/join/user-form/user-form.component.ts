@@ -4,6 +4,7 @@ import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { MyValidator} from '../../../shared/myValidators'
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from 'src/app/services/http.service';
+import { Observable, Subscription } from 'rxjs';
 
 
 @Component({
@@ -12,19 +13,31 @@ import { HttpService } from 'src/app/services/http.service';
   styleUrls: ['./user-form.component.scss']
 })
 export class UserFormComponent implements OnInit {
-  faCircleXmark = faCircleXmark
+  
   @Input() payload:object | any
   @Input() queryString_enc:string | undefined
+  @Input() queryParams : any | undefined
   @Output() renewal:EventEmitter<any> = new EventEmitter();
   @ViewChild ('driverSocialNumberFirst') driverSocialNumberFirst : any;
   @ViewChild ('driverSocialNumberSecond') driverSocialNumberSecond : any;
+// @Input() payload!:Observable<any> | any;
+
+  page : string ='user-form'
+  sub!: Subscription;
+
+
+  faCircleXmark = faCircleXmark
+
+  
   form!:FormGroup
   formDataArr:any[] = []
   formControlsList:any[] =[]
   driverSocialNumber:string =''
   onFormControl='driverName'
-
   submitted = false;
+
+  
+
   constructor(
     private formBuilder: FormBuilder,
     private element : ElementRef,
@@ -35,70 +48,67 @@ export class UserFormComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log(this.payload)
+
+    // console.log('Payload userForm : ',this.payload)
+
     if(!this.payload){
-      this.router.navigate(['/join/insurance-information'],{queryParams : {enc : this.queryString_enc}})
+     
+      // 첫페이지로 라우팅시킨다.
+      this.router.navigate(['/join/insurance-information'], {queryParams : this.queryParams})
      
     }else {
-      this.getUser()
-
-      this.form = this.formBuilder.group({
-        driverName : [this.payload.driverName, [Validators.required]],
-        driverCell : [this.payload.driverCell,[Validators.required,MyValidator.validateCell()]],
-        driverSocialNumberFirst:[this.payload.driverSocialNumberFirst ? this.payload.driverSocialNumberFirst : '', Validators.required],
-        driverSocialNumberSecond:[this.payload.driverSocialNumberSecond ? this.payload.driverSocialNumberSecond : '', Validators.required]
-      },
-      {
-        validators : [MyValidator.validSocialNumber2('driverSocialNumberFirst', 'driverSocialNumberSecond')]
-      })
-
-
-
-      // 다음 클릭 버튼 눌렀을 때 입력 폼 하나씩 생성되던 방식 사용안함 -2022-05-04 적용
-      /*
-      this.initialFormContent()
-      this.form = this.formBuilder.group({ }) // formBuilder 무상태 초기화
-      this.addFormControl() // 첫 ngOninit 주기에 운전자Input만 세팅하기 위해 addFormControl 실행
-      */
+      
+      this.logUser()
+      this.setForm()
+    
     }
     
   }
 
 
-  private getUser(){
+  ngOnDestroy():void{
+    this.sub?.unsubscribe()
+    console.log('ngOnDestroy UserForm Component ')
+  }
 
-    this.setParams().subscribe(params => {
-      
 
-      let encryptedData = encodeURI(params.enc).replace(/%20/gi,'+')
-      
-      let body = {
-        enc : encryptedData,
-        onPage : 'user-form'
+  setForm(){
+    this.form = this.formBuilder.group({
+      driverName : [this.payload.driverName, [Validators.required]],
+      driverCell : [this.payload.driverCell,[Validators.required,MyValidator.validateCell()]],
+      driverSocialNumberFirst:[this.payload.driverSocialNumberFirst ? this.payload.driverSocialNumberFirst : '', Validators.required],
+      driverSocialNumberSecond:[this.payload.driverSocialNumberSecond ? this.payload.driverSocialNumberSecond : '', Validators.required]
+    },
+    {
+      validators : [MyValidator.validSocialNumber2('driverSocialNumberFirst', 'driverSocialNumberSecond')]
+    })
+
+    // 다음 클릭 버튼 눌렀을 때 입력 폼 하나씩 생성되던 방식 사용안함 -2022-05-04 적용
+      /*
+      this.initialFormContent()
+      this.form = this.formBuilder.group({ }) // formBuilder 무상태 초기화
+      this.addFormControl() // 첫 ngOninit 주기에 운전자Input만 세팅하기 위해 addFormControl 실행
+      */
+  }
+
+
+  private logUser(){
+    
+    let queryParam = {...this.queryParams}; // 깊은복사로 참조주소 다른 새로운 객체 생성한다.
+    queryParam['onPage'] = this.page
+    
+    this.sub = this._httpService.sendGetRequest('user', queryParam).subscribe(
+      (response:any) => {
+        let body = response.body
+        this.payload = body['payload']; // 1
+    },
+      (errObj) => {
+        let errorBody = errObj.error
+        alert(errorBody.message)
       }
-      
-      this._httpService.sendGetRequest('user', body).subscribe(
-        (response:any) => {
-          let body = response.body
-          // console.log(body)
-          this.payload = body['payload']; // 1
-      },
-        (errObj) => {
-          
-          let errorBody = errObj.error
-          
-          alert(errorBody.message)
-        }
-      )
-    }).unsubscribe()
+    )
+
   }
-
-  setParams(){
-    return this.activatedRoute.queryParams
-  }
-
-
-
 
 
 
@@ -208,13 +218,13 @@ export class UserFormComponent implements OnInit {
     if(this.form.valid){
 
       let emitData = {
-        // payload : this.form.value
         payload : Object.assign(this.payload, this.form.value)
       }
       this.renewal.emit(emitData)
     }
 
-    this.router.navigate(['/join/confirm'],{queryParams : {enc : this.queryString_enc}} )
+    // this.router.navigate(['/join/confirm'],{queryParams : {enc : this.queryString_enc}} )
+    this.router.navigate(['/join/confirm'],{queryParams : this.queryParams} )
 
   }
 

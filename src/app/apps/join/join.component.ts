@@ -1,6 +1,6 @@
-import { Component, OnInit,SimpleChange,ViewChild,ViewContainerRef,HostListener } from '@angular/core';
+import { Component, OnInit,SimpleChange,ViewChild,ViewContainerRef,HostListener, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { CryptoService } from 'src/app/services/crypto.service';
 import { HttpService } from 'src/app/services/http.service';
 import { ModalService } from 'src/app/services/modal.service';
@@ -22,7 +22,10 @@ export class JoinComponent implements OnInit {
 
   payload:object | undefined;
 
-  queryString_enc:string=''
+  queryParams :any = {
+    enc : '',
+    mode : undefined
+  }
   routeSub : Subscription | undefined
  
   constructor(
@@ -35,10 +38,6 @@ export class JoinComponent implements OnInit {
     
     location.onPopState((event)=>{
     
-      // console.log(history.state)
-      // console.log(event)
-
-      
       if(this.modalService.hasOpenModals()) {
         
         this.modalService.dismissAll()
@@ -48,61 +47,54 @@ export class JoinComponent implements OnInit {
   }
 
 
-
   ngOnInit(): void {
-    
+    console.log('queryParam :',this.queryParams)
+    console.log('Start Join Page')
+    this.setQueryParam();
+    this.pageManager();
 
-
-    this.setParam();
-    
-    console.log(this.queryString_enc)
-    if(!this.payload){
-      console.log(this.payload)
-      console.log('payload 업다니까 ',)
-      // this.router.navigate(['/join/insurance-information'],{queryParams : {enc : this.queryString_enc}})
-      
-    }
-
-    console.log()
-    this.routeSub = this.activatedRoute.params.subscribe(result => {
-      
-      let page = result['page']  
-      // console.log('page : ',page)
-      this.PAGE = page
-      
-    })
-    
   }
 
   ngOnDestroy():void{
-    // this.routeSub?.remove
-    
+    this.routeSub?.unsubscribe()
+    // console.log('없어짐')
   }
 
-
-  setParam(){
+  setQueryParam(){
     this.activatedRoute.queryParams.subscribe(params => {
       
+      
       let encryptedData = encodeURI(params.enc).replace(/%20/gi,'+')
-    
-      this.queryString_enc = encryptedData
-
+      let mode = params.mode
+      
+      this.queryParams['enc'] = encryptedData
+      this.queryParams['mode'] = mode
+      
     })
   }
 
+  pageManager(){
+    this.routeSub = this.activatedRoute.params.subscribe(result => {
+      let page = result['page']  
+      console.log('PageManage Set Page : ',page)
+      console.log('Join Component Payload: ',this.payload)
+      this.PAGE = page    
+    })    
+  }
+
   renewal(data : any){
+    console.log(data)
     this.payload = data['payload'];  
     
-    console.log(this.payload)
+    console.log('Renewal Payload : ',this.payload)
+
   }
 
   moveBack(){
-    // if(this.PAGE =='user-form'){
-    //   this.PAGE = 'insurance-information'
-    // }else if(this.PAGE == 'confirm'){
-    //   this.PAGE = 'user-form'
-    // }
     window.history.back()
+  
   }
 
 }
+
+

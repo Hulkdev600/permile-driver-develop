@@ -15,10 +15,10 @@ const routes: Routes = [
     path:'join/:page',
     component : JoinComponent,
   },
-  {
-    path:'joindev/:page',
-    component : JoinComponent,
-  },
+  // {
+  //   path:'joindev/:page',
+  //   component : JoinComponent,
+  // },
   {
     path:'insuRequest',
     component : InsuRequestComponent

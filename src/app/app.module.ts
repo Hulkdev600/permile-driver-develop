@@ -45,7 +45,7 @@ import { HttpService } from './services/http.service';
     DashCellPipe,
     DateDotPipe,
     SafePipe,
-    InsuInformationComponent
+    InsuInformationComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,7 +53,8 @@ import { HttpService } from './services/http.service';
     ReactiveFormsModule,
     NgbModule,
     HttpClientModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    
   ],
   providers: [HttpService],
   bootstrap: [AppComponent]

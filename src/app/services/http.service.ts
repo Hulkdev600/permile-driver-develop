@@ -29,17 +29,32 @@ export class HttpService {
 
   
   getRouter(endpoint : string){
-
+    
     let sendURL;
-    if(this.URLMode === 'TEST'){
-       sendURL = this.testUrl
-    } else if(this.URLMode === 'PROD'){
-      sendURL = this.prodUrl
-    } else if(this.URLMode === 'LOCAL'){
-      sendURL = this.localUrl
+    let path='';
+    
+    switch(this.URLMode){
+      case 'TEST' : sendURL = this.testUrl; break;
+      case 'PROD' : sendURL = this.prodUrl; break;
+      case 'LOCAL': sendURL = this.localUrl; break;  
     }
 
-    return sendURL+'/api/join/'+endpoint
+    switch(endpoint){
+      case  'insuRequest' : 
+          path += '/api/insuRequest';
+          break;
+      case 'user' :
+          path += '/api/join/user';
+          break;
+      case 'contract' :
+          path += '/api/join/contract';
+          break;
+      case 'product' :
+          path += '/api/join/product';
+          break;
+    }
+
+    return sendURL+path
 
   }
 

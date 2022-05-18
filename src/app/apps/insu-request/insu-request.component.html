@@ -2,7 +2,7 @@
     
   
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg  text-uppercase fixed-top" id="mainNav">
+    <!-- <nav class="navbar navbar-expand-lg  text-uppercase fixed-top" id="mainNav">
       <div class="container">
         <div class="title-logo" (click)="scrollToElement(firstSection)"><span style="color: #dfab01;">카카오 T </span><span class="serviceType"></span> <br class="br br-title-logo"> <span class="sub-text"></span> 운전자보험</div>
         
@@ -28,23 +28,111 @@
           </ul>
         </div>
       </div>
-    </nav>
+    </nav> -->
       
+    
+
+    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" #mainNav>
+      <div class="container-fluid">
+        <a class="navbar-brand" (click)="moveScroll('top', $event)">탄 만큼 내는 <br> <span class="color-blue">운전자보험</span></a>
+    
+        <!-- Step 3: Toggle the value of the property when the toggler button is clicked. -->
+        <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
+          &#9776;
+        </button>
+    
+        <!-- Step 2: Add the ngbCollapse directive to the element below. -->
+        <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <!-- Step 4: Close the menu when a link is clicked. -->
+              <a class="nav-link" (click)="moveScroll('product-section', $event)">상품내용</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="moveScroll('term-section', $event)">약관안내</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="moveScroll('faq-section', $event)">자주 묻는 질문</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="moveScroll('contact-us-section', $event)">문의하기</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+
       
       <header #firstSection class="section" id="header-section">
-        <h1 class="page-title section-title">탄 만큼 내는 운전자보험</h1>
-        <p>운전자보험 간단 설명</p>
+        <h1 class="page-title section-title">탄 만큼 내는 <span class="color-blue">운전자보험</span></h1>
+        <!-- <p>운전자보험 간단 설명</p> -->
+        <p id="product-explanation">카카오내비에서 서비스하는 '탄 만큼 내는 운전자보험' 가입자가 아래 상품내용에 해당하는 피해를 입으셨을 때 가입금액을 한도로 하여 보상해드리는 보험입니다.</p>
 
-        <button id="insu-request-button">
+        <button id="insu-request-button" (click)="open(insuRequestFormModal,'my-class-insuRequestFormModal')">
             사고접수하기
         </button>
 
       </header>
       
-      <section #secondSection id="product-section" class="section background-color-gray">
+      <section #productSection id="product-section" class="section background-color-gray">
         <h2 class="section-title">상품내용</h2>
 
-        <div class="table-area">
+        <div class="dambo-content-area">
+          <h6>담보 및 가입금액</h6>
+          
+          <div class="dambo-box" (click)="open(damboOne,'my-class-modal-full-height')">
+            <div class="content-left">
+              <dl>
+                <img src="/assets/image/img_settlement.svg" alt="">
+              </dl>  
+              <dd>
+                <h6 class="guarantee-title">형사합의금 <span class="font-weight-basic">1.5억 한도</span></h6> 
+                <small class="guarantee-sub-title">교통사고 처리지원금</small>
+              </dd>
+            </div>
+            <div class="content-right">
+              <fa-icon [icon]="faArrowRight"></fa-icon>
+              <small>자세히 보기</small>
+            </div>
+            
+          </div>
+          
+          <div class="dambo-box"  (click)="open(damboTwo,'my-class-modal-full-height')">
+            <div class="content-left">
+              <dl>
+                <img src="/assets/image/img_lawyer.svg" alt="">
+              </dl>
+              <dd>
+                <h6 class="guarantee-title">변호사 선임비 <span class="font-weight-basic">3천만원 한도</span></h6>
+                <small class="guarantee-sub-title">공소제기 또는 구속 시</small>
+              </dd>
+            </div>
+            <div class="content-right">
+              <fa-icon [icon]="faArrowRight"></fa-icon>
+              <small>자세히 보기</small>
+            </div>
+          </div>
+          
+          <div class="dambo-box"  (click)="open(damboThree,'my-class-modal-full-height')">
+            <div class="content-left">
+              <dl>
+                <img src="/assets/image/img_penalty.svg" alt="">
+              </dl>
+              <dd>
+                <h6 class="guarantee-title">벌금보상 <span class="font-weight-basic">3천만원 한도</span></h6>
+                <small class="guarantee-sub-title">벌금형이 판결된 경우</small>
+              </dd>
+            </div>
+            <div class="content-right">
+              <fa-icon [icon]="faArrowRight"></fa-icon>
+              <small>자세히 보기</small>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- <div class="table-area">
           <h6>담보 및 보험료 내용</h6>
           <table id="table">
             <thead>
@@ -52,34 +140,33 @@
                 <td class="col1">담보</td>
                 <td class="col2">보상하는 손해</td>
                 <td class="col3">가입금액(원)</td>
-                <!-- <td class="col4"></td> -->
               </tr>
               
             </thead>
             <tbody>
               <tr>
-                <td>교통사고처리지원금<br>(동승자포함)</td>
+                <td>교통사고<br>처리지원금<br>(동승자포함)</td>
                 <td></td>
                 <td>1.5억원</td>
               </tr>
               <tr>
-                <td>자동차사고변호사선임비용<br>(약식기소제외)</td>
-                <td></td>
+                <td>자동차사고<br>변호사선임비용<br>(약식기소제외)</td>
+                <td>보험기간 내 자동차를 운전하던 중에 급격하고도 우연한 자동차사고로 타인의 신체(의수, 의족, 의안, 의치 등 신체보조장구는 제외하나, 인공장기나 부분 의치 등 신체에 이식되어 그 기능을 대신할 경우는 포함)에 상해를 입힘으로써 구속영장에 의하여 구속되었거나, 검찰에 의해 공소제기(약식기소는 제외)된 경우 또는 검사에 의해 약식기소 되었으나 법원에 의해 보통의 심판절차인 공판절차에 의해 재판이 진행되게 된 경우에는 변호사선임비용을 부담함으로써 입은 손해(1사고당)에 대하여 보험가입금액 한도로 지급</td>
                 <td>3,000만원</td>
               </tr>
               <tr>
                 <td>벌금</td>
-                <td></td>
+                <td>보험기간 내 자동차를 운전하던 중에 급격하고도 우연한 자동차사고로 타인의 신체(의수, 의족, 의안, 의치 등 신체보조장구는 제외하나, 인공장기나 부분 의치 등 신체에 이식되어 그 기능을 대신할 경우는 포함)에 상해를 입힘으로써 신체상해와 관련하여 받은 벌금액(확정판결에 의하여 정해진 벌금액을 말하며, 보험기간 중에 발생한 사고의 벌금 확정판결이 보험기간 종료 후에 이루어진 경우 포함)을 1사고당 보험가입금액 한도로 지급</td>
                 <td>3,000만원</td>
               </tr>
               
             </tbody>
           </table>
-        </div>
+        </div> -->
         
       </section>
 
-      <section #thirdSection id="term-section">
+      <section #termSection id="term-section">
         <h2 class="section-title">약관안내</h2>
 
         <div class="terms-button">
@@ -89,31 +176,62 @@
         
       </section>
 
-      <section #fourthSection id="faq-section" class="section background-color-gray">
+      <section #faqSection id="faq-section" class="section background-color-gray">
         <h2 class="section-title">자주 묻는 질문</h2>
 
-        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
-          <ngb-panel title="Simple">
+        <ngb-accordion #acc="ngbAccordion">
+          <ngb-panel>
+            <ng-template ngbPanelTitle>
+              <span>이 보험의 대상자는 누구인가요?</span>
+            </ng-template>
             <ng-template ngbPanelContent>
-              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
-              aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
-              sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-              craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-              occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-              labore sustainable VHS.
+              카카오 내비에서 서비스하는 '탄 만큼 내는 운전자보험'의 가입자 입니다. 
+              <br>이 보험은 카카오내비에서 운전자보험 ON 모드로 주행 도중 사고가 나신 경우, 가입자분들께 제공되는 보험서비스입니다.
             </ng-template>
           </ngb-panel>
           <ngb-panel>
             <ng-template ngbPanelTitle>
-              <span>&#9733; <b>Fancy</b> title &#9733;</span>
+              <span>보험금 청구 절차는 어떻게 되나요?</span>
             </ng-template>
             <ng-template ngbPanelContent>
-              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia
-              aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
-              sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
-              craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
-              occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-              labore sustainable VHS.
+              <ol class="">
+                <li>
+                  카카오내비 앱에서<br>
+                   a. '계약상세보기' - '고객지원' - '보상접수' 를 선택하시거나 <br>
+                   b. '계약상세보기' - '고객지원' - '대리점 고객센터' 를 선택하시거나<br>
+                   c. 카카오톡 '친구' 상단 검색 "탄 만큼 내는 보험-SIMG"를 입력하신 후,
+                  보상접수 페이지에서 <span class="color-blue point-cusor" (click)="open(insuRequestFormModal,'my-class-insuRequestFormModal')">사고접수하기</span>를 클릭합니다.<br></li>
+                <li>사고접수페이지에서 신청자명 / 휴대전화 / 이메일주소 / 사고내용을 입력합니다.</li>
+                <li>접수 연락처로 영업일 기준 2~3일 이내에 보험금 청구서 작성 안내 전화를 드립니다. <br></li>
+                <li>보험금 청구서 작성 후, 이메일로 회신 주시면 2~3일 이내 보상담당자가 지정됩니다.<br></li>
+                <li>담당자 지정 후 해당 보상담당자가 기사님께 연락드리고 보상을 진행합니다.</li>
+              </ol>
+            </ng-template>
+          </ngb-panel>
+          <ngb-panel>
+            <ng-template ngbPanelTitle>
+              <span>보험금 청구 시 필요한 서류는 무엇인가요?</span>
+            </ng-template>
+            <ng-template ngbPanelContent>
+              사고 유형에 따라 요청 서류가 상이할 수 있습니다.<br>
+              보험금 청구 시 우선 사고접수 페이지를 통해 접수를 진행해 주시고, 이후 보상담당자의 요청에 따라 필요 서류를 준비하여 해당 담당자에게 전달해주시기 바랍니다.
+            </ng-template>
+          </ngb-panel>
+          <ngb-panel title="상담원 연결은 어떻게 하나요?">
+            <ng-template ngbPanelContent>
+              문의사항이 있으신 경우 카카오톡 채널에서 <br>
+              "탄 만큼 내는 보험 고객센터-SIMG"를 검색하여 "상담원 연결안내"를 선택하시거나,<br> 
+              다음 전화번호 또는 이메일로 연락주시면, 친절하게 응대해드리겠습니다.<br><br>
+              · 대표번호 1877 - 3006 <br>
+              · 이메일 sj@simg.kr <br><br>
+              [상담시간] <br>
+              · 평일 10:00~17:30<br>
+              · 점심시간 11:30~13:00<br>
+              <br>
+              * 16:00 이후 접수 건은 상황에 따라 <br>
+              익일 안내될 수 있습니다. (영업일 기준)<br>
+              <br>
+              주말 및 공휴일은 업무 외 시간으로 접수처리가 어려워, 돌아오는 첫 영업일에 확인 후 접수하여 드립니다.
             </ng-template>
           </ngb-panel>
         </ngb-accordion>
@@ -121,7 +239,7 @@
 
       </section>
 
-      <section #fifthSection id="contact-us-section" class="section">
+      <section #contactUsSection id="contact-us-section" class="section">
         <h2 class="section-title">문의하기</h2>
 
       
@@ -135,11 +253,11 @@
           
         <table id="contact-info-table">
           <tr>
-            <td>대표번호</td>
+            <td class="col-1">대표번호</td>
             <td>1877 - 3006</td>
           </tr>
           <tr>
-            <td>이메일</td>
+            <td class="col-1">이메일</td>
             <td>sj@simg.kr</td>
           </tr>
         </table>
@@ -163,3 +281,249 @@
         </div> -->
       </footer>
 </main>
+
+
+<!-- 보험금청구 modal -->
+<ng-template #insuRequestFormModal let-modal>
+  <div class="modal-header">
+      <h5 id="modal-basic-title">사고접수 정보</h5>
+      <div class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <!-- <fa-icon [icon]="faX"></fa-icon> -->
+        
+        <img src="/assets/image/close_x.svg" alt="">
+      </div>
+  </div>
+  <div class="modal-body">
+         
+
+    <form [formGroup]="insuRequestForm">
+      <div class="form-area">
+
+        <div class="write-guide">
+          아래항목을 입력해주세요 <span class="necessary">* 필수입력 항목</span>
+        </div>
+
+
+        
+          
+          <div class="form-group row">
+            <label for="driverName" class="col-sm-3 col-form-label">이름 <span class="necessary">*</span></label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="driverName" formControlName="driverName" placeholder="이름을 입력해주세요">
+              <span *ngIf="submitted">
+                <span class="error-text" *ngIf="insuRequestForm.get('driverName')?.errors && insuRequestForm.get('driverName')?.touched && submitted">이름을 입력해주세요.</span>
+              </span>
+              
+            </div>
+          </div>
+
+
+          <div class="form-group row">
+            <label for="driverCell" class="col-sm-3 col-form-label">휴대폰번호 <span class="necessary">*</span></label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="driverCell" formControlName="driverCell" placeholder="휴대전화번호를 입력해주세요" id="driverCell" (input)="onlyNumber($event)">
+              <span *ngIf="submitted">
+                <span class="error-text" *ngIf="insuRequestForm.get('driverCell')?.errors && insuRequestForm.get('driverCell')?.hasError('required')">휴대전화번호를 입력해주세요.</span>
+                <span class="error-text" *ngIf="insuRequestForm.get('driverCell')?.errors && insuRequestForm.get('driverCell')?.hasError('invalidCell') &&!insuRequestForm.get('driverCell')?.hasError('required')">휴대전화번호를 확인해주세요.</span>
+                <!-- <span *ngIf="insuRequestForm.get('driverCell')?.errors && insuRequestForm.get('driverCell')?.hasError('required') && insuRequestForm.get('driverCell')?.touched">휴대전화번호를 입력해주세요.</span> -->
+              </span>
+              
+            </div>
+          </div>
+
+
+          <div class="form-group row">
+            <label for="driverEmail" class="col-sm-3 col-form-label">이메일 <span class="necessary">*</span></label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="driverEmail" formControlName="driverEmail" placeholder="이메일을 입력해주세요">
+              <span *ngIf="submitted">
+                <span class="error-text" *ngIf="insuRequestForm.get('driverEmail')?.errors && insuRequestForm.get('driverEmail')?.hasError('required')">이메일을 입력해주세요.</span>
+                <span class="error-text" *ngIf="insuRequestForm.get('driverEmail')?.errors && insuRequestForm.get('driverEmail')?.hasError('email') && insuRequestForm.get('driverEmail')?.touched && !insuRequestForm.get('driverEmail')?.hasError('required')">이메일을 확인해주세요.</span>
+              </span>
+              
+
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="detail" class="col-sm-3 col-form-label">사고내용 <span class="necessary">*</span></label>
+            <div class="col-sm-9">
+              <textarea class="form-control" name="accidentDetail" formControlName="accidentDetail"  placeholder="누가,언제,어디서,무엇을,어떻게,왜"></textarea>
+              <span *ngIf="submitted">
+                <span class="error-text" *ngIf="insuRequestForm.get('accidentDetail')?.errors && insuRequestForm.get('accidentDetail')?.hasError('required')">사고내용을 입력해주세요.</span>
+              </span>
+              
+
+            </div>
+          </div>
+
+        
+
+        
+      </div>
+
+      <div class="agree-area">
+        <div class="agree-box">
+          <h5 class="agree-title">개인정보 수집 및 이용동의</h5>
+          <h6 class="agree-subtitle">1. 개인정보의 수집 및 이용목적</h6>
+          <p>보험금지급·심사 및 보험사고 조사(보험사기 조사 포함), 보험금지급관련 민원처리 및 분쟁대응</p>
+          <h6 class="agree-subtitle">2. 수집항목</h6>
+          <p>성명,연락처(휴대폰번호),이메일</p>
+          <h6 class="agree-subtitle">3. 개인정보의 이용 및 보유기간</h6>
+          <p>보험금지급·심사 이후 3년간 보유</p>  
+        </div>
+
+        <!-- <div class="agree-box" style="display: none">
+          <h5 class="agree-title">개인정보 제3자 제공동의</h5>
+          <h6 class="agree-subtitle">1. 개인정보를 제공받는 자</h6>
+          <p>
+            기명 피보험자 : 카카오모빌리티<br>
+            보험회사 등 : DB손해보험<br>
+            업무수탁자 등 : 보험금지급·심사 및 보험사고 조사 등에 필요한 업무를 위탁 받은 자
+          </p>
+          <h6 class="agree-subtitle">2. 제공하는 개인정보의 항목</h6>
+          <p>성명, 연락처(휴대전화), 이메일</p>
+  
+          <h6 class="agree-subtitle">3. 개인정보를 제공받는 자의 개인정보 이용 목적</h6>
+          <p>
+            기명 피보험자 : 카카오 T 프로 멤버십 가입여부 확인<br>
+            보험회사 등 : 보험금지급·심사 및 보험사고 조사(보험사기 조사 포함), 보험금지급관련 민원처리 및 분쟁대응
+          </p>
+          
+          <h6 class="agree-subtitle">4. 제공받는 자의 개인정보 보유·이용기간</h6>
+          <p>
+            기명 피보험자 : 기사 가입여부 확인 후 즉시 삭제<br>
+            보험회사 등 : 목적 완료 후 즉시 파기
+          </p>
+        </div> -->
+        
+        
+      
+        <div class="form-check agree-checkbox-box">
+          <input type="checkbox" class="form-check-input" id="agree" name="agree" formControlName="agree">
+          <label class="form-check-label agree-label" for="agree">위와 같이 개인정보수집 및 이용방침에 동의를 합니다.</label>
+          <div *ngIf="submitted">
+            <span class="error-text" *ngIf="insuRequestForm.get('agree')?.errors && insuRequestForm.get('agree')?.hasError('required')">개인정보수집 및 이용동의가 필요합니다.</span>
+          </div>
+        </div>
+
+        
+        <!-- <div class="form-check agree-checkbox-box">
+          <input type="checkbox" class="form-check-input" id="agreeInfoForOther" name="agreeInfoForOther" formControlName="agreeInfoForOther">
+          <label class="form-check-label agree-label" for="agreeInfoForOther">위와 같이 개인정보 제3자 제공에 동의합니다.</label>
+          <div *ngIf="submitted">
+            <span class="error-text" *ngIf="insuRequestForm.get('agreeInfoForOther')?.errors && insuRequestForm.get('agreeInfoForOther')?.hasError('required')">개인정보 제3자 제공동의가 필요합니다.</span>
+          </div>
+        </div> -->
+      </div>
+      
+      <div class="simg-area">
+        <div>대표번호 1877 - 3006</div>
+      </div>
+      <div class="complete-img-area">
+        <button class="complete-button" (click)="onSubmit()">
+          접수완료
+        </button>
+      </div>
+    </form>
+      
+
+  </div>    
+</ng-template>
+
+
+
+<!-- 보장내용 modal -->
+<ng-template #damboOne let-modal>
+  <div class="modal-header">
+    <h4 class="modal-basic-title">보장내용</h4>
+    <div class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <img src="/assets/image/close_x.svg" alt="">
+    </div>
+  </div>
+  <div class="modal-body">
+      <div class="content-box">
+          <h4 class="content-title">교통사고처리지원금(동승자포함)</h4>
+          <h5 class="content-sub-title">지급사유</h5>
+          <p>자동차사고로 인하여 타인에게 상해를 입힌 경우 피보험자가 형사합의금으로 지급한 금액을 교통사고처리지원금으로 지급 </p>
+
+          <ul class="no-list-style no-padding-left">
+              <li>가. 피해자가 사망한 경우 : 1.5억원원 한도로 지급 </li>
+              <li>
+                  나. 중대법규위반 교통사고로 피해자가 42일 이상 진단을 받은 경우 
+                  <ul class="list-style-number padding-left-38">
+                      <li>42일 이상 70일 미만 진단 시 : 2,000만원 한도 실손 보상</li>
+                      <li>70일 이상 140일 미만 진단 시 : 8,000만원 한도 실손 보상 </li>
+                      <li>140일 이상 진단 시 : 1억원 한도 실손 보상 </li>
+                  </ul>
+              </li>
+              <li>
+                  일반교통사고로 피해자에게 중상해를 입혀 공소제기 되거나 상해급수 1급, 2급 또는 3급에 해당하는 부상을 입힌 경우 1억원 한도로 지급 
+              </li>
+          </ul>
+
+          <p>교통사고처리지원금 보장에 대하여 보험금을 지급할 다른 계약이 체결되어 있는 경우에는 각각의 계약에 대하여 비례 보상함.</p>
+
+          <h5 class="content-sub-title">지급금액</h5>
+          <p>매 사고당 피해자 1인당 1.5억원 한도 실손보상</p>
+      </div>
+
+
+  </div>
+  
+</ng-template>
+
+<!-- 보장내용 modal -->
+<ng-template #damboTwo let-modal>
+  <div class="modal-header">
+    <h4 class="modal-basic-title">보장내용</h4>
+    <div class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <!-- <fa-icon [icon]="faX"></fa-icon> -->
+      <img src="/assets/image/close_x.svg" alt="">
+    </div>
+  </div>
+  <div class="modal-body">
+
+      <div class="content-box">
+          <h4 class="content-title">자동차사고 변호사선임비용(약식기소 제외) 특별약관 특약</h4>
+          <h5 class="content-sub-title">지급사유</h5>
+          <p>보험기간 내 자동차를 운전하던 중에 급격하고도 우연한 자동차사고로 타인의 신체(의수, 의족, 의안, 의치 등 신체보조장구는 제외하나, 인공장기나 부분 의치 등 신체에 이식되어 그 기능을 대신할 경우는 포함)에 상해를 입힘으로써 구속영장에 의하여 구속되었거나, 검찰에 의해 공소제기(약식기소는 제외)된 경우 또는 검사에 의해 약식기소 되었으나 법원에 의해 보통의 심판절차인 공판절차에 의해 재판이 진행되게 된 경우에는 변호사선임비용을 부담함으로써 입은 손해(1사고당)에 대하여 보험가입금액 한도로 지급 </p>
+          <ul class="no-padding-left">
+              <li>자동차사고 변호사선임비용보장에 대하여 보험금을 지급할 다른 계약이 체결되어 있는 경우에는 각각의 계약에 대하여 실손 비례 보상</li>
+              <li>음주/무면허/도주사고는 보상에서 제외</li>
+          </ul>
+
+          <h5 class="content-sub-title">지급금액</h5>
+          <p>1사고당 3,000만원 한도</p>
+      </div>
+
+  </div>
+  
+</ng-template>
+
+
+<!-- 보장내용 modal -->
+<ng-template #damboThree let-modal>
+  <div class="modal-header">
+    <h4 class="modal-basic-title">보장내용</h4>
+    <div class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <!-- <fa-icon [icon]="faX"></fa-icon> -->
+      <img src="/assets/image/close_x.svg" alt="">
+    </div>
+  </div>
+  <div class="modal-body">
+
+      <div class="content-box">
+          <h4 class="content-title">벌금</h4>
+          <h5 class="content-sub-title">지급사유</h5>
+          <p>보험기간 내 자동차를 운전하던 중에 급격하고도 우연한 자동차사고로 타인의 신체(의수, 의족, 의안, 의치 등 신체보조장구는 제외하나, 인공장기나 부분 의치 등 신체에 이식되어 그 기능을 대신할 경우는 포함)에 상해를 입힘으로써 신체상해와 관련하여 받은 벌금액(확정판결에 의하여 정해진 벌금액을 말하며, 보험기간 중에 발생한 사고의 벌금 확정판결이 보험기간 종료 후에 이루어진 경우 포함)을 1사고당 보험가입금액 한도로 지급 </p>
+          <ul class="no-padding-left">
+              <li>벌금에 대하여 보험금을 지급할 다른 계약이 체결되어 있는 경우에는 각각의 계약에 대하여 비례 보상함.</li>
+          </ul>
+
+          <h5 class="content-sub-title">지급금액</h5>
+          <p>1사고당 3,000만원 한도</p>
+      </div>
+  </div>
+  
+</ng-template>

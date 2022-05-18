@@ -6,27 +6,50 @@
 }
 
 .background-color-gray{
-    background-color: #eee;
+    background-color: #f8f8f8
 }
 
-
+.point-cursor{
+    cursor: pointer;
+}
 .section-title{
     text-align: center;
-    margin-bottom: 80px;
+    margin-bottom: 40px;
     font-size: 26px;
     font-weight: 700;
+}
+
+.color-blue{
+    color: #3581FF;
+}
+#mainNav{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 0;
+    z-index: 1;
 }
 
 #header-section{
 
     text-align: center;
-    padding-top: 70px;
+    padding-top: 157px;
     padding-bottom  : 70px;
+    #product-explanation{
+        // margin-bottom: 30px;
+        color: #262d3985;
+        font-size: 14px;
+        max-width: 440px;
+        margin: 30px auto;
+    }
     #insu-request-button{
+        outline: none;
         width: 175px;
         background-color: #273646;
         color: #eee;
-        font-size: 17px;
+        font-size: 16px;
         height: 70px;
         line-height: 70px;
         border-radius: 50px;
@@ -34,7 +57,9 @@
     }
     .section-title{
         margin-bottom: 22px;
+        // color: #3581FF;
     }
+
 }
 
 
@@ -43,44 +68,87 @@
     padding-top: 70px;
     padding-bottom: 70px;
 
+    .dambo-box{
+        border: solid 1px #dce3e9;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 3px 6px 0 rgb(118 145 148 / 12%);
+        padding: 14px 10px 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 5px 0;
 
-    #table{
-        empty-cells: show;
-        width: 100%;
-        margin: auto;
-        margin-bottom: 20px;
-        thead td{
-            font-family: 'NotoSansCJKkr-Bold';
-            background: #273646;
-            color:#fff;
-            text-align: center;
-            height: 30px;
+        .font-weight-basic{
+            font-weight: 400;
         }
-        td{
-            font-family: 'NotoSansCJKkr-Regular';
-            // width: 30px;
-            border: 1px solid #dbdbdb;
-            height: 50px;
-            text-align: center;
-            background-color: #fff;
-            padding: 15px;
+        .content-left{
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            dl{
+                margin-bottom: 0;
+                margin-right: 10px;
+            }
+            dd{
+                margin-bottom: 0;
+            }
         }
-        .col1{
-            width: 120px;
+        .content-right{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            
         }
-        .col2{
-            width: 160px;
-        }
-        .col3{
-
-        }
-        .col4{
-            width: 125px;
-        }
-        .color-td{
-            // background: #d6f4ee;
+        
+        .guarantee-title{
+            margin-bottom: 0;
+            font-weight: 700;
         }
     }
+
+
+    .table-area{
+        font-size: 14px;
+        #table{
+            empty-cells: show;
+            width: 100%;
+            margin: auto;
+            margin-bottom: 20px;
+            thead td{
+                font-family: 'NotoSansCJKkr-Bold';
+                background: #273646;
+                color:#fff;
+                text-align: center;
+                height: 30px;
+            }
+            td{
+                font-family: 'NotoSansCJKkr-Regular';
+                // width: 30px;
+                border: 1px solid #dbdbdb;
+                height: 50px;
+                text-align: center;
+                background-color: #fff;
+                padding: 15px;
+            }
+            .col1{
+                width: 120px;
+            }
+            .col2{
+                width: 160px;
+            }
+            .col3{
+    
+            }
+            .col4{
+                width: 125px;
+            }
+            .color-td{
+                // background: #d6f4ee;
+            }
+        }
+    }
+    
 }
 
 #term-section{
@@ -100,6 +168,7 @@
         position: relative;
         left: 50%;
         transform: translateX(-50%);
+        z-index: -1;
     }
     
 }
@@ -110,6 +179,25 @@
     padding-top: 70px;
     padding-bottom: 70px;
     
+    .accordion{
+        
+    }
+
+    .card{
+        background-color: #fff;
+    }
+    .card-header{
+        
+    }
+    ol{
+        padding-left: 20px;
+    }
+    ::ng-deep .card-header {
+        background-color: #fff;
+    }
+    ::ng-deep .card-body{
+        font-size: 14px;
+    }
 }
 
 
@@ -134,6 +222,10 @@
     #contact-info-table{
         text-align: left;
         margin: 0 auto; /* or margin: 0 auto 0 auto */
+
+        .col-1{
+            width: 90px;
+        }
     }
     
 }
@@ -144,4 +236,212 @@
 
     padding-top: 20px;
     padding-bottom: 20px;
+    font-size: 14px;
 }
+
+.modal-dialog{
+    margin:0;
+    height: 100%;
+}
+
+.modal-content{
+    border-radius:0%;
+    min-height: 100%;
+    border: none;
+}
+
+.modal-header{
+    align-items: center;
+    .modal-basic-title{
+        margin-bottom: 0;
+        font-size: 18px;
+    }
+}
+
+.modal-body{
+    padding-top: 0;
+    a{
+        outline: none;
+    }
+    h3.modal-title{
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+    h4.content-title{
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom : 14px
+    }
+    h5.content-sub-title{
+        font-size: 14px;
+        font-weight: 700;
+    }
+    .content-box{
+        padding: 20px 0 0 0;
+    }
+    ul{
+        padding-left: 20px;
+        color: rgba(38, 45, 57, 0.52);
+        font-size: 14px;
+        
+        li{
+            padding: 3px 0;
+        }
+    }
+    ul.no-list-style{
+        list-style: none;
+    }
+    ul.list-style-number{
+        list-style: auto;
+    }
+    ul.no-padding-left{
+        padding-left: 14px;
+    }
+    ul.no-padding-left-0{
+        padding-left: 0;
+    }
+    ul.padding-left-38{
+        padding-left: 38px;
+    }
+    p{
+        color: rgba(38, 45, 57, 0.52);
+        font-size: 14px;
+
+    }
+
+
+
+}
+
+
+::ng-deep .my-class-insuRequestFormModal {
+    
+    .modal-dialog{
+        margin:0;
+        height: 100%;
+    }
+    .modal-content{
+        border-radius:0%;
+        min-height: 100%;
+        border: none;
+    }
+    .modal-body{
+        padding: 0;
+    }
+    #modal-basic-title{
+        margin-bottom: 0;
+        font-size: 16px;
+    }
+
+    .necessary{
+        color: #f0821f;
+    }
+    .form-area{
+        padding: 30px 20px;
+        background-color: #eee;
+        .write-guide{
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+        
+        p{
+            padding-left: 14px;
+            font-size: 14px;
+        }
+
+        textarea{
+            resize: none;
+            height: 100px;
+        }
+        .error-text{
+            display: block;
+            margin-top: 4px;
+            color: red;
+            padding-left: 10px;
+            font-size: 14px;
+        }
+    }
+
+    .agree-area{
+        padding:30px 30px;
+        .agree-title{
+            color: #273646;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        .agree-subtitle{
+            color: gray;
+            font-weight: 700;
+
+        }
+        .form-check{
+            margin: 5px 0;
+        }
+        .error-text{
+            display: block;
+            
+            color: red;
+            
+            font-size: 14px;
+        }
+        .agree-box{
+            margin-bottom: 35px;   
+        }
+        .agree-checkbox-box{
+            input[type=checkbox]#agree, #agreeInfoForOther{
+                transform: scale(1.5);
+                position: relative;
+                top: 0.5px;
+                left: -6px;
+                vertical-align: top;
+            }
+        }
+        
+    }
+
+    .simg-area{
+
+        font-weight: 700;
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .complete-img-area{
+        margin: 50px 0px;
+        text-align: center;
+        
+        .complete-button{
+            background-color: #273646;
+            color: #eee;
+            font-size: 21px;
+            width: 210px;
+            height: 80px;
+            
+            border: none;
+            border-radius: 50px;
+            outline: unset;
+
+        }
+        .complete-button:hover{
+            
+            background-color: #273646;
+        }
+    }
+}
+
+::ng-deep .my-class-modal-full-height{
+    .modal-dialog{
+        margin:0;
+        height: 100%;
+    }
+    
+    .modal-content{
+        border-radius:0%;
+        min-height: 100%;
+        border: none;
+    }
+
+}
+
+

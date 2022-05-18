@@ -161,7 +161,7 @@ export class InsuranceInformationComponent implements OnInit {
       payload : this.payload,
     }
     this.renewal.emit(emitData)
-    this.router.navigate(['/join/confirm'],{queryParams : {enc : this.queryString_enc}} )
+    this.router.navigate(['/join/confirm'],{queryParams : this.queryParams} )
   
   }
 
@@ -188,8 +188,15 @@ export class InsuranceInformationComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
 
+
     // Fake 히스토리를 하나 추가한다(브라우저 뒤로가기 버튼 클릭 시 모달만을 삭제하기 위함)
-    history.pushState(null, '', `/join/insurance-information?enc=${this.queryString_enc}&modal=open`);
+    if(this.queryParams['enc']){
+      let enc = this.queryParams['enc']
+      history.pushState(null, '', `/join/insurance-information?enc=${enc}&modal=open`);
+    } else {
+      history.pushState(null, '', `/join/insurance-information?mode=demo&modal=open`);
+    }
+    
     
   }
 
@@ -233,8 +240,9 @@ export class InsuranceInformationComponent implements OnInit {
     /**
      * 히스토리를 변경한다.
      * 이 method가 실행될 때 this.open 모달메소드로 인해 쿼리스트링을 추가하도록 해놓은 상태이기때문에 user-form페이지에서 뒤로가기 버튼 클릭하여 다시 해당 페이지로 돌아올 때 기존 URL로 변경시키기 위함
-     *  */  
-    history.replaceState(null, '', `/join/insurance-information?enc=${this.queryString_enc}`);
+     *  */ 
+    // let enc = this.queryParams['enc'] 
+    // history.replaceState(null, '', `/join/insurance-information?enc=${enc}`);
 
     /** 
      * URL변경 :: 페이지 이동한다.

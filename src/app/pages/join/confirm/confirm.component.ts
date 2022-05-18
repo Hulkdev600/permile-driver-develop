@@ -18,7 +18,6 @@ import { Subscription } from 'rxjs';
 
 export class ConfirmComponent implements OnInit {
   page : string ='confirm';
-  mode : string | null = '';
   modalRef: NgbModalRef | undefined;
   @Input() payload:any
   @Output("renewal") renewal:EventEmitter<any> = new EventEmitter();
@@ -29,7 +28,7 @@ export class ConfirmComponent implements OnInit {
   @ViewChild('contractFailModal') contractFailModal: TemplateRef<any> | undefined
   @ViewChild('iframe') iframe: ElementRef<any> | undefined
   
-  @Input() queryString_enc:string | undefined
+  
   @Input() queryParams : any | undefined
   faCircleCheck = faCircleCheck;
   faCircleExclamation = faCircleExclamation
@@ -90,6 +89,7 @@ export class ConfirmComponent implements OnInit {
 
       let queryParam = {...this.queryParams}; // 깊은복사로 참조주소 다른 새로운 객체 생성한다.
       queryParam['onPage'] = this.page
+      queryParam['userForm'] = JSON.stringify(this.payload)
 
       this.sub = this._httpService.sendGetRequest('user', queryParam).subscribe(
         (response:any) => {
@@ -123,7 +123,7 @@ export class ConfirmComponent implements OnInit {
 
   openKakaoPaymentApp(){
     
-    if(this.mode ==='demo'){
+    if(this.queryParams['mode'] ==='demo'){
       alert('demo Version')
       return 
     }
@@ -152,7 +152,7 @@ export class ConfirmComponent implements OnInit {
      * 결제창 띄우기
      * **/
     // this.appSchemeURL ="https://www.youtube.com/embed/ZNX4BnD2_9Q"
-    this.appSchemeURL = `webview://payment?action=select_payment&item_id=${leafletId}id&vertical_code=CAR_INS&action_type=create`
+    this.appSchemeURL = `webview://payment?action=select_payment&item_id=${leafletId}&vertical_code=CAR_INS&action_type=create`
     
 
     this.open(this.kakaoPaymentAppModal,'my-class-kakao-payment-app-modal');
@@ -172,7 +172,7 @@ export class ConfirmComponent implements OnInit {
    */
   contract(){
     
-    if(this.mode ==='demo'){
+    if(this.queryParams['mode'] ==='demo'){
       alert('demo Version')
       return 
     }
@@ -243,7 +243,13 @@ export class ConfirmComponent implements OnInit {
     });
     
     // push new state to history
-    history.pushState(null, '', `/join/confirm/enc?=${this.queryString_enc}&modal=open`);
+    if(this.queryParams['enc']){
+      let enc = this.queryParams['enc']
+      history.pushState(null, '', `/join/confirm/enc?=${enc}&modal=open`);
+    } else{
+      history.pushState(null, '', `/join/confirm/mode=demo&modal=open`);
+    }
+    
   }
 
   private getDismissReason(reason: any): string {

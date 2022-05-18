@@ -22,10 +22,7 @@ export class JoinComponent implements OnInit {
 
   payload:object | undefined;
 
-  queryParams :any = {
-    enc : '',
-    mode : undefined
-  }
+  queryParams :any = { }
   routeSub : Subscription | undefined
  
   constructor(
@@ -64,11 +61,17 @@ export class JoinComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       
       
-      let encryptedData = encodeURI(params.enc).replace(/%20/gi,'+')
-      let mode = params.mode
+      if(params.enc){
+        let encryptedData = encodeURI(params.enc).replace(/%20/gi,'+')
+        this.queryParams['enc'] = encryptedData
+      }
+
+      if(params.mode){
+        let mode = params.mode
+        this.queryParams['mode'] = mode
+      }
       
-      this.queryParams['enc'] = encryptedData
-      this.queryParams['mode'] = mode
+      console.log('queryParams : ',this.queryParams)
       
     })
   }
@@ -76,17 +79,17 @@ export class JoinComponent implements OnInit {
   pageManager(){
     this.routeSub = this.activatedRoute.params.subscribe(result => {
       let page = result['page']  
-      console.log('PageManage Set Page : ',page)
-      console.log('Join Component Payload: ',this.payload)
+      // console.log('PageManage Set Page : ',page)
+      // console.log('Join Component Payload: ',this.payload)
       this.PAGE = page    
     })    
   }
 
   renewal(data : any){
-    console.log(data)
+    // console.log(data)
     this.payload = data['payload'];  
     
-    console.log('Renewal Payload : ',this.payload)
+    // console.log('Renewal Payload : ',this.payload)
 
   }
 
